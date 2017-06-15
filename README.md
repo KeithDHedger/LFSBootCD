@@ -21,3 +21,8 @@ The bootable iso is bootcd.iso, either use as is for a VM or burn to a DVD r/w (
 
 See the file "Roll your own Linux Rescue or Setup CD.html" for more details ( original creator ), or online https://www.phenix.bnl.gov/~purschke/RescueCD/
 
+A pre-built iso is avaialable here:
+https://www.dropbox.com/s/x6ycbgtlhkb4onb/bootcd.iso
+
+This uses the ssh public keys in the pulblickeys folder.
+This will need to be burnt to a dvd writable if you mean to use a physical disk as it's slightly too large for a cdrom.
