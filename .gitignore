@@ -1,0 +1,4 @@
+*.orig
+*.tar.xz
+*.tar.*
+cdtree/LFS/LFSSourceArchives
