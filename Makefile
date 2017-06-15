@@ -33,6 +33,7 @@ $(TOPDIR)/hostkeys/ssh_host_dsa_key.pub:
 $(TOPDIR)/hostkeys/ssh_host_rsa_key:
 $(TOPDIR)/hostkeys/ssh_host_rsa_key.pub:
 	$(TOPDIR)/generate_hostkeys.sh
+	cp $(TOPDIR)/hostkeys/*.pub publickeys
 
 clean:
 	rm -f $(TOPDIR)/bootcd.iso $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz

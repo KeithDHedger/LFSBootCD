@@ -20,53 +20,52 @@ if [ "X$BOOTSTRAP" != "X" ];then
 		make install
 		SIMPLEUPDATE=1 lfspkg -U
 	popd
-#	rm -r "${TARNAME}-master"
 else
 
-if [ ! -e $TARBALL ];then
-	wget -c --no-check-certificate "https://github.com/KeithDHedger/$PKGNAME/archive/master.zip" -O $TARBALL||true
-fi
-
-unzip "$TARBALL"
-pushd "${TARNAME}-master"
-	if [ ! -e /etc/$RCFILE ];then
-		. ./$RCFILE
+	if [ ! -e $TARBALL ];then
+		wget -c --no-check-certificate "https://github.com/KeithDHedger/$PKGNAME/archive/master.zip" -O $TARBALL||true
 	fi
-	. ./$FUNCTIONS
 
-	PKG="${OUTPUT}/${PKGNAME}"
-	rm -rf "$PKG" || true
-	mkdir -p "$PKG"
+	rm -r "${TARNAME}-master"
+	unzip "$TARBALL"
+	pushd "${TARNAME}-master"
+		if [ ! -e /etc/$RCFILE ];then
+			. ./$RCFILE
+		fi
+		. ./$FUNCTIONS
 
-	make install DESTDIR=$PKG
-popd
+		PKG="${OUTPUT}/${PKGNAME}"
+		rm -rf "$PKG" || true
+		mkdir -p "$PKG"
 
-mkdir -vp "${SOURCEARCHIVES}/${SECTION}" "${OUTPUT}/${SECTION}" 2>/dev/null
-mv "$TARBALL" "${SOURCEARCHIVES}/${SECTION}"
+		make install DESTDIR=$PKG
+	popd
 
-checketc "$PKG"
-packageclean "$PKG"
+	mkdir -vp "${SOURCEARCHIVES}/${SECTION}" "${OUTPUT}/${SECTION}" 2>/dev/null
+	mv "$TARBALL" "${SOURCEARCHIVES}/${SECTION}"
 
-pushd "$PKG"
-	${PKG}/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
-popd
+	checketc "$PKG"
+	packageclean "$PKG"
 
-case $DOWHAT in
-	up*)
-		${PKG}/usr/bin/lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
-		;;
-	"install")
-		${PKG}/usr/bin/lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
-		;;
-	"build")
-		echo "Just built"
-		;;
-	*)
-		echo "*** Unknown command ***"
-		exit 1
-esac
+	pushd "$PKG"
+		${PKG}/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+	popd
 
-rm -r "$PKG"
-# "${TARNAME}-master"
+	case $DOWHAT in
+		up*)
+			${PKG}/usr/bin/lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+			;;
+		"install")
+			${PKG}/usr/bin/lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+			;;
+		"build")
+			echo "Just built"
+			;;
+		*)
+			echo "*** Unknown command ***"
+			exit 1
+	esac
+
+	rm -r "$PKG" "${TARNAME}-master"
 fi
 

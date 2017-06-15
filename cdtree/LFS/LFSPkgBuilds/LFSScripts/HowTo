@@ -92,6 +92,26 @@ cd /LFSPkgBuildScripts/admin/LFSPkg
 cd /LFSPkgBuildScripts/kernel
 ./kernel.LFSBuild install
 
+13.5)
+#Optional install of grub, see here:
+http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
+
+#assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
+grub-install /dev/sda
+
+cat > /boot/grub/grub.cfg << "EOF"
+# Begin /boot/grub/grub.cfg
+set default=0
+set timeout=30
+
+insmod ext2
+set root=(hd0,1)
+
+menuentry "GNU/Linux, Linux 4.9.9-lfs-8.0" {
+	linux /boot/vmlinuz-4.9.9-lfs-8.0 root=/dev/sda1 ro
+}
+EOF
+
 14)
 #Build xorg
 cd /LFSPkgBuildScripts/xorg/xorg-meta/
