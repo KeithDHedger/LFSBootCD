@@ -2,3 +2,6 @@
 *.tar.xz
 *.tar.*
 cdtree/LFS/LFSSourceArchives
+*.img
+hostkeys
+*.iso
