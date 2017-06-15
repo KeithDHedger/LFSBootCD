@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 12 Feb 16:59:11 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+UIDGIDPAIR=$(findnextpair "system")
+useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -ru $UIDGIDPAIR -s /bin/false polkitd || true

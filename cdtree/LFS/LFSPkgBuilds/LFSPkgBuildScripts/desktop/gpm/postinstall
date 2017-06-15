@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+#©keithhedger Fri 13 Feb 11:19:57 GMT 2015 kdhedger68713@gmail.com
+
+cat > /etc/sysconfig/mouse << "EOF"
+# Begin /etc/sysconfig/mouse
+
+MDEVICE="/dev/input/mice"
+PROTOCOL="ps2"
+GPMOPTS=""
+
+# End /etc/sysconfig/mouse
+EOF

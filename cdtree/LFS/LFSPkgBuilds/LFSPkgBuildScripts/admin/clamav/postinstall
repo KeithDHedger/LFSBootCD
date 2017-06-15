@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 22 Jan 17:20:47 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+chown -R clamav:clamav /var/lib/clamav /var/log/clamav /var/run/clamav
+chmod -R 755 /var/lib/clamav
+chmod 771 /var/lib/clamav /var/log/clamav /var/run/clamav
+chmod 0660 /var/lib/clamav/*
+chmod 660 /var/log/clamav/clamd.log /var/log/clamav/freshclam.log
+touch /var/log/clamav/clamd.log/var/log/clamav/freshclam.log

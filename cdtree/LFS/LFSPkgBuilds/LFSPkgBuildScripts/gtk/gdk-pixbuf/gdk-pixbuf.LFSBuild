@@ -1,0 +1,55 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="GLib-2.50.3 libjpeg-turbo-1.5.1 libpng-1.6.28 LibTIFF-4.0.7 gobject-introspection-1.50.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+TARNAME="gdk-pixbuf"
+PKGNAME="gdk-pixbuf"
+VERSION="2.36.5"
+BUILD=${BUILD:-1}
+SECTION="GTK"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://ftp.gnome.org/pub/gnome/sources/gdk-pixbuf/${VERSION%.?*}/${TARBALL}" $SECTION
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS} --with-x11
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

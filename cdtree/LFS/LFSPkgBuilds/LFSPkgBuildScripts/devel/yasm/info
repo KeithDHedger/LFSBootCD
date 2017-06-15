@@ -1,0 +1,2 @@
+Yasm is a complete rewrite of the NASM-2.11.06 assembler.
+It supports the x86 and AMD64 instruction sets, accepts NASM and GAS assembler syntaxes and outputs binary, ELF32 and ELF64 object formats.

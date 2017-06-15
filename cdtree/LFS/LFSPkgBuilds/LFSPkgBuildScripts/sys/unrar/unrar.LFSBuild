@@ -1,0 +1,51 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="unrar"
+TARNAME="unrarsrc"
+VERSION="5.3.3"
+BUILD=${BUILD:-1}
+SECTION="SYS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://www.rarlab.com/rar/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${PKGNAME}"
+	make -f makefile
+	mkdir -vp $PKG/usr/bin
+	install -v -m755 unrar $PKG/usr/bin
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${PKGNAME}"

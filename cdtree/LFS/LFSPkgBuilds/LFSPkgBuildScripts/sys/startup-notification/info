@@ -1,0 +1,2 @@
+The startup-notification package contains startup-notification libraries.
+These are useful for building a consistent manner to notify the user through the cursor that the application is loading.

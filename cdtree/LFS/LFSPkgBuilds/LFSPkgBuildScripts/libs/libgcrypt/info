@@ -1,0 +1,2 @@
+The libgcrypt package contains a general purpose crypto library based on the code used in GnuPG.
+The library provides a high level interface to cryptographic building blocks using an extendable and flexible API.

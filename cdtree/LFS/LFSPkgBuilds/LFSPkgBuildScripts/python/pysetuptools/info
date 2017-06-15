@@ -1,0 +1,7 @@
+pysetuptools (a collection of enhancements to Python distutils)
+Easily build, install, upgrade, and uninstall Python packages!
+Setuptools is a fully-featured, actively-maintained, and stable
+library designed to facilitate packaging Python projects, where
+packaging includes Python package and module definitions,
+distribution package metadata, test hooks, project installation,
+platform-specific details, and Python 3 support.

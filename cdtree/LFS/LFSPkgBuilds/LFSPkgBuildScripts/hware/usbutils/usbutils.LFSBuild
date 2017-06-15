@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="libusb-1.0.21 pkg-config-0.29.1"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+TARNAME="usbutils"
+PKGNAME="usbutils"
+VERSION="008"
+BUILD=${BUILD:-1}
+SECTION="HWARE"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://www.kernel.org/pub/linux/utils/usb/usbutils/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i '/^usbids/ s:usb.ids:hwdata/&:' lsusb.py
+
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --prefix=/usr --datadir=/usr/share/hwdata
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

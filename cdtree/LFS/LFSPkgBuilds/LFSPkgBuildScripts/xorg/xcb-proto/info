@@ -1,0 +1,1 @@
+The xcb-proto package provides the XML-XCB protocol descriptions that libxcb uses to generate the majority of its code and API.

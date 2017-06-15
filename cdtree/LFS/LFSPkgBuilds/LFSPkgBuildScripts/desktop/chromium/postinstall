@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#©keithhedger Wed 18 Mar 14:02:17 GMT 2015 kdhedger68713@gmail.com
+
+update-mime-database /usr/share/mime
+
+mkdir -vp /etc/default
+cat > /etc/default/chromium.default << EOF
+# Default settings for chromium. This file is sourced by /usr/bin/chromium
+
+# Options to pass to chromium
+CHROMIUM_FLAGS="${CHROMIUM_FLAGS} "
+EOF
+
+exit 0

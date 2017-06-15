@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+#©keithhedger Sun 22 Feb 14:52:58 GMT 2015 kdhedger68713@gmail.com
+
+cat > /usr/share/applications/qt5-creator.desktop << EOF
+[Desktop Entry]
+Name=Qt5 Creator
+Comment=Qt5 IDE
+Exec=qtcreator
+Icon=QtProject-qtcreator.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Documentation;
+EOF
+
+gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/hicolor

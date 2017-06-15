@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="gcc"
+TARNAME="$PKGNAME"
+VERSION="6.3.0"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	mkdir -v build
+	cd build
+	SED=sed ../configure --prefix=/usr --libdir=/usr/lib${LIBDIRSUFFIX} --libexecdir=/usr/lib --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu --enable-languages=c,c++,objc,obj-c++ --disable-multilib --disable-bootstrap --with-system-zlib
+
+	make $MAKEFLAGS||make|| exit
+	make install DESTDIR="$PKG" || exit
+
+	mkdir -p $PKG/lib $PKG/usr/share/gdb/auto-load/usr/lib
+	ln -sv ../usr/bin/cpp $PKG/lib
+	ln -sv gcc $PKG/usr/bin/cc
+	install -v -dm755 $PKG/usr/lib/bfd-plugins
+	ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/${VERSION}/liblto_plugin.so $PKG/usr/lib/bfd-plugins/
+	mkdir -pv $PKG/usr/share/gdb/auto-load/usr/lib
+	mv -v $PKG/usr/lib${LIBDIRSUFFIX}/*gdb.py $PKG/usr/share/gdb/auto-load/usr/lib
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"
+
+echo 'int main(){}' > dummy.c
+cc dummy.c -v -Wl,--verbose &> dummy.log
+readelf -l a.out | grep ': /lib'
+grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
+grep -B4 '^ /usr/include' dummy.log
+grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+grep "/lib.*/libc.so.6 " dummy.log
+grep found dummy.log
+
+read -t 30 -p "check out " ||true
+rm -v dummy.c a.out dummy.log ||true

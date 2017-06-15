@@ -1,0 +1,74 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="lua"
+TARNAME="$PKGNAME"
+VERSION="5.1.5"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+gettar "http://www.lua.org/ftp/${TARBALL}" $SECTION
+#gettar "http://www.linuxfromscratch.org/patches/blfs/7.7/lua-5.1.5-shared_library-1.patch" $SECTION
+gettar "http://www.lua.org/ftp/lua-5.1.5.tar.gz" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+# Fix up a to-be-installed header and the pkgconfig file
+	sed -i "s|/usr/local|/usr|" src/luaconf.h
+	sed -i "s|lib/lua|lib/lua|" src/luaconf.h
+	sed -i "s|/usr/local|/usr|" etc/lua.pc
+	sed -i "s|prefix}/lib|prefix}/lib|g" etc/lua.pc
+
+	make linux CFLAGS=" \$(MYCFLAGS) -O2 -fPIC" INSTALL_TOP=/usr INSTALL_LIB=/usr/lib${LIBDIRSUFFIX} INSTALL_LMOD=/usr/share/lua/5.1 INSTALL_CMOD=/usr/lib/lua/5.1
+	make linux install CFLAGS=" \$(MYCFLAGS) -O2 -fPIC" INSTALL_TOP=$PKG/usr INSTALL_LIB=$PKG/usr/lib${LIBDIRSUFFIX} INSTALL_LMOD=$PKG/usr/share/lua/5.1 INSTALL_CMOD=$PKG/usr/lib/lua/5.1
+
+# Now let's build the shared library
+	mkdir -p shared
+	cd shared
+	ar -x $PKG/usr/lib${LIBDIRSUFFIX}/liblua.a
+	gcc -ldl -lreadline -lhistory -lncurses -lm -shared *.o -O2 -fPIC -o liblua.so.$VERSION
+	cp -a liblua.so.$VERSION $PKG/usr/lib
+	(
+		cd $PKG/usr/lib${LIBDIRSUFFIX}
+		ln -s liblua.so.$VERSION liblua.so.5.1
+		ln -s liblua.so.$VERSION liblua.so.5
+		ln -s liblua.so.$VERSION liblua.so
+	)
+	cd ..
+
+# and install the pkgconfig file
+	mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig
+	cat etc/lua.pc > $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/lua.pc
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

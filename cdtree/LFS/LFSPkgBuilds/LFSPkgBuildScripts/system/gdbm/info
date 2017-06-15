@@ -1,0 +1,3 @@
+The GDBM package contains the GNU Database Manager.
+It is a library of database functions that use extensible hashing and work similar to the standard UNIX dbm.
+The library provides primitives for storing key/data pairs, searching and retrieving the data by its key and deleting a key along with its data.

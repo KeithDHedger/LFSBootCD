@@ -1,0 +1,1 @@
+cdrkit (Tools for mastering and writing compact discs) This is a fork of the last free GPL version of cdrtools. icedax: CD audio sampling utility (formerly cdda2wav). wodim: burn discs in most ATAPI and SCSI CD-R drives (formerly cdrecord). genisoimage: create ISO9660/HFS/Joliet CD-ROM images (formerly mkisofs). homepage: http://www.cdrkit.org/

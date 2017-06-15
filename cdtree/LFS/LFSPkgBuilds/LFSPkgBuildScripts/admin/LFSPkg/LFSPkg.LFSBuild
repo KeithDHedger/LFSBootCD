@@ -1,0 +1,72 @@
+#!/bin/bash
+
+PKGNAME="LFSPkg"
+TARNAME="$PKGNAME"
+VERSION="0.4.21"
+BUILD=${BUILD:-1}
+SECTION="ADMIN"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.zip"
+HELPER=finddepends
+HELPERCODE=main.cpp
+FUNCTIONS=LFSFunctions
+PROGRAM=lfspkg
+MANPAGE=${PROGRAM}.1
+RCFILE=lfspkg.rc
+DOWHAT=${1:-"build"}
+
+if [ "X$BOOTSTRAP" != "X" ];then
+	pushd "${TARNAME}-master"
+		make install
+		SIMPLEUPDATE=1 lfspkg -U
+	popd
+#	rm -r "${TARNAME}-master"
+else
+
+if [ ! -e $TARBALL ];then
+	wget -c --no-check-certificate "https://github.com/KeithDHedger/$PKGNAME/archive/master.zip" -O $TARBALL||true
+fi
+
+unzip "$TARBALL"
+pushd "${TARNAME}-master"
+	if [ ! -e /etc/$RCFILE ];then
+		. ./$RCFILE
+	fi
+	. ./$FUNCTIONS
+
+	PKG="${OUTPUT}/${PKGNAME}"
+	rm -rf "$PKG" || true
+	mkdir -p "$PKG"
+
+	make install DESTDIR=$PKG
+popd
+
+mkdir -vp "${SOURCEARCHIVES}/${SECTION}" "${OUTPUT}/${SECTION}" 2>/dev/null
+mv "$TARBALL" "${SOURCEARCHIVES}/${SECTION}"
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	${PKG}/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		${PKG}/usr/bin/lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		${PKG}/usr/bin/lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG"
+# "${TARNAME}-master"
+fi
+

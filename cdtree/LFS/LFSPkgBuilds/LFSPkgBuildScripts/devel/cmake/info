@@ -1,0 +1,3 @@
+The CMake package contains a modern toolset used for generating Makefiles.
+It is a successor of the auto-generated configure script and aims to be platform- and compiler-independent.
+A significant user of CMake is KDE since version 4.

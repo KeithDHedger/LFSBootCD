@@ -1,0 +1,104 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="glibc"
+TARNAME="$PKGNAME"
+VERSION="2.25"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+TZDATATARBALL=${SOURCEARCHIVES}/${SECTION}/tzdata2016j.tar.gz
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/${TARNAME}-${VERSION}-fhs-1.patch
+	mkdir -v build || true
+	cd build
+	../configure --prefix=/usr --enable-kernel=2.6.32 --enable-obsolete-rpc --enable-stack-protector=strong libc_cv_slibdir=/lib${LIBDIRSUFFIX}|| exit 1
+	make $MAKEFLAGS||make
+
+	touch /etc/ld.so.conf
+
+	make install DESTDIR="$PKG" || exit 1
+
+	mkdir -p "$PKG/etc/"||true
+	cp -v ../nscd/nscd.conf $PKG/etc/nscd.conf
+	mkdir -pv $PKG/var/cache/nscd||true
+
+	mkdir -pv $PKG/usr/lib/locale $PKG/lib${LIBDIRSUFFIX}||true
+	make localedata/install-locales install_root="$PKG" || exit 1
+	ln -s ld-linux.so.2 $PKG/lib${LIBDIRSUFFIX}/ld-lsb.so.3||true
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+mkdir build
+pushd build
+	tar -xf ${TZDATATARBALL}
+	ZONEINFO="/usr/share/zoneinfo"
+	mkdir -pv $ZONEINFO/{posix,right}
+
+	for tz in etcetera southamerica northamerica europe africa antarctica asia australasia backward pacificnew systemv
+		do
+			zic -L /dev/null   -d $ZONEINFO -y "sh yearistype.sh" ${tz}
+			zic -L /dev/null   -d $ZONEINFO/posix -y "sh yearistype.sh" ${tz}
+			zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${tz}
+		done
+
+	cp -v zone.tab zone1970.tab $ZONEINFO
+	zic -d $ZONEINFO -p Europe/London
+	unset ZONEINFO
+	cp -v /usr/share/zoneinfo/Europe/London /etc/localtime
+popd
+
+rm -r "$PKG" "${TARNAME}-${VERSION}" "build"
+
+mv -v /tools/bin/{ld,ld-old}
+mv -v /tools/$(uname -m)-pc-linux-gnu/bin/{ld,ld-old}
+#mv -v /tools/$(gcc -dumpmachine)/bin/{ld,ld-old}
+mv -v /tools/bin/{ld-new,ld}
+#ln -sv /tools/bin/ld /tools/$(gcc -dumpmachine)/bin/ld
+ln -sv /tools/bin/ld /tools/$(uname -m)-pc-linux-gnu/bin/ld
+
+#gcc -dumpspecs | sed -e 's@/tools@@g' -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' > $(dirname $(gcc --print-libgcc-file-name))/specs
+gcc -dumpspecs | sed -e 's@/tools@@g' -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' > $(dirname $(gcc --print-libgcc-file-name))/specs
+
+echo 'main(){}' > dummy.c
+cc dummy.c -v -Wl,--verbose &> dummy.log
+readelf -l a.out | grep ': /lib'
+grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
+grep -B1 '^ /usr/include' dummy.log
+grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+grep "/lib.*/libc.so.6 " dummy.log
+grep found dummy.log
+
+read -t 30 -p "check out " ||true
+rm -v dummy.c a.out dummy.log

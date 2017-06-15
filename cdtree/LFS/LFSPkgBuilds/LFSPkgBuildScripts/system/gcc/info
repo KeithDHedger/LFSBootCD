@@ -1,0 +1,5 @@
+The GCC package contains the GNU Compiler Collection.
+This page describes the installation of compilers for the following languages: C, C++, Fortran, Objective C, Objective C++, and Go.
+Two additional languages , Ada and Java are available in the collection.
+They have specific requirements, so they are described in separate pages (GCC-Ada-4.9.2 and GCC-Java-4.9.2).
+Since C and C++ are installed in LFS, this page is either for upgrading C and C++, or for installing additional compilers.

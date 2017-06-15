@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+#©keithhedger Fri 20 Feb 15:24:48 GMT 2015 kdhedger68713@gmail.com
+
+cat > /usr/share/applications/seamonkey.desktop << "EOF"
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=SeaMonkey
+Comment=The Mozilla Suite
+Icon=seamonkey
+Exec=seamonkey
+Categories=Network;GTK;Application;Email;Browser;WebBrowser;News;
+StartupNotify=true
+Terminal=false
+EOF

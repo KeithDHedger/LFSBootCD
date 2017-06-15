@@ -1,0 +1,2 @@
+The libglade package contains libglade libraries.
+These are useful for loading Glade interface files in a program at runtime.

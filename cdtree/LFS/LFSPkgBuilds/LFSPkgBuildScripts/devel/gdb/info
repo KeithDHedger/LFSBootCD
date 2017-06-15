@@ -1,0 +1,2 @@
+GDB, the GNU Project debugger, allows you to see what is going on &ldquo;inside&rdquo; another program while it executes -- or what another program was doing at the moment it crashed.
+Note that GDB is most effective when tracing programs and libraries that were built with debugging symbols and not stripped.

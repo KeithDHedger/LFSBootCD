@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Fri 13 Feb 12:57:17 GMT 2015 kdhedger68713@gmail.com
+
+update-desktop-database -v /usr/share/applications||true

@@ -1,0 +1,3 @@
+GStreamer is a streaming media framework that enables applications to share a common set of plugins for things like video decoding and encoding, audio encoding and decoding, audio and video filters, audio visualisation, Web streaming and anything else that streams in real-time or otherwise.
+It is modelled after research software worked on at the Oregon Graduate Institute.
+After installing GStreamer, you'll likely need to install one or more of the gst-plugins-bad-0.10.23, gst-plugins-good-0.10.31, gst-plugins-ugly-0.10.19 and gst-ffmpeg-0.10.13 packages.

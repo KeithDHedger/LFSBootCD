@@ -1,0 +1,3 @@
+FAAC is an encoder for a lossy sound compression scheme specified in MPEG-2 Part 7 and MPEG-4 Part 3 standards and known as Advanced Audio Coding (AAC).
+This encoder is useful for producing files that can be played back on iPod.
+Moreover, iPod does not understand other sound compression schemes in video files.

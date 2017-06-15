@@ -1,0 +1,69 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="Boost-1.63.0 gtest-1.8.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="luceneplus"
+TARNAME="rel"
+VERSION="3.0.7"
+BUILD=${BUILD:-1}
+SECTION="LIBS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}_${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://github.com/luceneplusplus/LucenePlusPlus/archive/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "LucenePlusPlus-${TARNAME}_${VERSION}"
+# Disable building internal gtest
+	sed -i "s/include(CMakeExternal.txt)/#include(CMakeExternal.txt)/" CMakeLists.txt
+	sed -i "s/enable_testing()/#enable_testing()/" CMakeLists.txt
+	#patch -p1 < ../LuceneTestFixture.patch
+	#patch -p1 < ../LuceneHeaders.patch
+
+	mkdir -p build
+	cd build
+	cmake -DCMAKE_C_FLAGS:STRING="$LFSFLAGS" -DCMAKE_CXX_FLAGS:STRING="$LFSFLAGS" -DCMAKE_INSTALL_PREFIX=/usr -DLIB_DESTINATION=/usr/lib${LIBDIRSUFFIX}  -DCMAKE_CXX_FLAGS='-DBOOST_VARIANT_USE_RELAXED_GET_BY_DEFAULT' -DCMAKE_BUILD_TYPE=Release ..
+	make || exit 1
+	make install DESTDIR=$PKG || exit 1
+
+
+#	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+#	make $MAKEFLAGS||make|| exit 1
+#	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "LucenePlusPlus-${TARNAME}_${VERSION}"

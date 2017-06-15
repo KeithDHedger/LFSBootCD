@@ -1,0 +1,143 @@
+################################################
+#                                              #
+#                 LFSPkg                       #
+#   A Package Manager For Linux From Scratch   #
+#                                              #
+#            ©K.D.Hedger 2012                  #
+#         kdhedger68713@gmail.com              #
+#                                              #
+#           Relased Under GPLv3                #
+#                                              #
+################################################
+
+
+This is a package manager inspired by slackware's slackpkg for the linux from scratch system.
+
+This app will build, install,remove and update packages and also allow you to search for a particular file within installed packages, find an installed package and create a template file to build and install/upgrade a package.
+
+This is a source based package manager and no dependency checking is done.
+
+The dialog application is required.
+
+################################################
+
+OPTIONS
+
+All options must be given discretly ie lfspkg -L -f FILETOFIND and NOT lfspkg -Lf FILETOFIND.
+
+-c, --commit
+	Make and Install package.
+
+-i, --install
+	Install a package.
+
+-m, --make
+	Make a package.
+
+-u,	--upgrade
+	Upgrade a package.
+
+-r, --remove
+	Remove a package.
+
+-t, --template ARG
+	Create LFSBuild template for source tarball ARG.
+
+-l, --list
+	List installed files from a package.
+
+-f, --find
+	Find installed file.
+
+-L,--less
+	Pipe output from list/find to less
+
+-R, --rootdir
+	use ROOTDIR as install/remove prefix (optional defaults to /).
+
+-s, --suffix
+	Suffix of package (optional defaults to LFSPKG).
+
+-d, --section
+	Section name of package (optional defaults to SYS).
+
+-b, --build
+	Build number of package (optional defaults to 1).
+
+-o, --output
+	Output archive to this folder default is to build in /tmp but this can be overridden either by setting OUTPUT on the commandline ( OUTPUT=/some/tmp/folder lfspk ... ) or setting the variable in ~/.config/lfspkg.rc or /usr/share/LFSPkg/LFSFunctions, order of precedence is env variable OR ~/.config/lfspkg.rc OR /usr/share/LFSPkg/LFSFunctions OR /tmp.
+
+-n, --name
+	Name of package.
+
+-p, --pkgversion
+	Version of package.
+
+################################################
+
+FILES
+
+/usr/share/LFSPkg/LFSFunctions
+	Helper functions for lfspkg.
+
+~/.config/lfspkg.rc
+	Local config file, should contain only the following:
+
+TMP=${TMP:-/tmp/LFS}
+OUTPUT=${OUTPUT:-/path/to/store/packages}
+
+Where TMP is the location for tempory files ( defaults to /tmp if not set )
+OUTPUT is the location to save built packages ( defaults to /tmp if not set )
+
+/var/lib/LFSPackages
+Contains gziped lists containg package information.
+
+
+################################################
+
+EXAMPLES
+ 
+Build and install a package from the current directory:
+	lfspkg -n "SomePackage" -p "6.6.6" -d "DEV" -b 34 -c
+
+Build a package from the current directory and save to /some/other/tmp:
+	OUTPUT=/some/other/tmp lfspkg -n "SomePackage" -p "6.6.6" -m
+
+Install a package:
+	lfspkg "/media/SkyNet/UpdatedPakckages/wget-1.14-1_NET_LFSPKG.tar.gz" -i
+ 
+Create a template script based on an archive file name:
+	lfspkg -t wget-1.14.tar.gz
+
+Find a file in an installed package:
+	lfspkg -f wget
+	 ...
+	wget Found in package: wget-1.14-2_NET_LFSPKG
+	At these locations:
+	 ./etc/wgetrc
+	 ./usr/share/man/man1/wget.1
+	 ./usr/share/locale/nl/LC_MESSAGES/wget.mo
+	 ...
+	 ./usr/share/info/wget.info
+	 ./usr/bin/wget
+	 ...
+
+Find an installed package:
+	lfspkg wget
+
+	Matches for:wget
+	wget-1.14-1_NET_LFSPKG
+
+Remove a package:
+	lfspkg -r wget
+
+If you use the template script when you want to update a package just place the new archive in the same folder as the script alter the version number in the script and run ( using wget for instance )
+
+	sudo ./wget.LFSBuild upgrade
+
+The package will be rebuilt and you will be asked which package to upgrade.
+
+When removing a package or listing the contents of a package you will be asked to choose from a list of possible matches.
+You must have admin priviliges to install or remove files but you do not need to be root to just build a package.
+
+

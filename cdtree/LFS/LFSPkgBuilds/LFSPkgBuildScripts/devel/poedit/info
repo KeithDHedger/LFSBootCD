@@ -1,0 +1,5 @@
+Poedit (cross-platform gettext catalogs editor)
+Poedit is an cross-platform gettext catalogs (.po files) editor.
+It aims to provide more convenient approach to editing catalogs
+than launching vi and editing the file by hand.
+Homepage: http://www.poedit.net

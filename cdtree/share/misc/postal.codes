@@ -1,0 +1,124 @@
+# Postal codes
+#
+# Code : Region
+
+# American States
+AL:Alabama
+AK:Alaska
+AZ:Arizona
+AR:Arkansas
+CA:California
+CO:Colorado
+CT:Connecticut
+DE:Delaware
+FL:Florida
+GA:Georgia
+HI:Hawaii
+ID:Idaho
+IL:Illinois
+IN:Indiana
+IA:Iowa
+KS:Kansas
+KY:Kentucky
+LA:Louisiana
+ME:Maine
+MD:Maryland
+MA:Massachusetts
+MI:Michigan
+MN:Minnesota
+MS:Mississippi
+MO:Missouri
+MT:Montana
+NE:Nebraska
+NV:Nevada
+NH:New Hampshire
+NJ:New Jersey
+NM:New Mexico
+NY:New York
+NC:North Carolina
+ND:North Dakota
+OH:Ohio
+OK:Oklahoma
+OR:Oregon
+PA:Pennsylvania
+RI:Rhode Island
+SC:South Carolina
+SD:South Dakota
+TN:Tennessee
+TX:Texas
+UT:Utah
+VT:Vermont
+VA:Virginia
+WA:Washington
+WV:West Virginia
+WI:Wisconsin
+WY:Wyoming
+
+# American Possessions
+AS:American Samoa
+DC:District of Columbia
+FM:Federated States of Micronesia
+GU:Guam
+MH:Marshall Islands
+MP:Northern Mariana Islands
+PW:Palau
+PR:Puerto Rico
+TT:Trust Territories
+VI:Virgin Islands
+
+# American military
+AE:Armed Forces Africa
+AA:Armed Forces Americas
+AE:Armed Forces Canada
+AE:Armed Forces Europe
+AE:Armed Forces Middle East
+AP:Armed Forces Pacific
+
+# Canadian Provinces
+AB:Alberta
+BC:British Columbia
+MB:Manitoba
+NB:New Brunswick
+NF:Newfoundland
+NS:Nova Scotia
+NT:Northwest Territories
+NU:Nunavut
+ON:Ontario
+PE:Prince Edward Island
+QU:Quebec
+SA:Saskatchewan
+YT:Yukon
+
+# Mexican states
+AG:Aguascalientes
+BN:Baja California North
+BS:Baja California South
+CH:Chihuahua
+CI:Coahuila
+CL:Colima
+CM:Campeche
+CS:Chiapas
+DF:Federal District
+DU:Durango
+GR:Guerrero
+GT:Guanajuato
+HG:Hidalgo
+JA:Jalisco
+MC:Michoacan
+ML:Morelos
+MX:Mexico
+NA:Nayarit
+NL:Nuevo Leon
+OA:Oazaca
+PU:Puebla
+QE:Queretaro
+QR:Quintana Roo
+SI:Sinaloa
+SL:San Luis Potosi
+SO:Sonora
+TA:Tamaulipas
+TB:Tabasco
+TL:Tlaxcala
+VC:Vera Cruz
+YC:Yucatan
+ZA:Zacatecas

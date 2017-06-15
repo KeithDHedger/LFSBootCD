@@ -1,0 +1,72 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="ncurses"
+TARNAME="$PKGNAME"
+VERSION="6.0"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
+
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --mandir=/usr/share/man --with-shared --without-debug --without-normal --enable-pc-files --enable-widec --prefix=/usr
+
+	make $MAKEFLAGS||make|| exit
+	make install DESTDIR="$PKG" || exit
+	mkdir -p $PKG/lib|| true
+
+	mv -v $PKG/usr/lib/libncursesw.so.6* $PKG/lib
+	ln -sfv ../../lib/$(readlink $PKG/usr/lib/libncursesw.so) $PKG/usr/lib/libncursesw.so
+	for lib in ncurses form panel menu
+		do
+			rm -vf /usr/lib/lib${lib}.so
+			echo "INPUT(-l${lib}w)" > $PKG/usr/lib/lib${lib}.so
+			ln -sfv lib${lib}w.a $PKG/usr/lib/lib${lib}.a
+			ln -sfv ${lib}w.pc $PKG/usr/lib/pkgconfig/${lib}.pc
+		done
+
+	ln -sfv libncurses++w.a $PKG/usr/lib/libncurses++.a
+	rm -vf $PKG/usr/lib/libcursesw.so
+	echo "INPUT(-lncursesw)" > $PKG/usr/lib/libcursesw.so
+	ln -sfv libncurses.so $PKG/usr/lib/libcurses.so
+	ln -sfv libncursesw.a $PKG/usr/lib/libcursesw.a
+	ln -sfv libncurses.a $PKG/usr/lib/libcurses.a
+	mkdir -pv $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+	cp -v -R doc/* $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+	ln -sfv ../share/terminfo $PKG/usr/lib||true
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

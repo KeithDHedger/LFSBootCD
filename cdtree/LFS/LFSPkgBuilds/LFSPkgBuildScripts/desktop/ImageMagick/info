@@ -1,0 +1,3 @@
+ImageMagick is a collection of tools and libraries to read, write, and manipulate an image in various image formats.
+Image processing operations are available from the command line.
+Bindings for Perl and C++ are also available.

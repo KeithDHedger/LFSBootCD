@@ -1,0 +1,53 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="openssl"
+TARNAME="${PKGNAME}"
+VERSION="1.0.2"
+BUILD=${BUILD:-1}
+SECTION="NET"
+SUFFIX="LFSPKG"
+MINORSUFFIX="k"
+TARBALL="${TARNAME}-${VERSION}${MINORSUFFIX}.tar.gz"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}${MINORSUFFIX}"
+	./config --prefix=/usr --openssldir=/etc/ssl shared zlib-dynamic --libdir=/lib${LIBDIRSUFFIX}
+	make depend|| exit 1
+	make $MAKEFLAGS||make|| exit 1
+	sed -i 's# libcrypto.a##;s# libssl.a##' Makefile
+	make MANDIR=/usr/share/man MANSUFFIX=ssl install INSTALL_PREFIX=$PKG || exit 1
+	mkdir -vp $PKG/usr/share/doc/${PKGNAME}-${VERSION}||true
+	cp -vfr doc/* $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}${MINORSUFFIX}"

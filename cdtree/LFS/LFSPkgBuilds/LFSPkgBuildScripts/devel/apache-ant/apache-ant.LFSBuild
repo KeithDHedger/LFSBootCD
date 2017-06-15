@@ -1,0 +1,61 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="OpenJDK-1.8.0.121 GLib-2.50.3"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="apache-ant"
+TARNAME="$PKGNAME"
+VERSION="1.10.1"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}-src.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://archive.apache.org/dist/ant/source/${TARBALL}" $SECTION
+gettar "http://repo1.maven.org/maven2/junit/junit/4.11/junit-4.11.jar" $SECTION
+gettar "http://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+export JAVA_HOME
+pushd "${TARNAME}-${VERSION}"
+	cp -v ${SOURCEARCHIVES}/${SECTION}/junit-4.11.jar ${SOURCEARCHIVES}/${SECTION}/hamcrest-core-1.3.jar lib/optional
+
+	mkdir -vp $PKG/opt/ant-${VERSION}||true
+	./build.sh -Ddist.dir=$PKG/opt/ant-${VERSION} dist
+	ln -v -sfn ant-${VERSION} $PKG/opt/ant
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

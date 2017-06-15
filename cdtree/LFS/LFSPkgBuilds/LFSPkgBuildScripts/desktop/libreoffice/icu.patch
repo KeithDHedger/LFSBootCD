@@ -1,0 +1,12 @@
+diff -urN libreoffice-5.3.0.3/configure.ac libreoffice-5.3.0.3/configure.ac
+--- libreoffice-5.3.0.3/configure.ac	2017-02-14 17:14:46.305124770 -0800
++++ libreoffice-5.3.0.3/configure.ac	2017-02-14 17:16:42.693332158 -0800
+@@ -9249,7 +9249,7 @@
+ 
+ libo_CHECK_SYSTEM_MODULE([harfbuzz],[HARFBUZZ],[harfbuzz-icu >= 0.9.18],
+                          ["-I${WORKDIR}/UnpackedTarball/harfbuzz/src"],
+-                         ["-L${WORKDIR}/UnpackedTarball/harfbuzz/src/.libs -lharfbuzz"])
++                         ["-L${WORKDIR}/UnpackedTarball/harfbuzz/src/.libs -lharfbuzz -lharfbuzz-icu"])
+ 
+ if test "$COM" = "MSC"; then # override the above
+     GRAPHITE_LIBS="${WORKDIR}/LinkTarget/StaticLibrary/graphite.lib"

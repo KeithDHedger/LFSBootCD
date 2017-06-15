@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 12 Feb 17:15:37 GMT 2015 kdhedger68713@gmail.com
+
+mkdir -vp /etc/ConsoleKit/run-seat.d||true

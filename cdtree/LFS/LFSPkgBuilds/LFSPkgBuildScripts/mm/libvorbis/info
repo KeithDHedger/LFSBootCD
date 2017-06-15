@@ -1,0 +1,2 @@
+The libvorbis package contains a general purpose audio and music encoding format.
+This is useful for creating (encoding) and playing (decoding) sound in an open (patent free) format.

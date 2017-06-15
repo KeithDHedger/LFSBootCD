@@ -1,0 +1,64 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="eudev"
+TARNAME="$PKGNAME"
+VERSION="3.2.1"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+UDEVLFS="udev-lfs-20140408"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -r -i 's|/usr(/bin/test)|\1|' test/udev-test.pl
+	sed -i '/keyboard_lookup_key/d' src/udev/udev-builtin-keyboard.c
+	cat > config.cache << "EOF"
+HAVE_BLKID=1
+BLKID_LIBS="-lblkid"
+BLKID_CFLAGS="-I/tools/include"
+EOF
+
+	./configure --prefix=/usr --bindir=/sbin --sbindir=/sbin --libdir=/usr/lib${LIBDIRSUFFIX} --sysconfdir=/etc --libexecdir=/lib${LIBDIRSUFFIX} --with-rootprefix= --with-rootlibdir=/lib${LIBDIRSUFFIX} --enable-manpages --disable-static --config-cache
+	LIBRARY_PATH=/tools/lib make $MAKEFLAGS||LIBRARY_PATH=/tools/lib make||LIBRARY_PATH=/tools/lib make || exit 1
+
+	LIBRARY_PATH=/tools/lib make $MAKEFLAGS||make|| exit
+	mkdir -pv $PKG/lib${LIBDIRSUFFIX}/rules.d $PKG/etc/udev/rules.d||true
+	make LD_LIBRARY_PATH=/tools/lib install DESTDIR=$PKG || exit 1
+	mkdir -pv $PKG/lib${LIBDIRSUFFIX}/{firmware,udev/devices/pts,}||true
+
+	tar -xvf ${SOURCEARCHIVES}/${SECTION}/${UDEVLFS}.tar.bz2
+	make -f ${UDEVLFS}/Makefile.lfs install DESTDIR=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+rm -r "$PKG" "${TARNAME}-${VERSION}"

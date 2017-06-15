@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#©keithhedger Thu 19 Mar 11:41:49 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+mkdir -vp /usr/lib${LIBDIRSUFFIX}/mozilla/plugins ||true
+ln -s ${JAVA_HOME}/jre/lib/IcedTeaPlugin.so /usr/lib${LIBDIRSUFFIX}/mozilla/plugins/ ||true
+
+mandb -c ${JAVA_HOME}/man
+
+exit 0

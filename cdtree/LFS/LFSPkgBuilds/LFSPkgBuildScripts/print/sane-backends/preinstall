@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Wed 11 Feb 19:27:55 GMT 2015 kdhedger68713@gmail.com
+
+groupadd -fr scanner||true

@@ -1,0 +1,84 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+export CHECKETC=0
+
+DEPENDS="dbus-glib-0.108
+Py2cairo-1.10.0
+PyGObject-2.28.6
+PyGTK-2.24.0
+URI-1.71
+printing-meta-8.0
+vte1-0.28.2
+libnotify-0.5.2
+startup-notification-0.12
+NSPR-4.13.1
+zip-3.0
+JS-17.0.0
+Polkit-0.113
+UDisks-2.1.6
+ConsoleKit-1.0.0
+gnome-icon-theme-3.12.0
+Sudo-1.8.19
+xfce-meta-4.10.1
+gtksourceview-2.11.1
+leafpad-0.8.18.1
+shared-mime-info-1.8
+OpenSSH-7.4
+ntp-4.2.8
+xdg-utils-1.1.1
+desktop-file-utils-0.23
+Gimp-2.8.20
+gtkmm-2.24.5
+ImageMagick-7.0.5
+Firefox-51.0.1
+Thunderbird-45.7.1
+spacefm-1.0.5
+ManPageEditor-0.1.2
+AspellGUI-0.0.8
+KKEdit-0.2.11
+xarchiver-0.5.4
+ClipboardViewer-2.2.1
+LibreOffice-5.3.0
+GtkSu-0.1.6"
+
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+exit 666
+
+PKGNAME="desktop-meta"
+VERSION="0.0.3"
+BUILD=${BUILD:-1}
+SECTION="DESKTOP"
+SUFFIX="LFSPKG"
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG"

@@ -1,0 +1,69 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="Apr-Util-1.5.4 PCRE-8.40 OpenSSL-1.0.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="apache"
+TARNAME="httpd"
+VERSION="2.4.16"
+BUILD=${BUILD:-1}
+SECTION="NET"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://archive.apache.org/dist/httpd/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/7.8/httpd-2.4.16-blfs_layout-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+UIDGIDPAIR=$(findnextpair "system")
+useradd -c "Apache Server" -d /srv/www -s /bin/false -ru $UIDGIDPAIR apache||true
+
+pushd "${TARNAME}-${VERSION}"
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/httpd-2.4.16-blfs_layout-1.patch
+	sed '/dir.*CFG_PREFIX/s@^@#@' -i support/apxs.in
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --enable-authnz-fcgi --enable-layout=BLFS --enable-mods-shared="all cgi" --enable-mpms-shared=all --with-apr=/usr/bin/Apr-1.5.2-config --with-apr-util=/usr/bin/apu-1-config --enable-suexec=shared --with-suexec-bin=/usr/lib/httpd/suexec --with-suexec-docroot=/srv/www --with-suexec-caller=apache --with-suexec-userdir=public_html --with-suexec-logfile=/var/log/httpd/suexec.log --with-suexec-uidmin=100
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+
+	mkdir -vp $PKG/usr/lib/httpd $PKG/srv/www||true
+	mv -v $PKG/usr/sbin/suexec $PKG/usr/lib/httpd/suexec
+	chgrp apache $PKG/usr/lib/httpd/suexec
+	chmod 4754 $PKG/usr/lib/httpd/suexec
+	chown -v -R apache:apache $PKG/srv/www
+
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

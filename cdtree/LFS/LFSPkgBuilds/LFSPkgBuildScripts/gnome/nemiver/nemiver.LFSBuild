@@ -1,0 +1,66 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="libgtop-2.30.0 gnome-doc-utils-0.3.2 libgtksourceviewmm-1.9.5"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="nemiver"
+TARNAME="$PKGNAME"
+VERSION="0.8.2"
+BUILD=${BUILD:-1}
+SECTION="GNOME"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://www.mirrorservice.org/sites/ftp.gnome.org/pub/GNOME/sources/nemiver/${VERSION%.?*}/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS} --disable-scrollkeeper
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"
+
+mkdir -vp /etc/pango ||true
+/usr/bin/gdk-pixbuf-query-loaders --update-cache
+fc-cache -f
+gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/hicolor
+gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/gnome
+/usr/bin/pango-querymodules > /etc/pango/pango.modules
+update-mime-database /usr/share/mime
+mkdir -vp /var/cache/man/fsstnd||true
+mandb -c

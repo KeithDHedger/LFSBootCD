@@ -1,0 +1,24 @@
+PROGRAM=lfspkg
+PREFIX=/usr
+VERSION=0.4.20
+CONF=LFSMakePkg.conf
+HELPER=finddepends
+HELPERCODE=main.cpp
+FUNCTIONS=LFSFunctions
+
+all:
+	sed -r -i 's/[0-9]+.[0-9]+.[0-9]+/'"$(VERSION)"'/' $(CONF)
+	makeswitch -c $(CONF)
+	g++ -o $(HELPER) $(HELPERCODE)
+
+install:
+	sed -r -i 's/[0-9]+.[0-9]+.[0-9]+/'"$(VERSION)"'/' $(CONF)
+	makeswitch -c $(CONF)
+	g++ -o $(HELPER) $(HELPERCODE)
+	mkdir -p $(DESTDIR)$(PREFIX)/share/LFSPkg $(DESTDIR)$(PREFIX)/bin||true
+	cp $(FUNCTIONS) $(DESTDIR)$(PREFIX)/share/LFSPkg/
+	cp $(PROGRAM) $(HELPER) $(DESTDIR)$(PREFIX)/bin
+
+clean:
+	rm $(HELPER) || true
+

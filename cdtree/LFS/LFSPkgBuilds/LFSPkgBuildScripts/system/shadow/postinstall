@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+#©keithhedger Mon 2 Feb 20:42:33 GMT 2015 kdhedger68713@gmail.com
+
+pwconv
+grpconv

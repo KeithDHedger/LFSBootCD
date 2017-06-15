@@ -1,0 +1,72 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="dbus-glib-0.108 xorg-libs-8.0 Polkit-0.113 xmlto-0.0.28"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="ConsoleKit2"
+TARNAME="$PKGNAME"
+BASEPKGNAME="$PKGNAME"
+VERSION="0.9.2"
+BUILD=1
+SECTION="SYS"
+SUFFIX="LFSPKG"
+TARBALL="${PKGNAME}.zip"
+
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://github.com/ConsoleKit2/ConsoleKit2/archive/master.zip" $SECTION
+mv ${SOURCEARCHIVES}/${SECTION}/master.zip ${SOURCEARCHIVES}/${SECTION}/${PKGNAME}.zip||true
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+unzip "${SOURCEARCHIVES}/${SECTION}/${PKGNAME}.zip"
+
+pushd "${BASEPKGNAME}-master"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./autogen.sh ${CONFIGOPTIONS} --with-systemdsystemunitdir=no  --enable-udev-acl --enable-polkit --disable-nls
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+
+	mkdir -p $PKG/etc/rc.d/init.d $PKG/etc/rc.d/rc5.d $PKG/etc/rc.d/rc3.d || true
+	cp ../rc.consolekit $PKG/etc/rc.d/init.d
+
+	pushd $PKG/etc/rc.d/rc5.d
+		ln -sv ../init.d/rc.consolekit S25consolekit || true
+	popd
+	pushd $PKG/etc/rc.d/rc3.d
+		ln -sv ../init.d/rc.consolekit S30consolekit || true
+	popd
+
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+cp ./preinstall ./postinstall ./info "$PKG" &>/dev/null || true
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${BASEPKGNAME}-master"

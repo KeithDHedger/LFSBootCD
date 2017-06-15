@@ -1,0 +1,53 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="attr"
+TARNAME="$PKGNAME"
+VERSION="2.4.47"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.src.tar.gz"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i -e 's|/@pkg_name@|&-@pkg_version@|' include/builddefs.in
+
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --prefix=/usr --bindir=/bin
+	make||exit 1
+	make install install-dev install-lib DESTDIR=$PKG || exit 1
+	mkdir -vp  $PKG/lib||true
+	mv -v $PKG/usr/lib/libattr.so.* $PKG/lib
+	ln -sfv ../../lib/$(readlink $PKG/usr/lib/libattr.so) $PKG/usr/lib/libattr.so
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

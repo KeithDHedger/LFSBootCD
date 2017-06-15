@@ -1,0 +1,3 @@
+Valgrind is an instrumentation framework for building dynamic analysis tools.
+There are Valgrind tools that can automatically detect many memory management and threading bugs, and profile programs in detail.
+Valgrind can also be used to build new tools.

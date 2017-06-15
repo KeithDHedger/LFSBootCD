@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Wed 11 Feb 11:00:02 GMT 2015 kdhedger68713@gmail.com
+
+gdk-pixbuf-query-loaders --update-cache

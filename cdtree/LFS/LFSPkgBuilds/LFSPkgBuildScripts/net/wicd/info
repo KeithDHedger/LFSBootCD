@@ -1,0 +1,5 @@
+Wicd is a network manager written in Python.
+It simplifies network setup by automatically detecting and connecting to wireless and wired networks.
+Wicd includes support for WPA authentication and DHCP configuration.
+It provides Curses- and GTK-based graphical frontends for user-friendly control.
+An excellent KDE-based frontend is also available here.

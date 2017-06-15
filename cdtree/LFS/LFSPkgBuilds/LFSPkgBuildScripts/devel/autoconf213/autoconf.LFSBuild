@@ -1,0 +1,58 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="autoconf213"
+TARNAME="autoconf"
+VERSION="2.13"
+BUILD=1
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://ftp.gnu.org/gnu/autoconf/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/8.0/${TARNAME}-${VERSION}-consolidated_fixes-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/${TARNAME}-${VERSION}-consolidated_fixes-1.patch
+	mv -v autoconf.texi autoconf213.texi
+	rm -v autoconf.info
+	./configure ${CONFIGOPTIONS} --program-suffix=2.13
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	install -v -m644 autoconf213.info $PKG/usr/share/info
+	install-info --info-dir=$PKG/usr/share/info autoconf213.info
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+cp ./preinstall ./postinstall ./info "$PKG" &>/dev/null || true
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

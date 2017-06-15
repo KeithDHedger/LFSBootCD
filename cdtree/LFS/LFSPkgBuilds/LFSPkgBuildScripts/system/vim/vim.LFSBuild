@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="vim"
+TARNAME="$PKGNAME"
+VERSION="8.0.069"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+VIMVERS=80
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${PKGNAME}${VIMVERS}"
+	echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
+	./configure --prefix=/usr --enable-multibyte
+	make $MAKEFLAGS||make|| exit
+	make install DESTDIR="$PKG" || exit
+	mkdir -vp $PKG/usr/bin $PKG/usr/share/man/man.1 $PKG/usr/share/doc $PKG/etc
+	ln -sv vim $PKG/usr/bin/vi
+	for L in  $PKG/usr/share/man/{,*/}man1/vim.1
+		do
+		    ln -sv vim.1 $(dirname $L)/vi.1
+		done
+	ln -sv ../vim/vim${VIMVERS}/doc $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "vim${VIMVERS}"

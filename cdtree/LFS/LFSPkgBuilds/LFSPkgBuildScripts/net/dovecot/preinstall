@@ -1,0 +1,12 @@
+#!/bin/bash
+#©keithhedger Sat  7 Mar 14:19:21 GMT 2015
+
+. /usr/share/LFSPkg/LFSFunctions
+
+UIDGIDPAIR=$(findnextpair "system")
+groupadd -g $UIDGIDPAIR dovecot||true
+useradd -c "Dovecot unprivileged user" -d /dev/null -g dovecot -s /bin/false -u $UIDGIDPAIR dovecot||true
+
+UIDGIDPAIR=$(findnextpair "system")
+groupadd -g $UIDGIDPAIR dovenull||true
+useradd -c "Dovecot login user" -d /dev/null -g dovenull -s /bin/false -u $UIDGIDPAIR dovenull||true

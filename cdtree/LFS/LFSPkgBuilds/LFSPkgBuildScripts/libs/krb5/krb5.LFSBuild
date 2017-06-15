@@ -1,0 +1,84 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="krb5"
+TARNAME="$PKGNAME"
+VERSION="1.15"
+BUILD=${BUILD:-1}
+SECTION="LIBS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://web.mit.edu/kerberos/dist/${TARNAME}/${VERSION}/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/8.0/mitkrb-1.15-fix_ipv4_only-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+tar -xvf ${SOURCEARCHIVES}/${SECTION}/${TARNAME}-${VERSION}.tar.gz
+pushd ${TARNAME}-${VERSION}
+	patch -p1 -i ${SOURCEARCHIVES}/${SECTION}/mitkrb-1.15-fix_ipv4_only-1.patch
+	cd src
+	sed -e "s@python2.5/Python.h@& python2.7/Python.h@g" -e "s@-lpython2.5]@&,\n  AC_CHECK_LIB(python2.7,main,[PYTHON_LIB=-lpython2.7])@g" -i configure.in
+#	sed -e "s@interp->result@Tcl_GetStringResult(interp)@g" -i kadmin/testing/util/tcl_kadm5.c
+	sed -e '/eq 0/{N;s/12 //}' -i plugins/kdb/db2/libdb2/test/run.test
+	sed -e 's@\^u}@^u cols 300}@' -i tests/dejagnu/config/default.exp
+
+	autoconf
+	./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib --with-system-et --with-system-ss --with-system-verto=no --enable-dns-for-realm
+
+	make $MAKEFLAGS||make||exit 1
+	make install DESTDIR=$PKG || exit 1
+
+	for LIBRARY in gssapi_krb5 gssrpc k5crypto kadm5clnt kadm5srv kdb5 kdb_ldap krad krb5 krb5support verto
+		do
+		    [ -e  $PKG/usr/lib/lib$LIBRARY.so ] && chmod -v 755 $PKG/usr/lib/lib$LIBRARY.so
+		done
+
+	mkdir -vp $PKG/lib $PKG/bin||true
+	mv -v $PKG/usr/lib/libkrb5.so.3* $PKG/lib
+	mv -v $PKG/usr/lib/libk5crypto.so.3* $PKG/lib
+	mv -v $PKG/usr/lib/libkrb5support.so.0* $PKG/lib
+
+	ln -v -sf ../../lib/libkrb5.so.3.3 $PKG/usr/lib/libkrb5.so
+	ln -v -sf ../../lib/libk5crypto.so.3.1 $PKG/usr/lib/libk5crypto.so
+	ln -v -sf ../../lib/libkrb5support.so.0.1 $PKG/usr/lib/libkrb5support.so
+
+	mv -v $PKG/usr/bin/ksu $PKG/bin
+	chmod -v 755 $PKG/bin/ksu
+
+	install -v -dm755 $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+	cp -vfr ../doc/*  $PKG/usr/share/doc/${PKGNAME}-${VERSION}
+
+	unset LIBRARY
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${PKGNAME}-${VERSION}"

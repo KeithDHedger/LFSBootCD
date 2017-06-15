@@ -1,0 +1,1 @@
+The rep-gtk package contains a Lisp and GTK binding. This is useful for extending GTK-2 and GDK libraries with Lisp. Starting at rep-gtk-0.15, the package contains the bindings to GTK and uses the same instructions. Both can be installed, if needed. 

@@ -1,0 +1,54 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="icu"
+TARNAME="icu4c"
+VERSION="58.2"
+BUILD=${BUILD:-1}
+SECTION="SYS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-58_2-src.tgz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://download.icu-project.org/files/icu4c/${VERSION}/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/8.0/icu4c-58.2-fix_enumeration-1.patch"  $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "icu"
+	patch -p1 -i ${SOURCEARCHIVES}/${SECTION}/icu4c-58.2-fix_enumeration-1.patch
+	cd source
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" CC=gcc CXX=g++ ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "icu"

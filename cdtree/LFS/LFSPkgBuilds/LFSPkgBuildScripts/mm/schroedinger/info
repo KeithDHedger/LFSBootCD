@@ -1,0 +1,4 @@
+Schroedinger (a C implementation of BBC's Dirac Codec)
+Schroedinger is a high-speed implementation of BBC's dirac
+codec in C.
+Homepage: http://diracvideo.org/

@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 19 Feb 15:49:20 GMT 2015 kdhedger68713@gmail.com
+
+update-pciids

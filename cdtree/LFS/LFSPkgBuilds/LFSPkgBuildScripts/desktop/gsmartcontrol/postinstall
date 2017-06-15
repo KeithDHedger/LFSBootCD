@@ -1,0 +1,6 @@
+#!/bin/bash
+#©keithhedger Sun 25 Jan 19:28:53 GMT 2015
+
+. /usr/share/LFSPkg/LFSFunctions
+
+sed -ri 's@Exec="/usr/bin/gsmartcontrol-root"@Exec=/usr/bin/gtksu -- /usr/bin/gsmartcontrol@g' /usr/share/applications/gsmartcontrol.desktop

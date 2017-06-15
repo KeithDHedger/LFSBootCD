@@ -1,0 +1,56 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="id3lib"
+TARNAME="$PKGNAME"
+VERSION="3.8.3"
+BUILD=${BUILD:-1}
+SECTION="MM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://kent.dl.sourceforge.net/project/id3lib/id3lib/3.8.3/${TARBALL}" $SECTION
+#gettar "http://svn.cross-lfs.org/svn/repos/patches/id3lib/id3lib-3.8.3-UTF16_writing_bug-1.patch" $SECTION
+#gettar "http://svn.cross-lfs.org/svn/repos/patches/id3lib/id3lib-3.8.3-GCC43FIX-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	patch -Np1 -i ../id3lib-3.8.3-UTF16_writing_bug-1.patch
+	sed -i "s@iomanip.h@iomanip@g" ./configure
+	patch -Np1 -i ../id3lib-3.8.3-GCC43FIX-1.patch
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

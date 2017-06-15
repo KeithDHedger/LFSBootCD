@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#©keithhedger Wed 11 Feb 15:18:13 GMT 2015 kdhedger68713@gmail.com
+
+cd /etc/certdata
+/usr/sbin/make-ca.sh --force
+
+exit 0

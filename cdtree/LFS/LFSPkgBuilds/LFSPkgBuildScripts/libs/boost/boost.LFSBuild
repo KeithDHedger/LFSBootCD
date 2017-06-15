@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="Which-2.2 icu-58.2 Python-2.7.13"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="boost"
+TARNAME="$PKGNAME"
+VERSION="1.63.0"
+BUILD=${BUILD:-1}
+SECTION="LIBS"
+SUFFIX="LFSPKG"
+TARVERSION="1_63_0"
+TARBALL="${TARNAME}_${TARVERSION}.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://downloads.sourceforge.net/${PKGNAME}/${PKGNAME}/${VERSION}/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}_${TARVERSION}"
+	./bootstrap.sh --prefix=$PKG/usr || exit 
+	./b2 -j3 stage threading=multi link=shared || true 
+	./b2 -j3 install threading=multi link=shared || true 
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}_${TARVERSION}"

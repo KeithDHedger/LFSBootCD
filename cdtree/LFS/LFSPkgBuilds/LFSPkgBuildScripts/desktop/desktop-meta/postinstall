@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 10 Feb 19:40:20 GMT 2015 kdhedger68713@gmail.com
+
+mkdir -vp /etc/pango ||true
+/usr/bin/gdk-pixbuf-query-loaders --update-cache
+fc-cache -f
+gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/hicolor||true
+gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/gnome||true
+/usr/bin/pango-querymodules > /etc/pango/pango.modules||true
+update-mime-database -V /usr/share/mime||true
+update-desktop-database -v /usr/share/applications||true
+mkdir -vp /var/cache/man/fsstnd||true
+mandb -c
+

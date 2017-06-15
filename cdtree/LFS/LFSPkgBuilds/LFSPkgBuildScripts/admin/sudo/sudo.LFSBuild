@@ -1,0 +1,54 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="sudo"
+TARNAME="$PKGNAME"
+VERSION="1.8.19"
+MINORREVISION="p2"
+BUILD=${BUILD:-1}
+SECTION="ADMIN"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}${MINORREVISION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://www.sudo.ws/dist/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}${MINORREVISION}"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --prefix=/usr --libexecdir=/usr/lib${LIBDIRSUFFX} --docdir=/usr/share/doc/${PKGNAME}-${VERSION}${MINORREVISION} --with-all-insults --with-env-editor --with-passprompt="[sudo] password for %p"
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	mkdir -p $PKG/usr/lib/sudo ||true
+	ln -sfv libsudo_util.so.0.0.0 $PKG/usr/lib/sudo/libsudo_util.so.0
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}${MINORREVISION}"

@@ -1,0 +1,6 @@
+cflow (Flow graph generator for C projects)
+The cflow utility analyzes a collection of source files written in C
+programming language and outputs a graph charting dependencies between
+various functions.
+Homepage: http://www.gnu.org/software/cflow/
+Maintainer: Sergey Poznyakoff <gray@gnu.org>

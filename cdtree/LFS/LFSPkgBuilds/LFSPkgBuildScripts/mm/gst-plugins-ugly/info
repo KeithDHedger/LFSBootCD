@@ -1,0 +1,4 @@
+The GStreamer Ugly Plug-ins is a set of plug-ins considered by the GStreamer developers to have good quality and correct functionality, but distributing them might pose problems.
+The license on either the plug-ins or the supporting libraries might not be how the GStreamer developers would like.
+The code might be widely known to present patent problems.
+Also see the gst-plugins-bad-0.10.23, gst-plugins-good-0.10.31 and gst-ffmpeg-0.10.13 packages.

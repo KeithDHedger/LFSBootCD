@@ -1,0 +1,2 @@
+The Libtool package contains the GNU generic library support script.
+It wraps the complexity of using shared libraries in a consistent, portable interface.

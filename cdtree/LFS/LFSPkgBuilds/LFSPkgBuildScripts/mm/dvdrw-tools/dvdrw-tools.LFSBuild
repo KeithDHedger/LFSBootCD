@@ -1,0 +1,64 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="libisoburn-1.4.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="dvdrw-tools"
+TARNAME="dvd+rw-tools"
+VERSION="7.1"
+BUILD=${BUILD:-1}
+SECTION="MM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://fy.chalmers.se/~appro/linux/DVD+RW/tools/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i '/stdlib/a #include <limits.h>' transport.hxx &&
+	sed -i 's#mkisofs"#xorrisofs"#' growisofs.c &&
+	sed -i 's#mkisofs#xorrisofs#;s#MKISOFS#XORRISOFS#' growisofs.1 &&
+
+	make all rpl8 btcflash
+	make prefix=/usr
+	mkdir -vp $PKG/usr/bin $PKG/usr/man/man1
+	cp -vp growisofs dvd+rw-format dvd+rw-booktype dvd+rw-mediainfo dvd-ram-control $PKG/usr/bin
+	cp growisofs.1 $PKG/usr/man/man1
+	mkdir -vp $PKG/usr/share/doc/dvd+rw-tools-7.1
+	install -v -m644 -D index.html $PKG/usr/share/doc/dvd+rw-tools-7.1/index.html
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

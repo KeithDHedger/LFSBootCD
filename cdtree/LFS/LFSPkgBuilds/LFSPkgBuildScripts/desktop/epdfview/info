@@ -1,0 +1,2 @@
+ePDFView is a free standalone lightweight PDF document viewer using Poppler and GTK+ libraries.
+It is a good replacement for Evince as it does not rely upon GNOME libraries.

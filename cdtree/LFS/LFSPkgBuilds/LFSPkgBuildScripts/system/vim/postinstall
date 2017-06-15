@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 3 Feb 19:40:19 GMT 2015 kdhedger68713@gmail.com
+
+cat > /etc/vimrc << "EOF"
+" Begin /etc/vimrc
+
+set nocompatible
+set backspace=2
+syntax on
+if (&term == "iterm") || (&term == "putty")
+  set background=dark
+endif
+
+" End /etc/vimrc
+EOF

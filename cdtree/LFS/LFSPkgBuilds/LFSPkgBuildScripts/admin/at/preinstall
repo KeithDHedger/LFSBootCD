@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 22 Jan 17:20:37 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+UIDGIDPAIR=$(findnextpair "system")
+groupadd -g $UIDGIDPAIR atd||true
+useradd -d /dev/null -c "atd daemon" -g atd -s /bin/false -u $UIDGIDPAIR atd||true
+mkdir -vp /var/spool/cron||true

@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 10 Feb 20:22:57 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+UIDGIDPAIR=$(findnextpair "system")
+useradd -c "D-Bus Message Daemon User" -d /var/run/dbus -ru $UIDGIDPAIR -s /bin/false messagebus||true

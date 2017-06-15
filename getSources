@@ -1,0 +1,43 @@
+#!/bin/bash -e
+
+#©keithhedger Wed 14 Jun 19:51:12 BST 2017 kdhedger68713@gmail.com
+
+LFSVERSION=8.0
+SYSTEMSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYSTEM
+NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
+SYSSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYS
+
+WGETTAR="http://ftp.gnu.org/gnu/wget/wget-1.19.1.tar.xz"
+OPENSSLTAR="https://openssl.org/source/openssl-1.0.2k.tar.gz"
+UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
+
+TOOLS32TAR="https://www.dropbox.com/s/83ks1qylfthfeho/tools32.tar.xz"
+TOOLS64TAR="https://www.dropbox.com/s/nbd1l6kewryigau/tools64.tar.xz?"
+ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
+ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
+
+mkdir -vp $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
+
+if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
+	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list||exit 1
+	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums||exit 1
+	mv md5sums $SYSTEMSOURCE
+	wget -i wget-list -c -P $SYSTEMSOURCE||exit 1 
+
+#wget/openssl/unzip from the blfs book I prefer to make this as part of the main system
+	wget -c "$WGETTAR" -P $NETSOURCE||exit 1
+	wget -c "$OPENSSLTAR" -P $NETSOURCE||exit 1
+	wget -c "$UNZIPTAR" -P $SYSSOURCE||exit 1
+
+	touch $SYSTEMSOURCE/gotsystemsources||exit 1
+	rm wget-list
+
+	wget -c "$TOOLS32TAR" -P cdtree/LFS||exit 1
+	wget -c "$TOOLS64TAR" -P cdtree/LFS||exit 1
+
+	wget -c "$ROOT32TAR" ||exit 1
+	wget -c "$ROOT64TAR" ||exit 1
+fi
+
+exit 0
+

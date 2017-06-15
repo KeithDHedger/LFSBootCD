@@ -1,0 +1,61 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="Cups-2.2.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="gutenprint"
+TARNAME="$PKGNAME"
+VERSION="5.2.10"
+BUILD=${BUILD:-1}
+SECTION="PRINT"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://downloads.sourceforge.net/gimp-print/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i 's|$(PACKAGE)/doc|doc/$(PACKAGE)-$(VERSION)|' {,doc/,doc/developer/}Makefile.in
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	install -v -m755 -d /usr/share/doc/${PKGNAME}-${VERSION}/api/gutenprint{,ui2}
+	mkdir -vp $PKG/usr/share/doc/${PKGNAME}-${VERSION}/api/gutenprint $PKG/usr/share/doc/${PKGNAME}-${VERSION}/api/gutenprintui2||true
+	install -v -m644 doc/gutenprint/html/* $PKG/usr/share/doc/${PKGNAME}-${VERSION}/api/gutenprint
+	install -v -m644 doc/gutenprintui2/html/* $PKG/usr/share/doc/${PKGNAME}-${VERSION}/api/gutenprintui2
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

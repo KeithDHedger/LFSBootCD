@@ -1,0 +1,76 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="OpenSSL-1.0.2 libedit-3.1"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="openssh"
+TARNAME="$PKGNAME"
+VERSION="7.4"
+MINORREVISION=p1
+BUILD=${BUILD:-1}
+SECTION="SYS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}${MINORREVISION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+UIDGIDPAIR=$(findnextpair "system")
+useradd -c 'sshd PrivSep' -d /var/lib/sshd -s /bin/false -ru $UIDGIDPAIR sshd||true
+
+pushd "${TARNAME}-${VERSION}${MINORREVISION}"
+
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --prefix=/usr --libexecdir=/usr/lib/openssh --sysconfdir=/etc/ssh --datadir=/usr/share/sshd --with-md5-passwords --with-privsep-path=/var/lib/sshd --with-xauth=/usr/bin/xauth --with-libedit
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	mkdir -vp $PKG/usr/share/man/man1 $PKG/usr/share/doc/${TARNAME}-${VERSION}${MINORREVISION}
+	install -v -m755 contrib/ssh-copy-id $PKG/usr/bin
+	install -v -m644 contrib/ssh-copy-id.1 $PKG/usr/share/man/man1
+	install -v -m755 -d $PKG/usr/share/doc/${TARNAME}-${VERSION}${MINORREVISION}
+	install -v -m644 INSTALL LICENCE OVERVIEW README* $PKG/usr/share/doc/${TARNAME}-${VERSION}${MINORREVISION}
+	install -v -m700 -d $PKG/var/lib/sshd
+	chown   -v root:sys $PKG/var/lib/sshd
+#sshaskpass
+	if [ "X$MAKEASKPASS" != "XNOPASS" ];then
+		cd contrib
+		make gnome-ssh-askpass2
+		install -v -d -m755 $PKG/usr/lib/openssh/contrib
+		install -v -m755 gnome-ssh-askpass2 $PKG/usr/lib/openssh/contrib
+		ln -sv -f contrib/gnome-ssh-askpass2 $PKG/usr/lib/openssh/ssh-askpass
+	fi
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}${MINORREVISION}"

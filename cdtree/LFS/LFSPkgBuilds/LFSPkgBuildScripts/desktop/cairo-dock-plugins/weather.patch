@@ -1,0 +1,22 @@
+--- weather/src/applet-config.c.orig    2016-05-16 20:41:00.989532095 -0400 
++++ weather/src/applet-config.c    2016-05-16 20:41:05.890473638 -0400 
+@@ -174,7 +174,7 @@ 
+    gldi_task_discard (myData.pGetLocationTask); 
+    myData.pGetLocationTask = NULL; 
+} 
+-#define CD_WEATHER_BASE_URL "http://xml.weather.com" 
++#define CD_WEATHER_BASE_URL "http://wxdata.weather.com/wxdata" 
+static void _cd_weather_search_for_location (GtkEntry *pEntry, GldiModuleInstance *myApplet) 
+{ 
+    const gchar *cLocationName = gtk_entry_get_text (pEntry); 
+--- weather/src/applet-read-data.c.orig    2016-05-16 20:39:06.222916780 -0400 
++++ weather/src/applet-read-data.c    2016-05-16 20:39:40.641497521 -0400 
+@@ -30,7 +30,7 @@ 
+#include "applet-load-icons.h" 
+#include "applet-read-data.h" 
+
+-#define CD_WEATHER_BASE_URL "http://xml.weather.com" 
++#define CD_WEATHER_BASE_URL "http://wxdata.weather.com/wxdata" 
+
+
+static xmlDocPtr _cd_weather_open_xml_buffer (const gchar *cData, xmlNodePtr *root_node, const gchar *cRootNodeName, GError **erreur)

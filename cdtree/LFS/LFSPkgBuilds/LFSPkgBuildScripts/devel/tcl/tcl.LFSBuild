@@ -1,0 +1,63 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="tcl"
+TARNAME="$PKGNAME"
+VERSION="8.6.4"
+BUILD=1
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}${VERSION}-src.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://downloads.sourceforge.net/tcl/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}${VERSION}"
+	export SRCDIR=$(pwd)
+	cd unix
+
+	./configure --prefix=/usr --libdir=/usr/lib${LIBDIRSUFFIX} --without-tzdata --mandir=/usr/share/man $([ $(uname -m) = x86_64 ] && echo --enable-64bit)
+	make $MAKEFLAGS||make|| exit 1
+
+	sed -e "s#$SRCDIR/unix#/usr/lib#" -e "s#$SRCDIR#/usr/include#" -i tclConfig.sh
+	sed -e "s#$SRCDIR/unix/pkgs/tdbc1.0.3#/usr/lib/tdbc1.0.3#" -e "s#$SRCDIR/pkgs/tdbc1.0.3/generic#/usr/include#" -e "s#$SRCDIR/pkgs/tdbc1.0.3/library#/usr/lib/tcl8.6#" -e "s#$SRCDIR/pkgs/tdbc1.0.3#/usr/include#" -i pkgs/tdbc1.0.3/tdbcConfig.sh
+	sed -e "s#$SRCDIR/unix/pkgs/itcl4.0.3#/usr/lib/itcl4.0.3#" -e "s#$SRCDIR/pkgs/itcl4.0.3/generic#/usr/include#" -e "s#$SRCDIR/pkgs/itcl4.0.3#/usr/include#" -i pkgs/itcl4.0.3/itclConfig.sh
+
+	unset SRCDIR
+	make install DESTDIR=$PKG || exit 1
+	make install-private-headers DESTDIR=$PKG || exit 1
+	ln -v -sf tclsh8.6 $PKG/usr/bin/tclsh
+	chmod -v 755 $PKG/usr/lib${LIBDIRSUFFIX}/libtcl8.6.so
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}${VERSION}"

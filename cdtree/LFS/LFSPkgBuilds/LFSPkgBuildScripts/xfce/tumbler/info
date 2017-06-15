@@ -1,0 +1,2 @@
+The Tumbler package contains a D-Bus thumbnailing service based on the thumbnail management D-Bus specification.
+This is useful for generating thumbnail images of files.

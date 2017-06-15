@@ -1,0 +1,3 @@
+The GStreamer Good Plug-ins is a set of plug-ins considered by the GStreamer developers to have good quality code, correct functionality, and the preferred license (LGPL for the plug-in code, LGPL or LGPL-compatible for the supporting library).
+A wide range of video and audio decoders, encoders, and filters are included.
+Also see the gst-plugins-ugly-0.10.19, gst-plugins-bad-0.10.23 and gst-ffmpeg-0.10.13 packages.

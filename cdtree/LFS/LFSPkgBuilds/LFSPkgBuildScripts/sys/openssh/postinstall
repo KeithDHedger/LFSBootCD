@@ -1,0 +1,27 @@
+#!/bin/bash -e
+
+#©keithhedger Fri 13 Feb 11:34:36 GMT 2015 kdhedger68713@gmail.com
+
+cat >> /etc/sudo.conf << "EOF"
+# Path to askpass helper program
+Path askpass /usr/lib/openssh/ssh-askpass
+EOF
+
+chmod -v 0644 /etc/sudo.conf||true
+mkdir -vp /var/lib/sshd||true
+chmod 700 /var/lib/sshd||true
+chown   -v root:sys /var/lib/sshd||true
+
+if [ ! -r /etc/ssh/ssh_host_key ]; then
+	/usr/bin/ssh-keygen -t rsa1 -f /etc/ssh/ssh_host_key -N '' 
+fi
+if [ ! -f /etc/ssh/ssh_host_dsa_key ]; then
+	/usr/bin/ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key -N ''
+fi
+if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then
+	/usr/bin/ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
+fi
+if [ ! -f /etc/ssh/ssh_host_ecdsa_key ]; then
+	/usr/bin/ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N ''
+fi
+

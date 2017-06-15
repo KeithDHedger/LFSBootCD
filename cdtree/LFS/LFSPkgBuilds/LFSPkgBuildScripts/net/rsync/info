@@ -1,0 +1,2 @@
+The rsync package contains the rsync utility.
+This is useful for synchronizing large file archives over a network.

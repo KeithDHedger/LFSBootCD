@@ -1,0 +1,58 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="libxml2-2.9.4 UnZip-6.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="docbook-xml"
+TARNAME="$PKGNAME"
+VERSION="4.5"
+BUILD=${BUILD:-1}
+SECTION="GTK"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.zip"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://www.docbook.org/xml/4.5/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+mkdir tmp ||true
+pushd tmp
+	unzip "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+	install -v -d -m755 $PKG/usr/share/xml/docbook/xml-dtd-${VERSION}
+	install -v -d -m755 $PKG/etc/xml
+	chown -R root:root .
+	cp -v -af docbook.cat *.dtd ent/ *.mod $PKG/usr/share/xml/docbook/xml-dtd-${VERSION}
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "tmp"

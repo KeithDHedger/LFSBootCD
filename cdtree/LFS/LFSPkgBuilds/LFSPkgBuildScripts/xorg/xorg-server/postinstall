@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 10 Feb 14:24:22 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+mkdir -pv /etc/X11/xorg.conf.d /etc/sysconfig || true
+
+cat >> /etc/sysconfig/createfiles << "EOF"
+/tmp/.ICE-unix dir 1777 root root
+/tmp/.X11-unix dir 1777 root root
+EOF

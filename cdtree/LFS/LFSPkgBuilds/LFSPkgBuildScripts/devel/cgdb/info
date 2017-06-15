@@ -1,0 +1,1 @@
+cgdb (A curses interface for cgdb) CGDB is a curses (terminal-based) interface to the GNU Debugger (GDB). Its goal is to be lightweight and responsive; not encumbered with unnecessary features. Homepage: http://cgdb.sourceforge.net

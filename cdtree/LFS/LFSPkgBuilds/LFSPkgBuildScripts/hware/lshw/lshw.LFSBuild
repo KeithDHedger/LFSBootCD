@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="lshw"
+TARNAME="$PKGNAME"
+VERSION="2.17"
+BUILD=${BUILD:-1}
+SECTION="HWARE"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-B.0${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://ezix.org/software/files/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/$TARBALL"
+
+pushd "${TARNAME}-B.0${VERSION}"
+	# Fix the MANDIR variable
+	sed -i "s%MANDIR=\$(PREFIX)/share/man%MANDIR=\$(PREFIX)/man%" src/Makefile
+
+	RPM_OPT_FLAGS="$LFSFLAGS" MANDIR="/usr/man" make $MAKEFLAGS||make|| exit 1
+	RPM_OPT_FLAGS="$LFSFLAGS" MANDIR="/usr/man" make $MAKEFLAGS gui||make gui|| exit 1
+	make install DESTDIR=$PKG|| exit 1
+	make install-gui DESTDIR=$PKG|| exit 1
+	mkdir -vp $PKG/usr/share/applications||true
+	cp ../gtk-lshw.desktop $PKG/usr/share/applications
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-B.0${VERSION}"

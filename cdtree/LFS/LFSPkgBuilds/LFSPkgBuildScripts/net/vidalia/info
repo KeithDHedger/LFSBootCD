@@ -1,0 +1,6 @@
+Vidalia (GUI frontend for Tor)
+Using Vidalia, you can start and stop Tor, view its status at a
+glance, and monitor bandwidth usage. Vidalia also makes it easy to
+contribute to the Tor network by helping you set up and manage your
+own relay.
+Homepage: https://www.torproject.org/projects/vidalia.html.en

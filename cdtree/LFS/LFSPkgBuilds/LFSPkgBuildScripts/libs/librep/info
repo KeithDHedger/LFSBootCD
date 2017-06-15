@@ -1,0 +1,1 @@
+The librep package contains a Lisp system. This is useful for scripting or for applications that may use the Lisp interpreter as an extension language.

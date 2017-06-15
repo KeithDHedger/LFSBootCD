@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+#©keithhedger Wed 11 Feb 19:31:57 GMT 2015 kdhedger68713@gmail.com
+cat > /usr/share/applications/xscanimage.desktop << "EOF"
+[Desktop Entry]
+Encoding=UTF-8
+Name=XScanImage - Scanning
+Comment=Acquire images from a scanner
+Exec=xscanimage
+Icon=xscanimage
+Terminal=false
+Type=Application
+Categories=Application;Graphics
+EOF

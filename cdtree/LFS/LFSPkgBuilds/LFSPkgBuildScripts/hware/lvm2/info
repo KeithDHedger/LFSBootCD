@@ -1,0 +1,2 @@
+The LVM2 package is a package that manages logical partitions.
+It allows spanning of file systems across multiple physical disks and disk partitions and provides for dynamic growing or shrinking of logical partitions.

@@ -1,0 +1,33 @@
+*** wxWidgets-3.0.1/src/stc/scintilla/src/Editor.cxx	2017-05-15 11:25:27.000000000 +0100
+--- wxWidgets-3.0.1/src/stc/scintilla/src/Editor.cxx.patched	2017-05-15 11:20:52.000000000 +0100
+***************
+*** 11,16 ****
+--- 11,17 ----
+  #include <ctype.h>
+  #include <assert.h>
+  
++ #include <cmath>
+  #include <string>
+  #include <vector>
+  #include <map>
+***************
+*** 5841,5849 ****
+  }
+  
+  static bool Close(Point pt1, Point pt2) {
+! 	if (abs(pt1.x - pt2.x) > 3)
+  		return false;
+! 	if (abs(pt1.y - pt2.y) > 3)
+  		return false;
+  	return true;
+  }
+--- 5842,5850 ----
+  }
+  
+  static bool Close(Point pt1, Point pt2) {
+! 	if (std::abs(pt1.x - pt2.x) > 3)
+  		return false;
+! 	if (std::abs(pt1.y - pt2.y) > 3)
+  		return false;
+  	return true;
+  }

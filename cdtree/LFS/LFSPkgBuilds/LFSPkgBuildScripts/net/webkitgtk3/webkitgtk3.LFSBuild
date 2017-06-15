@@ -1,0 +1,63 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="gst-plugins-base1.0-1.10.3 GTK-2.24.31 icu-58.2 libsoup-2.56.0 MesaLib-13.0.4 Ruby-2.4.0 SQLite-3.17.0 Which-2.21 libwebp-0.6.0 libsecret-0.18.5 GTK-Doc-1.25"
+
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="webkitgtk3"
+TARNAME="webkitgtk"
+VERSION="2.4.9"
+BUILD=${BUILD:-1}
+SECTION="NET"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://webkitgtk.org/releases/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -e '/generate-gtkdoc --rebase/s:^:# :' -i GNUmakefile.in
+	rm -rf build-3||true
+	mkdir -vp build-3
+	cp -a Documentation build-3
+	cd build-3
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ../configure ${CONFIGOPTIONS} --with-gtk=3.0 --disable-geolocation --enable-introspection
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+#	rm -rf $PKG/usr/share/gtk-doc/html/webkitgtk-2.4.9
+#	mv -vi $PKG/usr/share/gtk-doc/html/webkitgtk{,-1.0}
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

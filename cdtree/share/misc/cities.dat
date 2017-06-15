@@ -1,0 +1,6957 @@
+ID          : 1
+Type        : City
+Population  : 210700
+Size        : 
+Name        : Aberdeen
+ Country    : UK
+ Region     : Scotland
+Location    : Earth
+ Longitude  : -2.083
+ Latitude   :   57.150
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 2
+Type        : City
+Population  : 1950000
+Size        : 
+Name        : Abidjan
+ Country    : Ivory Coast
+ Region     : 
+Location    : Earth
+ Longitude  : -3.867
+ Latitude   :    5.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 3
+Type        : City
+Population  : 859640
+Size        : 
+Name        : Accra
+ Country    : Ghana
+ Region     : 
+Location    : Earth
+ Longitude  : -0.200
+ Latitude   :    5.550
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 4
+Type        : Mountain
+Population  : 
+Size        : 
+Name        : Aconcagua
+ Country    : AR
+ Region     : 
+Location    : Earth
+ Longitude  : -70.050
+ Latitude   : -32.417
+ Elevation  : 6959
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 5
+Type        : City
+Population  : 1686300
+Size        : 
+Name        : Addis Abeba
+ Country    : Ethiopia
+ Region     : 
+Location    : Earth
+ Longitude  :   39.133
+ Latitude   :    9.200
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 6
+Type        : City
+Population  : 
+Size        : 
+Name        : Adelboden
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :    7.583
+ Latitude   :   46.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 7
+Type        : City
+Population  : 176100
+Size        : 
+Name        : Aden
+ Country    : Yemen
+ Region     : 
+Location    : Earth
+ Longitude  :   44.967
+ Latitude   :   12.967
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 8
+Type        : City
+Population  : 
+Size        : 
+Name        : Aerdt
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :    6.083
+ Latitude   :   51.900
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 9
+Type        : City
+Population  : 41200
+Size        : 
+Name        : Agrigento
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   13.600
+ Latitude   :   37.283
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 10
+Type        : City
+Population  : 
+Size        : 
+Name        : Aix-les-Bains
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    5.950
+ Latitude   :   45.717
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 11
+Type        : City
+Population  : 101082
+Size        : 
+Name        : Albany
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -74.000
+ Latitude   :   42.633
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 12
+Type        : City
+Population  : 
+Size        : 
+Name        : Alblasserwaard
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.833
+ Latitude   :   51.867
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 13
+Type        : Pass
+Population  : 
+Size        : 
+Name        : Albula Pass
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :    9.833
+ Latitude   :   46.583
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 14
+Type        : City
+Population  : 
+Size        : 
+Name        : Alfold
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   20.000
+ Latitude   :   46.750
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 15
+Type        : City
+Population  : 1507241
+Size        : 
+Name        : Algiers
+ Country    : DZ
+ Region     : 
+Location    : Earth
+ Longitude  :    3.033
+ Latitude   :   36.783
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 16
+Type        : City
+Population  : 
+Size        : 
+Name        : Alkmaar
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.717
+ Latitude   :   52.617
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 17
+Type        : City
+Population  : 
+Size        : 
+Name        : Almelo
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.667
+ Latitude   :   52.350
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 18
+Type        : City
+Population  : 
+Size        : 
+Name        : Amapala
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -87.667
+ Latitude   :   13.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 19
+Type        : City
+Population  : 
+Size        : 
+Name        : Amdabad
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   72.633
+ Latitude   :   23.050
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 20
+Type        : City
+Population  : 
+Size        : 
+Name        : Ameland
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.750
+ Latitude   :   53.467
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 21
+Type        : City
+Population  : 
+Size        : 
+Name        : Amersfoort
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.383
+ Latitude   :   52.150
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 22
+Type        : City
+Population  : 936300
+Size        : 
+Name        : Amman
+ Country    : Jordania
+ Region     : 
+Location    : Earth
+ Longitude  :   35.983
+ Latitude   :   31.983
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 23
+Type        : City
+Population  : 
+Size        : 
+Name        : Amoer
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :  136.833
+ Latitude   :   50.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 24
+Type        : City
+Population  : 
+Size        : 
+Name        : Amstelveen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.833
+ Latitude   :   52.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 25
+Type        : City
+Population  : 696500
+Size        : 
+Name        : Amsterdam
+ Country    : NL
+ Region     : Noord-Holland
+Location    : Earth
+ Longitude  :    4.833
+ Latitude   :   52.383
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 26
+Type        : City
+Population  : 
+Size        : 
+Name        : Andalsnes
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :    7.667
+ Latitude   :   62.550
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 27
+Type        : City
+Population  : 18463
+Size        : 
+Name        : Andorra
+ Country    : AD
+ Region     : 
+Location    : Earth
+ Longitude  :    1.567
+ Latitude   :   42.533
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 28
+Type        : Island
+Population  : 
+Size        : 
+Name        : Andros
+ Country    : GR
+ Region     : 
+Location    : Earth
+ Longitude  :   24.833
+ Latitude   :   37.833
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 29
+Type        : City
+Population  : 3485398
+Size        : 
+Name        : Los Angeles
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -118.333
+ Latitude   :   34.017
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 30
+Type        : City
+Population  : 
+Size        : 
+Name        : Ankara
+ Country    : TR
+ Region     : 
+Location    : Earth
+ Longitude  :   33.000
+ Latitude   :   39.967
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 31
+Type        : City
+Population  : 479748
+Size        : 
+Name        : Antwerpen
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    4.383
+ Latitude   :   51.233
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 32
+Type        : City
+Population  : 
+Size        : 
+Name        : Apeldoorn
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.967
+ Latitude   :   52.217
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 33
+Type        : City
+Population  : 
+Size        : 
+Name        : Arnhem
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.917
+ Latitude   :   51.983
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 34
+Type        : City
+Population  : 
+Size        : 
+Name        : Ascension
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -14.667
+ Latitude   : -8.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 35
+Type        : City
+Population  : 
+Size        : 
+Name        : Assam
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   94.000
+ Latitude   :   26.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 36
+Type        : City
+Population  : 
+Size        : 
+Name        : Assen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.550
+ Latitude   :   52.983
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 37
+Type        : City
+Population  : 
+Size        : 
+Name        : Asuncion
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -57.583
+ Latitude   : -25.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 38
+Type        : City
+Population  : 885737
+Size        : 
+Name        : Athinai
+ Country    : GR
+ Region     : 
+Location    : Earth
+ Longitude  :   23.783
+ Latitude   :   37.983
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 39
+Type        : City
+Population  : 
+Size        : 
+Name        : Attu
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :  173.000
+ Latitude   :   53.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 40
+Type        : City
+Population  : 
+Size        : 
+Name        : Azow
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   39.383
+ Latitude   :   47.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 41
+Type        : City
+Population  : 
+Size        : 
+Name        : Baarn
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.283
+ Latitude   :   52.200
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 42
+Type        : City
+Population  : 
+Size        : 
+Name        : Bagdad
+ Country    : IQ
+ Region     : 
+Location    : Earth
+ Longitude  :   44.500
+ Latitude   :   33.300
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 43
+Type        : City
+Population  : 1714355
+Size        : 
+Name        : Barcelona
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  :    2.167
+ Latitude   :   41.367
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 44
+Type        : City
+Population  : 6710000
+Size        : 
+Name        : Beijing
+ Country    : CN
+ Region     : 
+Location    : Earth
+ Longitude  :  116.500
+ Latitude   :   40.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 45
+Type        : City
+Population  : 
+Size        : 
+Name        : Beirut
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   35.533
+ Latitude   :   33.900
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 46
+Type        : City
+Population  : 
+Size        : 
+Name        : Beograd
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   20.500
+ Latitude   :   44.800
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 47
+Type        : City
+Population  : 
+Size        : 
+Name        : Bergen op Zoom
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.317
+ Latitude   :   51.483
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 48
+Type        : City
+Population  : 3461421
+Size        : 
+Name        : Berlin
+ Country    : DE
+ Region     : Berlin
+Location    : Earth
+ Longitude  :   13.383
+ Latitude   :   52.517
+ Elevation  : 40
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 49
+Type        : City
+Population  : 134393
+Size        : 
+Name        : Bern
+ Country    : CH
+ Region     : 
+Location    : Earth
+ Longitude  :    7.950
+ Latitude   :   46.950
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 50
+Type        : City
+Population  : 
+Size        : 
+Name        : Beverwijk
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.667
+ Latitude   :   52.467
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 51
+Type        : City
+Population  : 384733
+Size        : 
+Name        : Bilbao
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -2.967
+ Latitude   :   43.283
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 52
+Type        : City
+Population  : 1013995
+Size        : 
+Name        : Birmingham
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -1.917
+ Latitude   :   52.483
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 53
+Type        : City
+Population  : 
+Size        : 
+Name        : Bogota
+ Country    : CO
+ Region     : 
+Location    : Earth
+ Longitude  : -74.500
+ Latitude   :    4.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 54
+Type        : City
+Population  : 
+Size        : 
+Name        : Bolsward
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.517
+ Latitude   :   53.050
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 55
+Type        : City
+Population  : 8243405
+Size        : 
+Name        : Bombay
+ Country    : IN
+ Region     : 
+Location    : Earth
+ Longitude  :   72.917
+ Latitude   :   19.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 56
+Type        : City
+Population  : 296859
+Size        : 
+Name        : Bonn
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.10
+ Latitude   : 50.73
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 57
+Type        : City
+Population  : 574283
+Size        : 
+Name        : Boston
+ Country    : US
+ Region     : MA
+Location    : Earth
+ Longitude  : -71.083
+ Latitude   :   42.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 58
+Type        : City
+Population  : 1567709
+Size        : 
+Name        : Brasilia
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -48.000
+ Latitude   : -15.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 59
+Type        : City
+Population  : 
+Size        : 
+Name        : Breda
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.800
+ Latitude   :   51.567
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 60
+Type        : City
+Population  : 413861
+Size        : 
+Name        : Bristol
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -2.567
+ Latitude   :   51.467
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 61
+Type        : City
+Population  : 136920
+Size        : 
+Name        : Bruxelles
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    4.350
+ Latitude   :   50.850
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 62
+Type        : City
+Population  : 
+Size        : 
+Name        : Budapest
+ Country    : HU
+ Region     : 
+Location    : Earth
+ Longitude  :   19.000
+ Latitude   :   47.533
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 63
+Type        : City
+Population  : 2922829
+Size        : 
+Name        : Buenos Aires
+ Country    : AR
+ Region     : 
+Location    : Earth
+ Longitude  : -58.500
+ Latitude   : -34.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 64
+Type        : City
+Population  : 6052836
+Size        : 
+Name        : Cairo
+ Country    : EG
+ Region     : 
+Location    : Earth
+ Longitude  :   31.217
+ Latitude   :   30.017
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 65
+Type        : City
+Population  : 3305006
+Size        : 
+Name        : Calcutta
+ Country    : IN
+ Region     : 
+Location    : Earth
+ Longitude  :   88.500
+ Latitude   :   22.533
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 66
+Type        : City
+Population  : 636104
+Size        : 
+Name        : Calgary
+ Country    : CA
+ Region     : Alberta
+Location    : Earth
+ Longitude  : -114.033
+ Latitude   :   51.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 67
+Type        : City
+Population  : 
+Size        : 
+Name        : Caracas
+ Country    : VE
+ Region     : 
+Location    : Earth
+ Longitude  : -66.983
+ Latitude   :   10.517
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 68
+Type        : City
+Population  : 2783726
+Size        : 
+Name        : Chicago
+ Country    : US
+ Region     : IL
+Location    : Earth
+ Longitude  : -87.750
+ Latitude   :   41.833
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 69
+Type        : City
+Population  : 505616
+Size        : 
+Name        : Cleveland
+ Country    : US
+ Region     : OH
+Location    : Earth
+ Longitude  : -81.500
+ Latitude   :   41.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 70
+Type        : City
+Population  : 
+Size        : 
+Name        : Cognac
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  : -0.333
+ Latitude   :   45.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 71
+Type        : City
+Population  : 
+Size        : 
+Name        : Colombo
+ Country    : LK
+ Region     : 
+Location    : Earth
+ Longitude  :   79.967
+ Latitude   :    6.967
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 72
+Type        : Island
+Population  : 
+Size        : 
+Name        : Corse
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    9.000
+ Latitude   :   42.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 73
+Type        : City
+Population  : 1006877
+Size        : 
+Name        : Dallas
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -96.833
+ Latitude   :   32.833
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 74
+Type        : City
+Population  : 
+Size        : 
+Name        : Dar Es Salaam
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   39.667
+ Latitude   : -6.833
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 75
+Type        : City
+Population  : 
+Size        : 
+Name        : Delft
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.367
+ Latitude   :   52.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 76
+Type        : City
+Population  : 4884234
+Size        : 
+Name        : Delhi
+ Country    : IN
+ Region     : 
+Location    : Earth
+ Longitude  :   77.300
+ Latitude   :   28.583
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 77
+Type        : City
+Population  : 467610
+Size        : 
+Name        : Denver
+ Country    : US
+ Region     : CO
+Location    : Earth
+ Longitude  : -104.983
+ Latitude   :   39.717
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 78
+Type        : City
+Population  : 
+Size        : 
+Name        : Deventer
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.167
+ Latitude   :   52.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 79
+Type        : City
+Population  : 
+Size        : 
+Name        : Dordrecht
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.667
+ Latitude   :   51.800
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 80
+Type        : City
+Population  : 601966
+Size        : 
+Name        : Dortmund
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.45
+ Latitude   : 51.53
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 81
+Type        : City
+Population  : 
+Size        : 
+Name        : Drachten
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.100
+ Latitude   :   53.100
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 82
+Type        : City
+Population  : 502749
+Size        : 
+Name        : Dublin
+ Country    : IE
+ Region     : 
+Location    : Earth
+ Longitude  : -6.250
+ Latitude   :   53.350
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 83
+Type        : City
+Population  : 433200
+Size        : 
+Name        : Edinburgh
+ Country    : UK
+ Region     : Scotland
+Location    : Earth
+ Longitude  : -3.183
+ Latitude   :   55.950
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 84
+Type        : City
+Population  : 573982
+Size        : 
+Name        : Edmonton
+ Country    : CA
+ Region     : Alberta
+Location    : Earth
+ Longitude  : -113.417
+ Latitude   :   53.583
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 85
+Type        : City
+Population  : 190700
+Size        : 
+Name        : Eindhoven
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.500
+ Latitude   :   51.433
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 86
+Type        : City
+Population  : 45000
+Size        : 
+Name        : Eisenach
+ Country    : DE
+ Region     : Thueringen
+Location    : Earth
+ Longitude  :   10.300
+ Latitude   :   50.983
+ Elevation  : 300
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 87
+Type        : City
+Population  : 
+Size        : 
+Name        : Emmen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.883
+ Latitude   :   52.783
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 88
+Type        : City
+Population  : 
+Size        : 
+Name        : Enschede
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.883
+ Latitude   :   52.217
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 89
+Type        : City
+Population  : 659803
+Size        : 
+Name        : Frankfurt/Main
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.68
+ Latitude   : 50.10
+ Elevation  : 91
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 90
+Type        : City
+Population  : 83850
+Size        : 
+Name        : Frankfurt/Oder
+ Country    : DE
+ Region     : Brandenburg
+Location    : Earth
+ Longitude  : 14.53
+ Latitude   : 52.33
+ Elevation  : 30
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 91
+Type        : City
+Population  : 233856
+Size        : 
+Name        : Gent
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    3.733
+ Latitude   :   51.083
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 92
+Type        : City
+Population  : 695630
+Size        : 
+Name        : Glasgow
+ Country    : UK
+ Region     : Scotland
+Location    : Earth
+ Longitude  : -4.267
+ Latitude   :   55.867
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 93
+Type        : City
+Population  : 
+Size        : 
+Name        : Gouda
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.717
+ Latitude   :   51.017
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 94
+Type        : City
+Population  : 167800
+Size        : 
+Name        : Groningen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    6.567
+ Latitude   :   53.217
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 95
+Type        : City
+Population  : 
+Size        : 
+Name        : Guam
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :  144.000
+ Latitude   :   13.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 96
+Type        : City
+Population  : 
+Size        : 
+Name        : Haarlem
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.650
+ Latitude   :   52.367
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 97
+Type        : City
+Population  : 
+Size        : 
+Name        : La Habana
+ Country    : CU
+ Region     : 
+Location    : Earth
+ Longitude  : -82.500
+ Latitude   :   23.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 98
+Type        : City
+Population  : 
+Size        : 
+Name        : Haiderabad
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   78.467
+ Latitude   :   17.267
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 99
+Type        : City
+Population  : 1704534
+Size        : 
+Name        : Hamburg
+ Country    : DE
+ Region     : Hamburg
+Location    : Earth
+ Longitude  : 10.00
+ Latitude   : 53.55
+ Elevation  : 10
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 100
+Type        : City
+Population  : 2708
+Size        : 
+Name        : Hammerfest
+ Country    : NO
+ Region     : 
+Location    : Earth
+ Longitude  :   23.667
+ Latitude   :   70.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 101
+Type        : City
+Population  : 
+Size        : 
+Name        : Heerlen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.983
+ Latitude   :   50.900
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 102
+Type        : City
+Population  : 139429
+Size        : 
+Name        : Heidelberg
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 8.70
+ Latitude   : 49.42
+ Elevation  : 114
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 103
+Type        : City
+Population  : 
+Size        : 
+Name        : Den Helder
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.750
+ Latitude   :   52.467
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 104
+Type        : City
+Population  : 
+Size        : 
+Name        : Helmond
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.683
+ Latitude   :   51.467
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 105
+Type        : City
+Population  : 490034
+Size        : 
+Name        : Helsinki
+ Country    : FI
+ Region     : 
+Location    : Earth
+ Longitude  :   24.967
+ Latitude   :   60.217
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 106
+Type        : City
+Population  : 
+Size        : 
+Name        : Hongkong
+ Country    : HK
+ Region     : 
+Location    : Earth
+ Longitude  :  113.917
+ Latitude   :   22.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 107
+Type        : City
+Population  : 365272
+Size        : 
+Name        : Honolulu
+ Country    : US
+ Region     : HI
+Location    : Earth
+ Longitude  : -157.833
+ Latitude   :   21.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 108
+Type        : City
+Population  : 
+Size        : 
+Name        : Istanbul
+ Country    : TR
+ Region     : 
+Location    : Earth
+ Longitude  :   28.950
+ Latitude   :   41.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 109
+Type        : City
+Population  : 
+Size        : 
+Name        : Iwanowo
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   41.133
+ Latitude   :   57.050
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 110
+Type        : City
+Population  : 
+Size        : 
+Name        : Izmir
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   27.167
+ Latitude   :   38.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 111
+Type        : City
+Population  : 9200000
+Size        : 
+Name        : Jakarta
+ Country    : ID
+ Region     : 
+Location    : Earth
+ Longitude  :  106.817
+ Latitude   : -6.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 112
+Type        : City
+Population  : 
+Size        : 
+Name        : Johannesburg
+ Country    : SA
+ Region     : 
+Location    : Earth
+ Longitude  :   28.083
+ Latitude   : -26.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 113
+Type        : City
+Population  : 
+Size        : 
+Name        : Kaapstad
+ Country    : SA
+ Region     : 
+Location    : Earth
+ Longitude  :   18.433
+ Latitude   : -33.967
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 114
+Type        : City
+Population  : 
+Size        : 
+Name        : Kabul
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   69.167
+ Latitude   :   34.550
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 115
+Type        : City
+Population  : 
+Size        : 
+Name        : Karachi
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   67.000
+ Latitude   :   24.867
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 116
+Type        : City
+Population  : 2587000
+Size        : 
+Name        : Kiew
+ Country    : RU
+ Region     : Ukraine
+Location    : Earth
+ Longitude  :   30.517
+ Latitude   :   50.433
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 117
+Type        : City
+Population  : 
+Size        : 
+Name        : Klagenfurt
+ Country    : DE
+ Region     : 
+Location    : Earth
+ Longitude  :   14.300
+ Latitude   :   46.633
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 118
+Type        : City
+Population  : 1479218
+Size        : 
+Name        : Kyoto
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  :  136.917
+ Latitude   :   35.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 119
+Type        : City
+Population  : 
+Size        : 
+Name        : Lagos
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :    3.333
+ Latitude   :    6.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 120
+Type        : City
+Population  : 
+Size        : 
+Name        : Leeuwarden
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.783
+ Latitude   :   53.200
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 121
+Type        : City
+Population  : 
+Size        : 
+Name        : Leiden
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.500
+ Latitude   :   52.150
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 122
+Type        : City
+Population  : 4456000
+Size        : 
+Name        : Leningrad
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  :   30.333
+ Latitude   :   59.917
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 123
+Type        : City
+Population  : 
+Size        : 
+Name        : Liechtenstein
+ Country    : LI
+ Region     : 
+Location    : Earth
+ Longitude  :    9.533
+ Latitude   :   47.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 124
+Type        : City
+Population  : 
+Size        : 
+Name        : Lima
+ Country    : PE
+ Region     : 
+Location    : Earth
+ Longitude  : -76.833
+ Latitude   : -12.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 125
+Type        : City
+Population  : 807167
+Size        : 
+Name        : Lisboa
+ Country    : PT
+ Region     : 
+Location    : Earth
+ Longitude  : -9.167
+ Latitude   :   38.700
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 126
+Type        : City
+Population  : 6574009
+Size        : 
+Name        : London
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -0.083
+ Latitude   :   51.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 127
+Type        : City
+Population  : 76130
+Size        : 
+Name        : Luxembourg
+ Country    : LU
+ Region     : 
+Location    : Earth
+ Longitude  :    6.117
+ Latitude   :   49.617
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 128
+Type        : City
+Population  : 413095
+Size        : 
+Name        : Lyon
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    4.867
+ Latitude   :   45.767
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 129
+Type        : City
+Population  : 
+Size        : 
+Name        : Maastricht
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    5.683
+ Latitude   :   50.850
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 130
+Type        : City
+Population  : 
+Size        : 
+Name        : Madras
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   80.250
+ Latitude   :   13.117
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 131
+Type        : City
+Population  : 3102846
+Size        : 
+Name        : Madrid
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -3.717
+ Latitude   :   40.400
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 132
+Type        : City
+Population  : 
+Size        : 
+Name        : Manila
+ Country    : PH
+ Region     : 
+Location    : Earth
+ Longitude  :  121.000
+ Latitude   :   14.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 133
+Type        : City
+Population  : 874436
+Size        : 
+Name        : Marseille
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    5.367
+ Latitude   :   43.283
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 134
+Type        : City
+Population  : 368383
+Size        : 
+Name        : Minneapolis
+ Country    : US
+ Region     : MI
+Location    : Earth
+ Longitude  : -93.333
+ Latitude   :   44.950
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 135
+Type        : City
+Population  : 
+Size        : 
+Name        : Moermansk
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   33.167
+ Latitude   :   68.917
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 136
+Type        : City
+Population  : 
+Size        : 
+Name        : Mogadiscio
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   45.517
+ Latitude   :    2.033
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 137
+Type        : City
+Population  : 
+Size        : 
+Name        : Montevideo
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -56.167
+ Latitude   : -34.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 138
+Type        : City
+Population  : 1015420
+Size        : 
+Name        : Montreal
+ Country    : CA
+ Region     : Quebec
+Location    : Earth
+ Longitude  : -73.600
+ Latitude   :   45.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 139
+Type        : City
+Population  : 8769000
+Size        : 
+Name        : Moskwa
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  :   37.600
+ Latitude   :   55.750
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 140
+Type        : City
+Population  : 1255623
+Size        : 
+Name        : Muenchen
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.60
+ Latitude   : 48.13
+ Elevation  : 520
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 141
+Type        : City
+Population  : 2116381
+Size        : 
+Name        : Nagoya
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  :  137.050
+ Latitude   :   35.133
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 142
+Type        : City
+Population  : 
+Size        : 
+Name        : Nairobi
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :   37.167
+ Latitude   : -1.300
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 143
+Type        : City
+Population  : 1204211
+Size        : 
+Name        : Napoli
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   14.267
+ Latitude   :   40.850
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 144
+Type        : City
+Population  : 7322564
+Size        : 
+Name        : New York
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -74.000
+ Latitude   :   40.750
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 145
+Type        : City
+Population  : 
+Size        : 
+Name        : Novaja Semlja
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  :   56.000
+ Latitude   :   74.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 146
+Type        : City
+Population  : 
+Size        : 
+Name        : Nova Scotia
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -65.000
+ Latitude   :   45.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 147
+Type        : City
+Population  : 
+Size        : 
+Name        : Nowosibirsk
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  :   83.333
+ Latitude   :   55.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 148
+Type        : City
+Population  : 2636249
+Size        : 
+Name        : Osaka
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  :  135.467
+ Latitude   :   34.683
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 149
+Type        : City
+Population  : 452415
+Size        : 
+Name        : Oslo
+ Country    : NO
+ Region     : 
+Location    : Earth
+ Longitude  :   10.750
+ Latitude   :   59.950
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 150
+Type        : City
+Population  : 300763
+Size        : 
+Name        : Ottawa
+ Country    : CA
+ Region     : Ontario
+Location    : Earth
+ Longitude  : -75.683
+ Latitude   :   45.433
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 151
+Type        : City
+Population  : 
+Size        : 
+Name        : Paramaribo
+ Country    : SR
+ Region     : 
+Location    : Earth
+ Longitude  : -55.167
+ Latitude   :    5.833
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 152
+Type        : City
+Population  : 2078900
+Size        : 
+Name        : Paris
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    2.333
+ Latitude   :   48.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 153
+Type        : City
+Population  : 
+Size        : 
+Name        : La Paz
+ Country    : BO
+ Region     : 
+Location    : Earth
+ Longitude  : -68.250
+ Latitude   : -16.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 154
+Type        : City
+Population  : 
+Size        : 
+Name        : Phnom Penh
+ Country    : VN
+ Region     : 
+Location    : Earth
+ Longitude  :  104.867
+ Latitude   :   11.567
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 155
+Type        : Mountain
+Population  : 
+Size        : 
+Name        : Popocatepetl
+ Country    : MX
+ Region     : 
+Location    : Earth
+ Longitude  : -98.750
+ Latitude   :   19.167
+ Elevation  : 6000
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 156
+Type        : City
+Population  : 
+Size        : 
+Name        : Port-au-Prince
+ Country    : HT
+ Region     : 
+Location    : Earth
+ Longitude  : -72.333
+ Latitude   :   18.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 157
+Type        : City
+Population  : 
+Size        : 
+Name        : Praha
+ Country    : CZ
+ Region     : 
+Location    : Earth
+ Longitude  :   14.417
+ Latitude   :   50.083
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 158
+Type        : City
+Population  : 
+Size        : 
+Name        : Pyongyang
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :  126.000
+ Latitude   :   39.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 159
+Type        : City
+Population  : 
+Size        : 
+Name        : Quito
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  : -78.750
+ Latitude   : -0.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 160
+Type        : City
+Population  : 
+Size        : 
+Name        : Reykjavik
+ Country    : IS
+ Region     : 
+Location    : Earth
+ Longitude  : -21.833
+ Latitude   :   64.150
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 161
+Type        : City
+Population  : 114600
+Size        : 
+Name        : Rimini
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   12.517
+ Latitude   :   44.050
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 162
+Type        : City
+Population  : 5603388
+Size        : 
+Name        : Rio de Janeiro
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -43.500
+ Latitude   : -23.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 163
+Type        : City
+Population  : 2815457
+Size        : 
+Name        : Roma
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   12.500
+ Latitude   :   41.933
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 164
+Type        : City
+Population  : 576300
+Size        : 
+Name        : Rotterdam
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  :    4.500
+ Latitude   :   51.917
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 165
+Type        : City
+Population  : 
+Size        : 
+Name        : Saigon
+ Country    : VN
+ Region     : 
+Location    : Earth
+ Longitude  :  106.833
+ Latitude   :   10.900
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 166
+Type        : City
+Population  : 723959
+Size        : 
+Name        : San Francisco
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -122.500
+ Latitude   :   37.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 167
+Type        : City
+Population  : 
+Size        : 
+Name        : Santiago
+ Country    : CL
+ Region     : 
+Location    : Earth
+ Longitude  : -70.500
+ Latitude   : -33.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 168
+Type        : City
+Population  : 10063110
+Size        : 
+Name        : Sao Paolo
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -46.583
+ Latitude   : -23.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 169
+Type        : City
+Population  : 7220000
+Size        : 
+Name        : Shanghai
+ Country    : CN
+ Region     : 
+Location    : Earth
+ Longitude  :  121.500
+ Latitude   :   31.417
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 170
+Type        : City
+Population  : 2685400
+Size        : 
+Name        : Singapore
+ Country    : SG
+ Region     : 
+Location    : Earth
+ Longitude  :  103.833
+ Latitude   :    1.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 171
+Type        : City
+Population  : 1119152
+Size        : 
+Name        : Sofia
+ Country    : BG
+ Region     : 
+Location    : Earth
+ Longitude  :   23.317
+ Latitude   :   42.700
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 172
+Type        : City
+Population  : 672187
+Size        : 
+Name        : Stockholm
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  :   18.000
+ Latitude   :   59.333
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 173
+Type        : Island
+Population  : 
+Size        : 
+Name        : Sumatra
+ Country    : ID
+ Region     : 
+Location    : Earth
+ Longitude  :  102.000
+ Latitude   :    0.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 174
+Type        : City
+Population  : 
+Size        : 
+Name        : Sydney
+ Country    : AU
+ Region     : 
+Location    : Earth
+ Longitude  :  151.200
+ Latitude   : -33.917
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 175
+Type        : City
+Population  : 
+Size        : 
+Name        : Taipei
+ Country    : 
+ Region     : 
+Location    : Earth
+ Longitude  :  121.567
+ Latitude   :   25.050
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 176
+Type        : City
+Population  : 
+Size        : 
+Name        : Tehran
+ Country    : IR
+ Region     : 
+Location    : Earth
+ Longitude  :   51.450
+ Latitude   :   35.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 177
+Type        : City
+Population  : 8354615
+Size        : 
+Name        : Tokyo
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  :  139.750
+ Latitude   :   35.717
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 178
+Type        : City
+Population  : 1035565
+Size        : 
+Name        : Torino
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :    7.700
+ Latitude   :   45.083
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 179
+Type        : City
+Population  : 612289
+Size        : 
+Name        : Toronto
+ Country    : CA
+ Region     : Ontario
+Location    : Earth
+ Longitude  : -79.417
+ Latitude   :   43.667
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 180
+Type        : City
+Population  : 
+Size        : 
+Name        : Tunis
+ Country    : TN
+ Region     : 
+Location    : Earth
+ Longitude  :   10.167
+ Latitude   :   36.783
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 181
+Type        : City
+Population  : 230700
+Size        : 
+Name        : Utrecht
+ Country    : NL
+ Region     : Utrecht
+Location    : Earth
+ Longitude  :    5.133
+ Latitude   :   52.083
+ Elevation  :    0.000
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 182
+Type        : City
+Population  : 1651200
+Size        : 
+Name        : Warszawa
+ Country    : PL
+ Region     : 
+Location    : Earth
+ Longitude  :   21.000
+ Latitude   :   52.250
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 183
+Type        : City
+Population  : 606900
+Size        : 
+Name        : Washington
+ Country    : US
+ Region     : DC
+Location    : Earth
+ Longitude  : -77.000
+ Latitude   :   39.000
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 164
+Type        : City
+Population  : 
+Size        : 
+Name        : Wien
+ Country    : AT
+ Region     : 
+Location    : Earth
+ Longitude  :   16.417
+ Latitude   :   48.217
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 185
+Type        : City
+Population  : 
+Size        : 
+Name        : Wladiwostok
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  :  132.000
+ Latitude   :   43.167
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 187
+Type        : City
+Population  : 2992926
+Size        : 
+Name        : Yokohama
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  :  149.667
+ Latitude   :   35.500
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 188
+Type        : City
+Population  : 697925
+Size        : 
+Name        : Zagreb
+ Country    : CR
+ Region     : 
+Location    : Earth
+ Longitude  :   15.967
+ Latitude   :   45.850
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 189
+Type        : City
+Population  : 342861
+Size        : 
+Name        : Zuerich
+ Country    : CH
+ Region     : 
+Location    : Earth
+ Longitude  :    8.533
+ Latitude   :   47.367
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 190
+Type        : City
+Population  : 223818
+Size        : 
+Name        : Bahia Bianca
+ Country    : AR
+ Region     : 
+Location    : Earth
+ Longitude  : -62.5
+ Latitude   : -38.6
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 191
+Type        : City
+Population  : 
+Size        : 
+Name        : Graz
+ Country    : AT
+ Region     : 
+Location    : Earth
+ Longitude  :   15.4
+ Latitude   :   47.1
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 192
+Type        : City
+Population  : 
+Size        : 
+Name        : Linz
+ Country    : AT
+ Region     : 
+Location    : Earth
+ Longitude  :   14.3
+ Latitude   :   48.3
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 193
+Type        : City
+Population  : 
+Size        : 
+Name        : Salzburg
+ Country    : AT
+ Region     : 
+Location    : Earth
+ Longitude  :   13.05
+ Latitude   :   47.8
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 194
+Type        : City
+Population  : 
+Size        : 
+Name        : Melbourne
+ Country    : AU
+ Region     : 
+Location    : Earth
+ Longitude  :  145
+ Latitude   : -38
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 195
+Type        : City
+Population  : 
+Size        : 
+Name        : Brisbane
+ Country    : AU
+ Region     : 
+Location    : Earth
+ Longitude  :  153.5
+ Latitude   : -28
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 196
+Type        : City
+Population  : 
+Size        : 
+Name        : Leuven
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    4.75
+ Latitude   :   50.88
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 197
+Type        : City
+Population  : 200891
+Size        : 
+Name        : Liege
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    5.55
+ Latitude   :   50.63
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 198
+Type        : City
+Population  : 
+Size        : 
+Name        : Sart-Tilman
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    5.6
+ Latitude   :   50.66
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 199
+Type        : City
+Population  : 
+Size        : 
+Name        : Wilrijk
+ Country    : BE
+ Region     : 
+Location    : Earth
+ Longitude  :    4.38
+ Latitude   :   51.15
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 200
+Type        : City
+Population  : 201500
+Size        : 
+Name        : Vitoria
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -40.5
+ Latitude   : -20.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 201
+Type        : City
+Population  : 841016
+Size        : 
+Name        : Campinas
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -47.0
+ Latitude   : -22.8
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 202
+Type        : City
+Population  : 1287623
+Size        : 
+Name        : Recife
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -35
+ Latitude   : -8
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 203
+Type        : City
+Population  : 
+Size        : 
+Name        : Sete Lagoas
+ Country    : BR
+ Region     : 
+Location    : Earth
+ Longitude  : -44.2
+ Latitude   : -19.4
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 204
+Type        : City
+Population  : 431147
+Size        : 
+Name        : Vancouver
+ Country    : CA
+ Region     : British Columbia
+Location    : Earth
+ Longitude  : -123
+ Latitude   :   49.2
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 205
+Type        : City
+Population  : 306728
+Size        : 
+Name        : Hamilton
+ Country    : CA
+ Region     : Ontario
+Location    : Earth
+ Longitude  : -79.8
+ Latitude   :   43.3
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 206
+Type        : City
+Population  : 177641
+Size        : 
+Name        : Saskatoon
+ Country    : CA
+ Region     : Saskatchewan
+Location    : Earth
+ Longitude  : -106.8
+ Latitude   :   42.2
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 207
+Type        : City
+Population  : 169587
+Size        : 
+Name        : Basel
+ Country    : CH
+ Region     : 
+Location    : Earth
+ Longitude  :    7.6
+ Latitude   :   47.6
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 208
+Type        : City
+Population  : 
+Size        : 
+Name        : Brno
+ Country    : CZ
+ Region     : 
+Location    : Earth
+ Longitude  :   16.6
+ Latitude   :   49.2
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 209
+Type        : City
+Population  : 246671
+Size        : 
+Name        : Aachen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.10
+ Latitude   : 50.77
+ Elevation  : 174
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 210
+Type        : City
+Population  : 72000
+Size        : 
+Name        : Bayreuth
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  :   11.6
+ Latitude   :   49.95
+ Elevation  : 340
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 211
+Type        : City
+Population  : 30000
+Size        : 
+Name        : Biberach an der Riss
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  :    9.8
+ Latitude   :   48.15
+ Elevation  : 532
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 212
+Type        : City
+Population  : 324674
+Size        : 
+Name        : Bielefeld
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.53
+ Latitude   : 52.03
+ Elevation  : 118
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 213
+Type        : City
+Population  : 401058
+Size        : 
+Name        : Bochum
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.18
+ Latitude   : 51.47
+ Elevation  : 26
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 214
+Type        : City
+Population  : 256267
+Size        : 
+Name        : Braunschweig
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 10.50
+ Latitude   : 52.25
+ Elevation  : 72
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 215
+Type        : City
+Population  : 139754
+Size        : 
+Name        : Darmstadt
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.65
+ Latitude   : 49.87
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 216
+Type        : City
+Population  : 
+Size        : 
+Name        : Dossenheim
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  :    8.7
+ Latitude   :   49.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 217
+Type        : City
+Population  : 179000
+Size        : 
+Name        : Freiburg
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  :    7.8
+ Latitude   :   47.95
+ Elevation  : 278
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 218
+Type        : City
+Population  : 73705
+Size        : 
+Name        : Giessen
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.70
+ Latitude   : 50.58
+ Elevation  : 165
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 219
+Type        : City
+Population  : 128419
+Size        : 
+Name        : Goettingen
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 9.95
+ Latitude   : 51.53
+ Elevation  : 159
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 220
+Type        : City
+Population  : 295372
+Size        : 
+Name        : Halle/Saale
+ Country    : DE
+ Region     : Sachsen-Anhalt
+Location    : Earth
+ Longitude  : 11.97
+ Latitude   : 51.47
+ Elevation  : 94
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 221
+Type        : City
+Population  : 524823
+Size        : 
+Name        : Hannover
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 9.73
+ Latitude   : 52.38
+ Elevation  : 55
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 222
+Type        : City
+Population  : 43000
+Size        : 
+Name        : Homburg
+ Country    : DE
+ Region     : Saarland
+Location    : Earth
+ Longitude  :    7.25
+ Latitude   :   49.3
+ Elevation  : 233
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 223
+Type        : City
+Population  : 100093
+Size        : 
+Name        : Jena
+ Country    : DE
+ Region     : Thueringen
+Location    : Earth
+ Longitude  : 11.58
+ Latitude   : 50.93
+ Elevation  : 144
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 224
+Type        : City
+Population  : 31100
+Size        : 
+Name        : Juelich
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  :    6.35
+ Latitude   :   50.93
+ Elevation  : 78
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 225
+Type        : City
+Population  : 277998
+Size        : 
+Name        : Karlsruhe
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 8.40
+ Latitude   : 49.00
+ Elevation  : 116
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 226
+Type        : City
+Population  : 962517
+Size        : 
+Name        : Koeln
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.95
+ Latitude   : 50.93
+ Elevation  : 65
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 227
+Type        : City
+Population  : 165000
+Size        : 
+Name        : Ludwigshafen
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  :    8.45
+ Latitude   :   49.45
+ Elevation  : 92
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 228
+Type        : City
+Population  : 185487
+Size        : 
+Name        : Mainz
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 8.27
+ Latitude   : 50.00
+ Elevation  : 82
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 229
+Type        : City
+Population  : 318025
+Size        : 
+Name        : Mannheim
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 8.47
+ Latitude   : 49.50
+ Elevation  : 95
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+///
+ID          : 230
+Type        : City
+Population  : 76582
+Size        : 
+Name        : Marburg
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.60
+ Latitude   : 50.82
+ Elevation  : 180
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 231
+Type        : City
+Population  : 147701
+Size        : 
+Name        : Oldenburg
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 8.22
+ Latitude   : 53.10
+ Elevation  : 7
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 232
+Type        : City
+Population  : 168078
+Size        : 
+Name        : Osnabrueck
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 8.05
+ Latitude   : 52.28
+ Elevation  : 65
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 233
+Type        : City
+Population  : 125337
+Size        : 
+Name        : Regensburg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 12.12
+ Latitude   : 49.02
+ Elevation  : 339
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 234
+Type        : City
+Population  : 190902
+Size        : 
+Name        : Saarbruecken
+ Country    : DE
+ Region     : Saarland
+Location    : Earth
+ Longitude  : 6.97
+ Latitude   : 49.25
+ Elevation  : 191
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 235
+Type        : City
+Population  : 56400
+Size        : 
+Name        : Stolberg
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  :    6.2
+ Latitude   :   50.15
+ Elevation  : 180
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 236
+Type        : City
+Population  : 594506
+Size        : 
+Name        : Stuttgart
+ Country    : DE
+ Region     : Baden-Württemberg
+Location    : Earth
+ Longitude  : 9.20
+ Latitude   : 48.78
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 237
+Type        : City
+Population  : 83553
+Size        : 
+Name        : Tuebingen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.07
+ Latitude   : 48.53
+ Elevation  : 341
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 238
+Type        : City
+Population  : 114839
+Size        : 
+Name        : Ulm
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 10.00
+ Latitude   : 48.40
+ Elevation  : 479
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 239
+Type        : City
+Population  : 386625
+Size        : 
+Name        : Wuppertal
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.17
+ Latitude   : 51.25
+ Elevation  : 167
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 240
+Type        : City
+Population  : 128875
+Size        : 
+Name        : Wuerzburg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 9.95
+ Latitude   : 49.80
+ Elevation  : 182
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 241
+Type        : City
+Population  : 202300
+Size        : 
+Name        : Aarhus
+ Country    : DK
+ Region     : 
+Location    : Earth
+ Longitude  :   10.1
+ Latitude   :   56.15
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 242
+Type        : City
+Population  : 466723
+Size        : 
+Name        : Kobenhavn
+ Country    : DK
+ Region     : 
+Location    : Earth
+ Longitude  :   12.6
+ Latitude   :   55.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 243
+Type        : City
+Population  : 140100
+Size        : 
+Name        : Odense
+ Country    : DK
+ Region     : 
+Location    : Earth
+ Longitude  :   10.4
+ Latitude   :   55.4
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 244
+Type        : City
+Population  : 150021
+Size        : 
+Name        : Alcala de Henares
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -3.35
+ Latitude   :   40.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 245
+Type        : City
+Population  : 263334
+Size        : 
+Name        : Granada
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -3.55
+ Latitude   :   37.2
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 246
+Type        : City
+Population  : 149800
+Size        : 
+Name        : Murcia
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -1.2
+ Latitude   :   38
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 247
+Type        : City
+Population  : 582239
+Size        : 
+Name        : Zaragoza
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : -0.87
+ Latitude   :   41.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 248
+Type        : City
+Population  : 
+Size        : 
+Name        : Joensuu
+ Country    : FI
+ Region     : 
+Location    : Earth
+ Longitude  :   29.7
+ Latitude   :   62.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 249
+Type        : City
+Population  : 114000
+Size        : 
+Name        : Tartu
+ Country    : EE
+ Region     : 
+Location    : Earth
+ Longitude  :   26.75
+ Latitude   :   58.4
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 250
+Type        : City
+Population  : 160456
+Size        : 
+Name        : Turku
+ Country    : FI
+ Region     : 
+Location    : Earth
+ Longitude  :   22.3
+ Latitude   :   60.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 251
+Type        : City
+Population  : 
+Size        : 
+Name        : Pontoise
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    2.1
+ Latitude   :   49.05
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 252
+Type        : City
+Population  : 
+Size        : 
+Name        : Saclay
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    2.3
+ Latitude   :   48.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 253
+Type        : City
+Population  : 156637
+Size        : 
+Name        : Grenoble
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    5.75
+ Latitude   :   45.2
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 254
+Type        : City
+Population  : 168424
+Size        : 
+Name        : Lille
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    3.1
+ Latitude   :   50.65
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 255
+Type        : City
+Population  : 248712
+Size        : 
+Name        : Strasbourg
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    7.8
+ Latitude   :   48.6
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 256
+Type        : City
+Population  : 347995
+Size        : 
+Name        : Toulouse
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    1.5
+ Latitude   :   43.65
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 257
+Type        : City
+Population  : 132209
+Size        : 
+Name        : Tours
+ Country    : FR
+ Region     : 
+Location    : Earth
+ Longitude  :    0.65
+ Latitude   :   47.4
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 258
+Type        : City
+Population  : 
+Size        : 
+Name        : Ioannina
+ Country    : GR
+ Region     : 
+Location    : Earth
+ Longitude  :   20.8
+ Latitude   :   39.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 259
+Type        : City
+Population  : 406413
+Size        : 
+Name        : Thessaloniki
+ Country    : GR
+ Region     : 
+Location    : Earth
+ Longitude  :   22.9
+ Latitude   :   40.65
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 260
+Type        : City
+Population  : 
+Size        : 
+Name        : Debrecen
+ Country    : HU
+ Region     : 
+Location    : Earth
+ Longitude  :   21.6
+ Latitude   :   47.55
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 261
+Type        : City
+Population  : 
+Size        : 
+Name        : Rehovot
+ Country    : IL
+ Region     : 
+Location    : Earth
+ Longitude  :   34.8
+ Latitude   :   31.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 262
+Type        : City
+Population  : 373789
+Size        : 
+Name        : Chandigarh
+ Country    : IN
+ Region     : 
+Location    : Earth
+ Longitude  :   76.9
+ Latitude   :   30.8
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 263
+Type        : City
+Population  : 273036
+Size        : 
+Name        : New Delhi
+ Country    : IN
+ Region     : 
+Location    : Earth
+ Longitude  :   77.3
+ Latitude   :   28.5
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 264
+Type        : City
+Population  : 727427
+Size        : 
+Name        : Genova
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :    8.85
+ Latitude   :   44.45
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 265
+Type        : City
+Population  : 1495260
+Size        : 
+Name        : Milano
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :    9.16
+ Latitude   :   45.48
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 266
+Type        : City
+Population  : 176880
+Size        : 
+Name        : Modena
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   10.9
+ Latitude   :   44.65
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 267
+Type        : City
+Population  : 175842
+Size        : 
+Name        : Parma
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   10.3
+ Latitude   :   44.8
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 268
+Type        : City
+Population  : 82065
+Size        : 
+Name        : Pavia
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :    9.15
+ Latitude   :   45.25
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 269
+Type        : City
+Population  : 
+Size        : 
+Name        : Potenza
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   15.85
+ Latitude   :   40.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 270
+Type        : City
+Population  : 239031
+Size        : 
+Name        : Trieste
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   13.8
+ Latitude   :   45.7
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 271
+Type        : City
+Population  : 100211
+Size        : 
+Name        : Udine
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   13.25
+ Latitude   :   46.07
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 272
+Type        : City
+Population  : 259151
+Size        : 
+Name        : Verona
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   10.95
+ Latitude   :   45.45
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 273
+Type        : City
+Population  : 
+Size        : 
+Name        : Viterbo
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  :   12.1
+ Latitude   :   42.4
+ Elevation  : 
+Date        : 19961206
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 274
+Type        : City
+Population  : 317800
+Size        : 
+Name        : Tel Aviv
+ Country    : IL
+ Region     : 
+Location    : Earth
+ Longitude  : 34.9
+ Latitude   : 32.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 275
+Type        : City
+Population  : 432406
+Size        : 
+Name        : Bologna
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  : 11.35
+ Latitude   : 44.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 276
+Type        : City
+Population  : 220574
+Size        : 
+Name        : Cagliari
+ Country    : IT
+ Region     : 
+Location    : Earth
+ Longitude  : 9.1
+ Latitude   : 39.25
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 277
+Type        : City
+Population  : 294045
+Size        : 
+Name        : Aomori
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  : 140.8
+ Latitude   : 40.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 278
+Type        : City
+Population  : 788930
+Size        : 
+Name        : Chiba
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  : 140.2
+ Latitude   : 35.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 279
+Type        : City
+Population  : 935933
+Size        : 
+Name        : San Antonio
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -98.5
+ Latitude   : 29.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 280
+Type        : City
+Population  : 134
+Size        : 
+Name        : Hirosaki
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  : 140.45
+ Latitude   : 40.65
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 281
+Type        : City
+Population  : 1542979
+Size        : 
+Name        : Sapporo
+ Country    : JP
+ Region     : 
+Location    : Earth
+ Longitude  : 141.35
+ Latitude   : 43.05
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 282
+Type        : City
+Population  : 
+Size        : 
+Name        : Nairobi
+ Country    : KE
+ Region     : 
+Location    : Earth
+ Longitude  : 37
+ Latitude   : -1.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 283
+Type        : City
+Population  : 
+Size        : 
+Name        : Seoul
+ Country    : KR
+ Region     : 
+Location    : Earth
+ Longitude  : 127
+ Latitude   : 37.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 284
+Type        : City
+Population  : 
+Size        : 
+Name        : Taejeon
+ Country    : KR
+ Region     : 
+Location    : Earth
+ Longitude  : 127
+ Latitude   : 36.2
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 285
+Type        : City
+Population  : 915000
+Size        : 
+Name        : Riga
+ Country    : LV
+ Region     : 
+Location    : Earth
+ Longitude  : 24.15
+ Latitude   : 56.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 286
+Type        : City
+Population  : 192770
+Size        : 
+Name        : Cuernavaca
+ Country    : MX
+ Region     : 
+Location    : Earth
+ Longitude  : -99.2
+ Latitude   : 18.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 287
+Type        : City
+Population  : 8831079
+Size        : 
+Name        : Mexico
+ Country    : MX
+ Region     : 
+Location    : Earth
+ Longitude  : -99.2
+ Latitude   : 19.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 288
+Type        : City
+Population  : 
+Size        : 
+Name        : Haren
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  : 6.63
+ Latitude   : 53.17
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 289
+Type        : City
+Population  : 
+Size        : 
+Name        : Nijmegen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  : 5.86
+ Latitude   : 51.83
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 290
+Type        : City
+Population  : 
+Size        : 
+Name        : Vlaardingen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  : 4.35
+ Latitude   : 51.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 291
+Type        : City
+Population  : 
+Size        : 
+Name        : Wageningen
+ Country    : NL
+ Region     : 
+Location    : Earth
+ Longitude  : 5.67
+ Latitude   : 51.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 292
+Type        : City
+Population  : 209320
+Size        : 
+Name        : Bergen
+ Country    : NO
+ Region     : 
+Location    : Earth
+ Longitude  : 5.2
+ Latitude   : 60.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 293
+Type        : City
+Population  : 
+Size        : 
+Name        : Huddinge
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 18.0
+ Latitude   : 59.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 294
+Type        : City
+Population  : 
+Size        : 
+Name        : Tromsoe
+ Country    : NO
+ Region     : 
+Location    : Earth
+ Longitude  : 18.8
+ Latitude   : 69.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 295
+Type        : City
+Population  : 135010
+Size        : 
+Name        : Trondheim
+ Country    : NO
+ Region     : 
+Location    : Earth
+ Longitude  : 10.5
+ Latitude   : 63.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 296
+Type        : City
+Population  : 76964
+Size        : 
+Name        : Dunedin
+ Country    : NZ
+ Region     : 
+Location    : Earth
+ Longitude  : 170.6
+ Latitude   : -45.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 297
+Type        : City
+Population  : 199600
+Size        : 
+Name        : Torun
+ Country    : PL
+ Region     : 
+Location    : Earth
+ Longitude  : 18.6
+ Latitude   : 53.06
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 298
+Type        : City
+Population  : 516259
+Size        : 
+Name        : Seattle
+ Country    : US
+ Region     : WA
+Location    : Earth
+ Longitude  : -122.3
+ Latitude   : 47.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 299
+Type        : City
+Population  : 327368
+Size        : 
+Name        : Porto
+ Country    : PT
+ Region     : 
+Location    : Earth
+ Longitude  : -8.6
+ Latitude   : 41.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 300
+Type        : City
+Population  : 
+Size        : 
+Name        : Kazan
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  : 49
+ Latitude   : 56.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 301
+Type        : City
+Population  : 
+Size        : 
+Name        : Moscow
+ Country    : RU
+ Region     : 
+Location    : Earth
+ Longitude  : 37.6
+ Latitude   : 55.75
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 302
+Type        : City
+Population  : 
+Size        : 
+Name        : Bloemfontein
+ Country    : SA
+ Region     : 
+Location    : Earth
+ Longitude  : 26.5
+ Latitude   : -29
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 303
+Type        : City
+Population  : 
+Size        : 
+Name        : Pietermaritzburg
+ Country    : SA
+ Region     : 
+Location    : Earth
+ Longitude  : 30.5
+ Latitude   : -29.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 304
+Type        : City
+Population  : 
+Size        : 
+Name        : Pretoria
+ Country    : SA
+ Region     : 
+Location    : Earth
+ Longitude  : 28
+ Latitude   : -26
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 305
+Type        : City
+Population  : 431840
+Size        : 
+Name        : Goteborg
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 12
+ Latitude   : 57.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 306
+Type        : City
+Population  : 108359
+Size        : 
+Name        : Helsingborg
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 12.7
+ Latitude   : 56.05
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 307
+Type        : City
+Population  : 
+Size        : 
+Name        : Lund
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 13.2
+ Latitude   : 54.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 308
+Type        : City
+Population  : 
+Size        : 
+Name        : Molndal
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 12.1
+ Latitude   : 57.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 309
+Type        : City
+Population  : 
+Size        : 
+Name        : Umea
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 20.3
+ Latitude   : 63.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 310
+Type        : City
+Population  : 164754
+Size        : 
+Name        : Uppsala
+ Country    : SE
+ Region     : 
+Location    : Earth
+ Longitude  : 17.7
+ Latitude   : 59.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 311
+Type        : City
+Population  : 
+Size        : 
+Name        : Ljubljana
+ Country    : SI
+ Region     : 
+Location    : Earth
+ Longitude  : 14.55
+ Latitude   : 46.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 312
+Type        : City
+Population  : 
+Size        : 
+Name        : Cadiz
+ Country    : ES
+ Region     : 
+Location    : Earth
+ Longitude  : 6.35
+ Latitude   : 36.55
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 313
+Type        : City
+Population  : 
+Size        : 
+Name        : Bangkok
+ Country    : TH
+ Region     : 
+Location    : Earth
+ Longitude  : 100.7
+ Latitude   : 13.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 314
+Type        : City
+Population  : 656927
+Size        : 
+Name        : Tainan
+ Country    : TW
+ Region     : 
+Location    : Earth
+ Longitude  : 120.2
+ Latitude   : 23
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 315
+Type        : City
+Population  : 
+Size        : 
+Name        : Cambridge
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : 0.1
+ Latitude   : 52.25
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 316
+Type        : City
+Population  : 
+Size        : 
+Name        : Colchester
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : 0.9
+ Latitude   : 51.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 317
+Type        : City
+Population  : 324394
+Size        : 
+Name        : Leicester
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -1.1
+ Latitude   : 52.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 318
+Type        : City
+Population  : 
+Size        : 
+Name        : Norwich
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : 1.3
+ Latitude   : 52.65
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 319
+Type        : City
+Population  : 113874
+Size        : 
+Name        : Oxford
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -1.3
+ Latitude   : 51.75
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 320
+Type        : City
+Population  : 
+Size        : 
+Name        : Salford
+ Country    : UK
+ Region     : 
+Location    : Earth
+ Longitude  : -2.3
+ Latitude   : 53.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 321
+Type        : City
+Population  : 211321
+Size        : 
+Name        : Southampton
+ Country    : UK
+ Region     : England
+Location    : Earth
+ Longitude  : -1.4
+ Latitude   : 50.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 322
+Type        : City
+Population  : 172433
+Size        : 
+Name        : Swansea
+ Country    : UK
+ Region     : Wales
+Location    : Earth
+ Longitude  : -3.9
+ Latitude   : 51.65
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 323
+Type        : City
+Population  : 
+Size        : 
+Name        : Warrington
+ Country    : UK
+ Region     : 
+Location    : Earth
+ Longitude  : -2.5
+ Latitude   : 53.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 324
+Type        : City
+Population  : 265968
+Size        : 
+Name        : Birmingham
+ Country    : US
+ Region     : AL
+Location    : Earth
+ Longitude  : -86.8
+ Latitude   : 33.5
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 325
+Type        : City
+Population  : 175795
+Size        : 
+Name        : Little Rock
+ Country    : US
+ Region     : AR
+Location    : Earth
+ Longitude  : -92.3
+ Latitude   : 34.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 326
+Type        : City
+Population  : 102724
+Size        : 
+Name        : Berkeley
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -122.3
+ Latitude   : 37.83
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 327
+Type        : City
+Population  : 
+Size        : 
+Name        : La Jolla
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -117.3
+ Latitude   : 32.75
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 328
+Type        : City
+Population  : 
+Size        : 
+Name        : Livermore
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -121.7
+ Latitude   : 37.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 329
+Type        : City
+Population  : 55900
+Size        : 
+Name        : Palo Alto
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -122.15
+ Latitude   : 37.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 330
+Type        : City
+Population  : 131591
+Size        : 
+Name        : Pasadena
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -118.15
+ Latitude   : 34.2
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 331
+Type        : City
+Population  : 226505
+Size        : 
+Name        : Riverside
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -117.4
+ Latitude   : 33.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 332
+Type        : City
+Population  : 191262
+Size        : 
+Name        : Madison
+ Country    : US
+ Region     : WI
+Location    : Earth
+ Longitude  : -89.3
+ Latitude   : 43.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 333
+Type        : City
+Population  : 
+Size        : 49040
+Name        : Santa Cruz
+ Country    : US
+ Region     : CA
+Location    : Earth
+ Longitude  : -122.1
+ Latitude   : 36.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 334
+Type        : City
+Population  : 51555
+Size        : 
+Name        : Longmont
+ Country    : US
+ Region     : CO
+Location    : Earth
+ Longitude  : -105.1
+ Latitude   : 40.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 335
+Type        : City
+Population  : 
+Size        : 
+Name        : Farmington
+ Country    : US
+ Region     : CT
+Location    : Earth
+ Longitude  : -72.83
+ Latitude   : 41.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 336
+Type        : City
+Population  : 130474
+Size        : 
+Name        : New Haven
+ Country    : US
+ Region     : CT
+Location    : Earth
+ Longitude  : -72.9
+ Latitude   : 41.3
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 337
+Type        : City
+Population  : 71529
+Size        : 
+Name        : Wilmington
+ Country    : US
+ Region     : DE
+Location    : Earth
+ Longitude  : -75.55
+ Latitude   : 39.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 338
+Type        : City
+Population  : 280015
+Size        : 
+Name        : Tampa
+ Country    : US
+ Region     : FL
+Location    : Earth
+ Longitude  : -82.5
+ Latitude   : 27.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 339
+Type        : City
+Population  : 47198
+Size        : 
+Name        : Ames
+ Country    : US
+ Region     : IA
+Location    : Earth
+ Longitude  : -93.6
+ Latitude   : 42.05
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 340
+Type        : City
+Population  : 59738
+Size        : 
+Name        : Iowa City
+ Country    : US
+ Region     : IA
+Location    : Earth
+ Longitude  : -91.5
+ Latitude   : 41.65
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 341
+Type        : City
+Population  : 36344
+Size        : 
+Name        : Urbana
+ Country    : US
+ Region     : IL
+Location    : Earth
+ Longitude  : -88.2
+ Latitude   : 40.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 342
+Type        : City
+Population  : 25907
+Size        : 
+Name        : West Lafayette
+ Country    : US
+ Region     : IN
+Location    : Earth
+ Longitude  : -86.9
+ Latitude   : 40.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 343
+Type        : City
+Population  : 95802
+Size        : 
+Name        : Cambridge
+ Country    : US
+ Region     : MA
+Location    : Earth
+ Longitude  : -71.1
+ Latitude   : 42.37
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 344
+Type        : City
+Population  : 23400
+Size        : 
+Name        : Shrewsbury
+ Country    : US
+ Region     : MA
+Location    : Earth
+ Longitude  : -71.7
+ Latitude   : 42.3
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 345
+Type        : City
+Population  : 736014
+Size        : 
+Name        : Baltimore
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -76.6
+ Latitude   : 39.3
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 346
+Type        : City
+Population  : 62936
+Size        : 
+Name        : Bethesda
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -77.1
+ Latitude   : 38.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 347
+Type        : City
+Population  : 21927
+Size        : 
+Name        : College Park
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -76.9
+ Latitude   : 39.03
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 348
+Type        : City
+Population  : 
+Size        : 
+Name        : Fort Detrick
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -77.43
+ Latitude   : 39.43
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 349
+Type        : City
+Population  : 40148
+Size        : 
+Name        : Frederick
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -77.4
+ Latitude   : 39.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 350
+Type        : City
+Population  : 44835
+Size        : 
+Name        : Rockville
+ Country    : US
+ Region     : MD
+Location    : Earth
+ Longitude  : -77.15
+ Latitude   : 39.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 351
+Type        : City
+Population  : 6815
+Size        : 
+Name        : Columbia
+ Country    : US
+ Region     : MS
+Location    : Earth
+ Longitude  : -81.85
+ Latitude   : 31.2
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 352
+Type        : City
+Population  : 
+Size        : 
+Name        : East Lansing
+ Country    : US
+ Region     : MI
+Location    : Earth
+ Longitude  : -84.5
+ Latitude   : 42.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 353
+Type        : City
+Population  : 368383
+Size        : 
+Name        : Minneapolis
+ Country    : US
+ Region     : MN
+Location    : Earth
+ Longitude  : -93.25
+ Latitude   : 44.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 354
+Type        : City
+Population  : 
+Size        : 
+Name        : Rochester
+ Country    : US
+ Region     : MN
+Location    : Earth
+ Longitude  : -92.4
+ Latitude   : 44.05
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 355
+Type        : City
+Population  : 
+Size        : 
+Name        : St. Louis
+ Country    : US
+ Region     : MO
+Location    : Earth
+ Longitude  : -90.4
+ Latitude   : 38.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 356
+Type        : City
+Population  : 
+Size        : 191972
+Name        : Lincoln
+ Country    : US
+ Region     : NE
+Location    : Earth
+ Longitude  : -96.6
+ Latitude   : 40.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 357
+Type        : City
+Population  : 335795
+Size        : 
+Name        : Omaha
+ Country    : US
+ Region     : NE
+Location    : Earth
+ Longitude  : -95.9
+ Latitude   : 41.3
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 358
+Type        : City
+Population  : 275221
+Size        : 
+Name        : Newark
+ Country    : US
+ Region     : NJ
+Location    : Earth
+ Longitude  : -74.2
+ Latitude   : 40.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 359
+Type        : City
+Population  : 43800
+Size        : 
+Name        : Piscataway
+ Country    : US
+ Region     : NJ
+Location    : Earth
+ Longitude  : -74.47
+ Latitude   : 40.57
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 360
+Type        : City
+Population  : 12016
+Size        : 
+Name        : Princeton
+ Country    : US
+ Region     : NJ
+Location    : Earth
+ Longitude  : -74.7
+ Latitude   : 40.35
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 361
+Type        : City
+Population  : 25325
+Size        : 
+Name        : Rahway
+ Country    : US
+ Region     : NJ
+Location    : Earth
+ Longitude  : -74.3
+ Latitude   : 40.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 362
+Type        : City
+Population  : 29541
+Size        : 
+Name        : Ithaca
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -76.6
+ Latitude   : 42.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 363
+Type        : City
+Population  : 
+Size        : 
+Name        : Pearl River
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -74.05
+ Latitude   : 41.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 364
+Type        : City
+Population  : 231636
+Size        : 
+Name        : Rochester
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -77.65
+ Latitude   : 43.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 365
+Type        : City
+Population  : 
+Size        : 
+Name        : Stony Brook
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -73.15
+ Latitude   : 40.9
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 366
+Type        : City
+Population  : 
+Size        : 
+Name        : Upton
+ Country    : US
+ Region     : NY
+Location    : Earth
+ Longitude  : -72.8
+ Latitude   : 40.8
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 367
+Type        : City
+Population  : 28176
+Size        : 
+Name        : Bowling Green
+ Country    : US
+ Region     : OH
+Location    : Earth
+ Longitude  : -83.6
+ Latitude   : 41.25
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 368
+Type        : City
+Population  : 364040
+Size        : 
+Name        : Cincinnati
+ Country    : US
+ Region     : OH
+Location    : Earth
+ Longitude  : -84.5
+ Latitude   : 39.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 369
+Type        : City
+Population  : 632910
+Size        : 
+Name        : Columbus
+ Country    : US
+ Region     : OH
+Location    : Earth
+ Longitude  : -83
+ Latitude   : 39.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 370
+Type        : City
+Population  : 112669
+Size        : 
+Name        : Eugene
+ Country    : US
+ Region     : OR
+Location    : Earth
+ Longitude  : -123.1
+ Latitude   : 44.1
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 371
+Type        : City
+Population  : 1585577
+Size        : 
+Name        : Philadelphia
+ Country    : US
+ Region     : PA
+Location    : Earth
+ Longitude  : -75.2
+ Latitude   : 39.95
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 372
+Type        : City
+Population  : 369879
+Size        : 
+Name        : Pittsburgh
+ Country    : US
+ Region     : PA
+Location    : Earth
+ Longitude  : -80
+ Latitude   : 40.4
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 373
+Type        : City
+Population  : 610337
+Size        : 
+Name        : Memphis
+ Country    : US
+ Region     : TN
+Location    : Earth
+ Longitude  : -90.05
+ Latitude   : 35.15
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 374
+Type        : City
+Population  : 465622
+Size        : 
+Name        : Austin
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -97.7
+ Latitude   : 30.2
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 375
+Type        : City
+Population  : 52456
+Size        : 
+Name        : College Station
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -96.3
+ Latitude   : 30.6
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 376
+Type        : City
+Population  : 59070
+Size        : 
+Name        : Galveston
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -94.8
+ Latitude   : 29.2
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 377
+Type        : City
+Population  : 1630553
+Size        : 
+Name        : Houston
+ Country    : US
+ Region     : TX
+Location    : Earth
+ Longitude  : -95.4
+ Latitude   : 29.7
+ Elevation  : 
+Date        : 19961207
+Entered-By  : Rob.Hooft@EMBL-Heidelberg.DE
+//
+ID          : 378
+Type        : City
+Population  : 66333
+Size        : 
+Name        : Aalen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 10.12
+ Latitude   : 48.83
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 379
+Type        : City
+Population  : 
+Size        : 
+Name        : Aichach
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.13
+ Latitude   : 48.43
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 380
+Type        : City
+Population  : 77847
+Size        : 
+Name        : Arnsberg
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.05
+ Latitude   : 51.38
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 381
+Type        : City
+Population  : 65650
+Size        : 
+Name        : Aschaffenburg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 9.17
+ Latitude   : 49.97
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 382
+Type        : City
+Population  : 264764
+Size        : 
+Name        : Augsburg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 10.90
+ Latitude   : 48.35
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 383
+Type        : City
+Population  : 70770
+Size        : 
+Name        : Bamberg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 10.90
+ Latitude   : 49.90
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 384
+Type        : City
+Population  : 60121
+Size        : 
+Name        : Bergheim/Erft
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.63
+ Latitude   : 50.95
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 385
+Type        : City
+Population  : 104991
+Size        : 
+Name        : Bergisch Gladbach
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.17
+ Latitude   : 50.98
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 386
+Type        : City
+Population  : 70272
+Size        : 
+Name        : Bocholt
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.62
+ Latitude   : 51.82
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 387
+Type        : City
+Population  : 119676
+Size        : 
+Name        : Bottrop
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.92
+ Latitude   : 51.52
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 388
+Type        : City
+Population  : 89208
+Size        : 
+Name        : Brandenburg/Havel
+ Country    : DE
+ Region     : Brandenburg
+Location    : Earth
+ Longitude  : 12.57
+ Latitude   : 52.42
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 389
+Type        : City
+Population  : 551604
+Size        : 
+Name        : Bremen
+ Country    : DE
+ Region     : Bremen
+Location    : Earth
+ Longitude  : 8.80
+ Latitude   : 53.08
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 390
+Type        : City
+Population  : 131492
+Size        : 
+Name        : Bremerhaven
+ Country    : DE
+ Region     : Bremen
+Location    : Earth
+ Longitude  : 8.58
+ Latitude   : 53.55
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 391
+Type        : City
+Population  : 79101
+Size        : 
+Name        : Castrop-Rauxel
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.30
+ Latitude   : 51.55
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 392
+Type        : City
+Population  : 73671
+Size        : 
+Name        : Celle
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 10.08
+ Latitude   : 52.62
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 393
+Type        : City
+Population  : 280790
+Size        : 
+Name        : Chemnitz
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 12.92
+ Latitude   : 50.83
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 394
+Type        : City
+Population  : 128121
+Size        : 
+Name        : Cottbus
+ Country    : DE
+ Region     : Brandenburg
+Location    : Earth
+ Longitude  : 14.35
+ Latitude   : 51.72
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 395
+Type        : City
+Population  : 77127
+Size        : 
+Name        : Delmenhorst
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 8.62
+ Latitude   : 53.05
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 396
+Type        : City
+Population  : 93287
+Size        : 
+Name        : Dessau
+ Country    : DE
+ Region     : Sachsen-Anhalt
+Location    : Earth
+ Longitude  : 12.25
+ Latitude   : 51.85
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 397
+Type        : City
+Population  : 72101
+Size        : 
+Name        : Detmold
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.87
+ Latitude   : 51.92
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 398
+Type        : City
+Population  : 67619
+Size        : 
+Name        : Dinslaken
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.72
+ Latitude   : 51.57
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 399
+Type        : City
+Population  : 59915
+Size        : 
+Name        : Dormagen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 5.75
+ Latitude   : 51.10
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 400
+Type        : City
+Population  : 79941
+Size        : 
+Name        : Dorsten
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.97
+ Latitude   : 51.63
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 401
+Type        : City
+Population  : 480202
+Size        : 
+Name        : Dresden
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 13.75
+ Latitude   : 51.05
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 402
+Type        : City
+Population  : 89852
+Size        : 
+Name        : Dueren
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.50
+ Latitude   : 50.80
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 403
+Type        : City
+Population  : 574936
+Size        : 
+Name        : Duesseldorf
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.78
+ Latitude   : 51.22
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 404
+Type        : City
+Population  : 636797
+Size        : 
+Name        : Duisburg
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.75
+ Latitude   : 51.43
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 405
+Type        : City
+Population  : 200799
+Size        : 
+Name        : Erfurt
+ Country    : DE
+ Region     : Thueringen
+Location    : Earth
+ Longitude  : 11.03
+ Latitude   : 50.97
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 406
+Type        : City
+Population  : 102383
+Size        : 
+Name        : Erlangen
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.03
+ Latitude   : 49.60
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 407
+Type        : City
+Population  : 622380
+Size        : 
+Name        : Essen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.95
+ Latitude   : 51.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 408
+Type        : City
+Population  : 91388
+Size        : 
+Name        : Esslingen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 10.03
+ Latitude   : 48.82
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 409
+Type        : City
+Population  : 87991
+Size        : 
+Name        : Flensburg
+ Country    : DE
+ Region     : Schleswig-Holstein
+Location    : Earth
+ Longitude  : 9.45
+ Latitude   : 54.78
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 410
+Type        : City
+Population  : 108097
+Size        : 
+Name        : Fuerth
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.00
+ Latitude   : 49.47
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 411
+Type        : City
+Population  : 58711
+Size        : 
+Name        : Fulda
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 9.68
+ Latitude   : 50.55
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 412
+Type        : City
+Population  : 62196
+Size        : 
+Name        : Garbsen
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 9.60
+ Latitude   : 52.42
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 413
+Type        : City
+Population  : 295037
+Size        : 
+Name        : Gelsenkirchen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.08
+ Latitude   : 51.33
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 414
+Type        : City
+Population  : 122974
+Size        : 
+Name        : Gera
+ Country    : DE
+ Region     : Thueringen
+Location    : Earth
+ Longitude  : 12.18
+ Latitude   : 50.85
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 415
+Type        : City
+Population  : 79931
+Size        : 
+Name        : Gladbeck
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.98
+ Latitude   : 51.57
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 416
+Type        : City
+Population  : 69875
+Size        : 
+Name        : Görlitz
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 15.00
+ Latitude   : 51.15
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 417
+Type        : City
+Population  : 63941
+Size        : 
+Name        : Greifswald
+ Country    : DE
+ Region     : Mecklenburg-Vorpommern
+Location    : Earth
+ Longitude  : 13.40
+ Latitude   : 54.10
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 418
+Type        : City
+Population  : 62737
+Size        : 
+Name        : Grevenbroich
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.57
+ Latitude   : 51.08
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 419
+Type        : City
+Population  : 91634
+Size        : 
+Name        : Guetersloh
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.37
+ Latitude   : 51.90
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 420
+Type        : City
+Population  : 214877
+Size        : 
+Name        : Hagen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.45
+ Latitude   : 51.37
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 421
+Type        : City
+Population  : 59209
+Size        : 
+Name        : Hameln
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 9.37
+ Latitude   : 52.12
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 422
+Type        : City
+Population  : 182390
+Size        : 
+Name        : Hamm
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.82
+ Latitude   : 51.67
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 423
+Type        : City
+Population  : 89156
+Size        : 
+Name        : Hanau
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.93
+ Latitude   : 50.13
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 424
+Type        : City
+Population  : 58481
+Size        : 
+Name        : Hattingen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.17
+ Latitude   : 51.40
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 4225
+Type        : City
+Population  : 122396
+Size        : 
+Name        : Heilbronn
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.23
+ Latitude   : 49.13
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 426
+Type        : City
+Population  : 65682
+Size        : 
+Name        : Herford
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.67
+ Latitude   : 52.12
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 427
+Type        : City
+Population  : 180539
+Size        : 
+Name        : Heme
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.93
+ Latitude   : 54.28
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 428
+Type        : City
+Population  : 69592
+Size        : 
+Name        : Herten
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.13
+ Latitude   : 51.60
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 429
+Type        : City
+Population  : 106303
+Size        : 
+Name        : Hildesheim
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 6.67
+ Latitude   : 50.28
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 430
+Type        : City
+Population  : 62238
+Size        : 
+Name        : Hoyerswerda
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 14.28
+ Latitude   : 51.47
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 431
+Type        : City
+Population  : 109666
+Size        : 
+Name        : Ingolstadt
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.45
+ Latitude   : 48.77
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 432
+Type        : City
+Population  : 98478
+Size        : 
+Name        : Iserlohn
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.70
+ Latitude   : 51.38
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 433
+Type        : City
+Population  : 102370
+Size        : 
+Name        : Kaiserslautern
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 7.78
+ Latitude   : 49.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 434
+Type        : City
+Population  : 202158
+Size        : 
+Name        : Kassel
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 9.50
+ Latitude   : 51.30
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 435
+Type        : City
+Population  : 61699
+Size        : 
+Name        : Kempten
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 6.42
+ Latitude   : 51.37
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 436
+Type        : City
+Population  : 60395
+Size        : 
+Name        : Kerpen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.70
+ Latitude   : 50.87
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 437
+Type        : City
+Population  : 248931
+Size        : 
+Name        : Kiel
+ Country    : DE
+ Region     : Schleswig-Holstein
+Location    : Earth
+ Longitude  : 10.13
+ Latitude   : 54.33
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 438
+Type        : City
+Population  : 109807
+Size        : 
+Name        : Koblenz
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 7.60
+ Latitude   : 50.35
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 439
+Type        : City
+Population  : 75891
+Size        : 
+Name        : Konstanz
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.17
+ Latitude   : 47.67
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 440
+Type        : City
+Population  : 249565
+Size        : 
+Name        : Krefeld
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.53
+ Latitude   : 51.33
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 441
+Type        : City
+Population  : 59637
+Size        : 
+Name        : Landshut
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 12.17
+ Latitude   : 48.52
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 442
+Type        : City
+Population  : 492640
+Size        : 
+Name        : Leipzig
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 12.42
+ Latitude   : 51.33
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 443
+Type        : City
+Population  : 161761
+Size        : 
+Name        : Leverkusen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.98
+ Latitude   : 51.03
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 444
+Type        : City
+Population  : 65922
+Size        : 
+Name        : Lippstadt
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.33
+ Latitude   : 51.68
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 445
+Type        : City
+Population  : 86216
+Size        : 
+Name        : Ludwigsburg
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.20
+ Latitude   : 48.90
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 446
+Type        : City
+Population  : 217269
+Size        : 
+Name        : Luebeck
+ Country    : DE
+ Region     : Schleswig-Holstein
+Location    : Earth
+ Longitude  : 10.67
+ Latitude   : 53.87
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 447
+Type        : City
+Population  : 80277
+Size        : 
+Name        : Luedenscheid
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.63
+ Latitude   : 51.22
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 448
+Type        : City
+Population  : 63299
+Size        : 
+Name        : Lueneburg
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 10.40
+ Latitude   : 51.25
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 449
+Type        : City
+Population  : 89741
+Size        : 
+Name        : Luenen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.52
+ Latitude   : 51.62
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 450
+Type        : City
+Population  : 270546
+Size        : 
+Name        : Magdeburg
+ Country    : DE
+ Region     : Sachsen-Anhalt
+Location    : Earth
+ Longitude  : 11.62
+ Latitude   : 52.13
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 451
+Type        : City
+Population  : 92590
+Size        : 
+Name        : Marl
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.10
+ Latitude   : 51.63
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 452
+Type        : City
+Population  : 80420
+Size        : 
+Name        : Minden
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.90
+ Latitude   : 52.30
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 453
+Type        : City
+Population  : 265312
+Size        : 
+Name        : Mönchengladbach
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.42
+ Latitude   : 51.20
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 454
+Type        : City
+Population  : 106631
+Size        : 
+Name        : Moers
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.60
+ Latitude   : 51.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 455
+Type        : City
+Population  : 177175
+Size        : 
+Name        : Muelheim/Ruhr
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.50
+ Latitude   : 50.38
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 456
+Type        : City
+Population  : 267367
+Size        : 
+Name        : Muenster
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.62
+ Latitude   : 51.97
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 457
+Type        : City
+Population  : 85540
+Size        : 
+Name        : Neubrandenburg
+ Country    : DE
+ Region     : Mecklenburg-Vorpommern
+Location    : Earth
+ Longitude  : 13.27
+ Latitude   : 53.55
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 458
+Type        : City
+Population  : 82014
+Size        : 
+Name        : Neumuenster
+ Country    : DE
+ Region     : Schleswig-Holstein
+Location    : Earth
+ Longitude  : 9.98
+ Latitude   : 54.08
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 459
+Type        : City
+Population  : 148560
+Size        : 
+Name        : Neuss
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.70
+ Latitude   : 51.20
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 460
+Type        : City
+Population  : 65740
+Size        : 
+Name        : Neuwied
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 7.47
+ Latitude   : 50.43
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 461
+Type        : City
+Population  : 69916
+Size        : 
+Name        : Norderstedt
+ Country    : DE
+ Region     : Schleswig-Holstein
+Location    : Earth
+ Longitude  : 8.98
+ Latitude   : 53.72
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 462
+Type        : City
+Population  : 498945
+Size        : 
+Name        : Nuernberg
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 11.08
+ Latitude   : 49.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 463
+Type        : City
+Population  : 226254
+Size        : 
+Name        : Oberhausen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.83
+ Latitude   : 51.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 464
+Type        : City
+Population  : 116870
+Size        : 
+Name        : Offenbach/Main
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.77
+ Latitude   : 50.10
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 465
+Type        : City
+Population  : 130130
+Size        : 
+Name        : Paderborn
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.73
+ Latitude   : 51.72
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 466
+Type        : City
+Population  : 117450
+Size        : 
+Name        : Pforzheim
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 8.68
+ Latitude   : 48.88
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 467
+Type        : City
+Population  : 69923
+Size        : 
+Name        : Plauen
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 12.10
+ Latitude   : 50.48
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 468
+Type        : City
+Population  : 139262
+Size        : 
+Name        : Potsdam
+ Country    : DE
+ Region     : Brandenburg
+Location    : Earth
+ Longitude  : 13.07
+ Latitude   : 52.40
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 469
+Type        : City
+Population  : 90443
+Size        : 
+Name        : Ratingen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.83
+ Latitude   : 51.30
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 470
+Type        : City
+Population  : 127150
+Size        : 
+Name        : Recklinghausen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.18
+ Latitude   : 51.62
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 471
+Type        : City
+Population  : 123610
+Size        : 
+Name        : Remscheid
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.18
+ Latitude   : 51.17
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 472
+Type        : City
+Population  : 107607
+Size        : 
+Name        : Reutlingen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.22
+ Latitude   : 48.50
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 473
+Type        : City
+Population  : 73543
+Size        : 
+Name        : Rheine
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.43
+ Latitude   : 52.28
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 474
+Type        : City
+Population  : 58553
+Size        : 
+Name        : Rosenheim
+ Country    : DE
+ Region     : Bayern
+Location    : Earth
+ Longitude  : 12.15
+ Latitude   : 47.85
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 475
+Type        : City
+Population  : 237307
+Size        : 
+Name        : Rostock
+ Country    : DE
+ Region     : Mecklenburg-Vorpommern
+Location    : Earth
+ Longitude  : 12.15
+ Latitude   : 54.10
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 476
+Type        : City
+Population  : 60361
+Size        : 
+Name        : Ruesselsheim
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.42
+ Latitude   : 50.00
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 477
+Type        : City
+Population  : 117684
+Size        : 
+Name        : Salzgitter
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 10.33
+ Latitude   : 52.22
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 478
+Type        : City
+Population  : 63701
+Size        : 
+Name        : Schwaebisch-Gmuend
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.80
+ Latitude   : 48.82
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 479
+Type        : City
+Population  : 122189
+Size        : 
+Name        : Schwerin
+ Country    : DE
+ Region     : Mecklenburg-Vorpommern
+Location    : Earth
+ Longitude  : 11.42
+ Latitude   : 53.63
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 480
+Type        : City
+Population  : 111845
+Size        : 
+Name        : Siegen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 8.03
+ Latitude   : 50.87
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 481
+Type        : City
+Population  : 59930
+Size        : 
+Name        : Sindelfingen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 9.02
+ Latitude   : 48.72
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 482
+Type        : City
+Population  : 166064
+Size        : 
+Name        : Solingen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.08
+ Latitude   : 51.17
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 483
+Type        : City
+Population  : 58028
+Size        : 
+Name        : Stolberg
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.25
+ Latitude   : 50.75
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 484
+Type        : City
+Population  : 69230
+Size        : 
+Name        : Stralsund
+ Country    : DE
+ Region     : Mecklenburg-Vorpommern
+Location    : Earth
+ Longitude  : 13.10
+ Latitude   : 54.30
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 485
+Type        : City
+Population  : 99183
+Size        : 
+Name        : Trier
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 6.65
+ Latitude   : 49.75
+ Elevation  : 245
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 486
+Type        : City
+Population  : 67584
+Size        : 
+Name        : Troisdorf
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.15
+ Latitude   : 50.82
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 487
+Type        : City
+Population  : 64327
+Size        : 
+Name        : Unna
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.68
+ Latitude   : 51.53
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 488
+Type        : City
+Population  : 89643
+Size        : 
+Name        : Velbert
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.05
+ Latitude   : 51.37
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 489
+Type        : City
+Population  : 77204
+Size        : 
+Name        : Viersen
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.40
+ Latitude   : 51.27
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 490
+Type        : City
+Population  : 81315
+Size        : 
+Name        : Villingen-Schwenningen
+ Country    : DE
+ Region     : Baden-Wuerttemberg
+Location    : Earth
+ Longitude  : 8.47
+ Latitude   : 48.05
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 491
+Type        : City
+Population  : 58807
+Size        : 
+Name        : Weimar
+ Country    : DE
+ Region     : Thueringen
+Location    : Earth
+ Longitude  : 11.33
+ Latitude   : 50.98
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 492
+Type        : City
+Population  : 61111
+Size        : 
+Name        : Wesel
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 6.62
+ Latitude   : 51.65
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 493
+Type        : City
+Population  : 270873
+Size        : 
+Name        : Wiesbaden
+ Country    : DE
+ Region     : Hessen
+Location    : Earth
+ Longitude  : 8.25
+ Latitude   : 50.08
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 494
+Type        : City
+Population  : 91680
+Size        : 
+Name        : Wilhelmshaven
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 9.12
+ Latitude   : 53.53
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 495
+Type        : City
+Population  : 105807
+Size        : 
+Name        : Witten
+ Country    : DE
+ Region     : Nordrhein-Westfalen
+Location    : Earth
+ Longitude  : 7.32
+ Latitude   : 51.42
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 496
+Type        : City
+Population  : 128032
+Size        : 
+Name        : Wolsburg
+ Country    : DE
+ Region     : Niedersachsen
+Location    : Earth
+ Longitude  : 10.32
+ Latitude   : 52.45
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 497
+Type        : City
+Population  : 79155
+Size        : 
+Name        : Worms
+ Country    : DE
+ Region     : Rheinland-Pfalz
+Location    : Earth
+ Longitude  : 8.38
+ Latitude   : 49.63
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de
+//
+ID          : 498
+Type        : City
+Population  : 108835
+Size        : 
+Name        : Zwickau
+ Country    : DE
+ Region     : Sachsen
+Location    : Earth
+ Longitude  : 12.50
+ Latitude   : 50.72
+ Elevation  : 
+Date        : 19970410
+Entered-By  : M.Dowling@tu-bs.de

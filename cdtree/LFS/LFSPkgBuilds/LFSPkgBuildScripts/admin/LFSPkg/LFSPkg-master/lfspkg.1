@@ -1,0 +1,305 @@
+.TH "LFSPkg" "1" "0.4.0" "K.D.Hedger" ""
+.SH "NAME"
+\fBlfspkg\fR - A package manager for Linux From Scratch
+.br
+
+.SH "SYNOPSIS"
+\fBlfspkg\fR [\fIOPTION]... [FILE]...\fR
+.br
+
+.SH "DESCRIPTION"
+This is a package manager inspired by slackware's slackpkg for the linux from scratch system.
+.br
+This app will build, install,remove and update packages and also allow you to search for a particular file within installed packages, find an installed package and create a template file to build and install/upgrade a package.
+.br
+The dialog application is required.
+.br
+This is a source based package manager and dependencies can be checked for and built as long as a build script is available.
+.br
+
+.SH "OPTIONS"
+\fB-c, --commit\fR
+.br
+	Make and Install package.
+.br
+
+\fB-i, --install\fR \fI[FILE]\fR
+.br
+	Install package \fI[FILE]\fR.
+.br
+
+\fB-m, --make\fR
+.br
+	Make a package.
+.br
+
+\fB-u, --upgrade\fR \fI[PACKAGENAME]\fR \fI[/PATH/TO/NEW/PACKAGE]\fR
+.br
+	Upgrade a package.
+.br
+
+\fB-r, --remove\fR \fI[FILE]\fR \fI[FILE]\fR ... \fI[FILE]\fR
+.br
+	Remove a package.
+.br
+
+\fB-t, --template\fR \fI[URL]\fR
+.br
+	Create LFSBuild template for source tarball \fI[URL]\fR.
+.br
+
+\fB-q, --qttemplate\fR \fI[URL]\fR
+.br
+	Create LFSBuild template for QT5 source tarball \fI[URL]\fR.
+.br
+
+\fB-l, --list\fR \fI[PACKAGE]\fR
+.br
+	List installed files from a package \fI[PACKAGE]\fR.
+.br
+
+\fB-f, --find\fR \fI[FILE]\fR
+.br
+	Find installed file.
+.br
+
+\fB-L, --less\fR
+.br
+	Pipe output from list/find to less.
+.br
+
+\fB-N, --noaskroot\fR
+.br
+	Don't check for root user when using -i or -u switches.
+.br
+
+\fB-M, --remake\fR \fI[PACKAGE]\fR
+.br
+	Re-constitute an installed package \fI[PACKAGE]\fR.
+.br
+
+\fB-B, --builddeps\fR \fI[DEPENDENCY LIST]\fR
+.br
+	Build all dependant packages in \fI[DEPENDENCY LIST]\fR.
+.br
+
+\fB-F, --finddepends\fR \fI[DEPENDENCY LIST]\fR
+.br
+	Find dependencies and build scripts \fI[DEPENDENCY LIST]\fR.
+.br
+
+\fB-j, --justlist\fR
+.br
+	Just output list if query results in multiple packages.
+.br
+
+\fB-a, --preinstall\fR \fI[PACKAGE]\fR
+.br
+	Re-run the preinstall script for \fI[PACKAGE]\fR.
+.br
+
+\fB-A, --postinstall\fR \fI[PACKAGE]\fR
+.br
+	Re-run the postinstall script for \fI[PACKAGE]\fR.
+.br
+
+\fB-R, --rootdir\fR \fI[ROOTDIR]\fR
+.br
+	Use \fI[ROOTDIR]\fR prefix for install,remove (optional defaults to /).
+.br
+
+\fB-s, --suffix\fR \fI[SUFFIX]\fR
+.br
+	Suffix of package (optional defaults to LFSPKG).
+.br
+
+\fB-d, --section\fR \fI[SECTION]\fR
+.br
+	Section name of package (optional defaults to SYS).
+.br
+
+\fB-b, --build\fR \fI[BUILD]\fR
+.br
+	Build number of package (optional defaults to 1).
+.br
+
+\fB-o, --output\fR \fI[/PATH/TO/OUTPUT/FOLER]\fR
+.br
+	Output archive to \fI[/PATH/TO/OUTPUT/FOLER]\fR, default is to build in /tmp but this can be overridden either by setting OUTPUT on the commandline ( OUTPUT=/some/tmp/folder lfspk ... ) or setting the variable in /etc/lfspkg.rc, order of precedence is env variable OR /etc/lfspkg.rc OR /tmp.
+.br
+
+\fB-n, --name\fR \fI[PKGNAME]\fR
+.br
+	Name of package.
+.br
+
+\fB-p, --pkgversion\fR \fI[\fRPKGVERSION\fI]\fR
+.br
+	Version of package.
+.br
+
+.SH "FILES"
+\fI/usr/share/LFSPkg/LFSFunctions\fR
+.br
+	Helper functions for lfspkg
+.br
+
+/etc\fI/lfspkg.rc\fR
+.br
+	Local config file, can contain the following:
+.br
+	OUTPUT=${OUTPUT:-/tmp/LFS}
+.br
+	SOURCEARCHIVES=${SOURCEARCHIVES:-/tmp/LFSSourceArchives}
+.br
+	BUILDSCRIPTS=${BUILDSCRIPTS:-"/LFSPkgBuildScripts/"}
+.br
+	EXITONFAIL=${EXITONFAIL:-1}
+.br
+	CONFIGOPTIONS=${CONFIGOPTIONS:-"--prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib${LIBDIRSUFFIX} --enable-gtk-doc --disable-debug --disable-nls --disable-static"}
+.br
+	CHECKETC=${CHECKETC:-1}
+.br
+	MAKEFLAGS=${MAKEFLAGS:-" -j3 "}
+.br
+	XORG_PREFIX=${XORG_PREFIX:-"/usr"}
+.br
+	XORG_CONFIG=${XORG_CONFIG:-"--prefix=$XORG_PREFIX --sysconfdir=/etc --mandir=$XORG_PREFIX/share/man --localstatedir=/var --disable-static"}
+.br
+	JAVA_HOME=${JAVA_HOME:-"/opt/jdk"}
+.br
+
+	Where:
+.br
+	TMP is the location for tempory files ( defaults to /tmp if not set )
+.br
+	OUTPUT is the location to save built packages ( defaults to /tmp if not set )
+.br
+	SOURCEARCHIVES is the location to store downloaded source archives.
+.br
+	BUILDSCRIPTS location of the folder containg the build scripts.
+.br
+	EXITONFAIL Abort on first error if set to 1 or continue if unset or set any other value.
+.br
+	CONFIGOPTIONS Basic configure options.
+.br
+	CHECKETC Check if there maybe files to go in /etc that are probably config files.
+.br
+	MAKEFLAGS What it says.
+.br
+	XORG_PREFIX What it says.
+.br
+	XORG_CONFIG Basic configure options for building xorg.
+.br
+	JAVA_HOME go on guess!
+.br
+
+\fI/var/lib/LFSPackages\fR
+.br
+       Contains lists of installed packages.
+.br
+
+PREFIX/bin lfspkg
+.br
+		This program.
+.br
+
+PREFIX/bin/finddepends
+.br
+		Helper app to recursivly find dependencies.
+.br
+.SH "EXAMPLES"
+Build and install a package from the current directory:
+.br
+       \fBlfspkg -n "SomePackage" -p "6.6.6" -d "DEV" -b 34 -c\fR
+.br
+
+Build a package from the current directory and save to /some/other/tmp:
+.br
+       OUTPUT=/some/other/tmp lfspkg -n "SomePackage" -p "6.6.6" -m
+.br
+
+Install a package:
+.br
+       \fBlfspkg "/media/SkyNet/UpdatedPakckages/wget-1.14-1_NET_LFSPKG.ta r.gz" -i\fR
+.br
+
+Create a template script based on an archive file name:
+.br
+       \fBlfspkg -t http://ftp.gnu.org/gnu/wget/wget-1.14.tar.xz\fR
+.br
+
+Find a file in an installed package:
+.br
+       \fBlfspkg -f wget\fR
+.br
+        ...
+.br
+       wget Found in package: wget-1.14-2_NET_LFSPKG At these locations:
+.br
+        ./etc/wgetrc
+.br
+        ./usr/share/man/man1/wget.1
+.br
+        ./usr/share/locale/nl/LC_MESSAGES/wget.mo
+.br
+        ...
+.br
+        ./usr/share/info/wget.info
+.br
+        ./usr/bin/wget
+.br
+        ...
+.br
+
+Find an installed package:
+.br
+       \fBlfspkg wget\fR
+.br
+
+       Matches for:wget
+.br
+       wget-1.14-1_NET_LFSPKG
+.br
+
+Remove a package:
+.br
+       \fBlfspkg -r wget\fR
+.br
+
+If you use the template script when you want to update a package just place the new archive in the same folder as the script alter the version number in the script and run ( using wget for instance )
+.br
+
+       \fBsudo ./wget.LFSBuild upgrade\fR
+.br
+       or
+.br
+       \fBsudo ./wget.LFSBuild up\fR
+.br
+
+And the package will be rebuilt and you will be asked which package to upgrade ( actually you can use any word that begins with up, upgrade update etc ).
+.br
+
+Find dependencies for package with the ROOTDIR set to /media/Zen:
+.br
+		\fBlfspkg -R /media/Zen -F wget\fR
+.br
+
+		Needed dependencies:
+.br
+		OpenSSL-1.0.1
+.br
+		Dependencies not installed:
+.br
+		Installed dependencies:
+.br
+		OpenSSL-1.0.1
+.br
+		Build Scripts:
+.br
+		/media/SkyNet/ZenSingleBuilds/NET/openssl.LFSBuild
+.br
+.SH "AUTHOR"
+K.D.Hedger kdhedger68713@gmail.com
+.br
+

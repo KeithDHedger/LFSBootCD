@@ -1,0 +1,247 @@
+#!/bin/bash
+
+# Copyright 2014
+# James Powell, Keith Hedger, and Stoat from LinuxQuestions.org
+#
+# ================================================================================
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+# of the Software, and to permit persons to whom the Software is furnished to do
+# so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# ================================================================================
+
+pauseScript ()
+{
+	exec 6<&0
+	exec 0<"$THISTTY"
+	read -t $1
+	exec 0<&6 6<&-
+}
+
+echo "Welcome to version 1.0 of the Runit setup for LFS"
+echo "This script will install all required scripts for Runit on LFS."
+echo ""
+echo "This installation script is under license by the MIT license and is"
+echo "free software and comes without warranty."
+echo ""
+echo "If you need assistance with this script please post to LinuxQuestions.org"
+echo "in the LFS section for assistance. This script does NOT cover BLFS scripts"
+echo "and is ONLY for a base LFS system."
+echo ""
+echo "This script will begin working in approximately 30 seconds. If you wish to"
+echo "abort the Runit script installation, press 'Ctrl + c' now!"
+pauseScript 30
+
+echo "Installing Runit init stage files"
+
+mkdir -pv $DESTDIR/etc/runit/runsvdir/default
+ln -sv default $DESTDIR/etc/runit/runsvdir/current
+ln -sv ../etc/runit/runsvdir/current $DESTDIR/var/service
+
+cat > ${DESTDIR}/etc/runit/1 << "EOF"
+#!/bin/sh
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+for i in /etc/runit/init.d/*
+  do
+	  if [ -x "$i" ];then
+		  "$i" start
+		  if [ $? -ne 0 ];then
+			  echo "Problem running $i"
+			  /sbin/sulogin
+			  exit 1
+		  fi
+	  fi
+  done
+
+touch /etc/runit/stopit
+chmod 0 /etc/runit/stopit
+
+EOF
+
+chmod +x ${DESTDIR}/etc/runit/1
+  
+mkdir -pv ${DESTDIR}/etc/runit/init.d
+pushd ${DESTDIR}/etc/runit/init.d
+	  ln -sv /etc/rc.d/init.d/mountvirtfs 00-mountvirtfs
+	  ln -sv /etc/rc.d/init.d/modules 02-modules
+	  ln -sv /etc/rc.d/init.d/udev 04-udev
+	  ln -sv /etc/rc.d/init.d/swap 06-swap
+	  ln -sv /etc/rc.d/init.d/setclock 08-setclock
+#	  ln -sv /etc/rc.d/init.d/checkfs 10-checkfs
+	  ln -sv /etc/rc.d/init.d/mountfs 12-mountfs
+	  ln -sv /etc/rc.d/init.d/udev_retry 14-udev_retry
+	  ln -sv /etc/rc.d/init.d/cleanfs 16-cleanfs
+	  ln -sv /etc/rc.d/init.d/console 18-console
+	  ln -sv /etc/rc.d/init.d/localnet 20-localnet
+	  ln -sv /etc/rc.d/init.d/sysctl 22-sysctl
+	  ln -sv /etc/rc.d/init.d/sysklogd 24-sysklogd
+	  ln -sv /etc/rc.d/init.d/random 26-random
+	  ln -sv /etc/rc.d/init.d/network 28-network
+popd
+
+cat > ${DESTDIR}/etc/runit/2 << "EOF"
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+exec env - PATH=$PATH \
+runsvdir /var/service 'log: ............................................................
+........................................................................................
+........................................................................................
+........................................................................................
+.......................................................................'
+EOF
+
+chmod +x ${DESTDIR}/etc/runit/2
+
+cat > ${DESTDIR}/etc/runit/3 << "EOF"
+#!/bin/sh
+exec 2>&1
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH
+
+LAST=0
+test -x /etc/runit/reboot && LAST=6
+
+echo 'Waiting for services to stop...'
+sv -w10 force-stop /var/service/*
+sv exit /var/service/*
+
+# Save the alsamixer volumes
+if [ -x /usr/sbin/alsactl ]; then
+    /usr/sbin/alsactl store &>/dev/null
+fi
+
+# Sync the hardware clock
+/etc/runit/init.d/08-setclock "stop"
+
+# Save the random number generator seed
+/etc/runit/init.d/22-random "stop"
+
+# Unmount all non-virtual partitions
+/etc/runit/init.d/12-mountfs "stop"
+
+# Turn swapping off
+/etc/runit/init.d/06-swap "stop"
+
+# Bring down the localnet
+/etc/runit/init.d/20-localnet "stop"
+
+sleep 3
+  
+
+EOF
+
+chmod +x ${DESTDIR}/etc/runit/3
+
+cat > ${DESTDIR}/etc/runit/ctrlaltdel << "EOF"
+#!/bin/sh
+
+PATH=/bin:/usr/bin
+MSG="System is going down in 10 seconds..."
+
+# echo 'disabled.' ; exit
+touch /etc/runit/stopit
+chmod 100 /etc/runit/stopit && echo "$MSG" | wall
+/bin/sleep 10
+
+EOF
+
+chmod +x ${DESTDIR}/etc/runit/ctrlaltdel
+
+cat > ${DESTDIR}/sbin/reboot << "EOF"
+#!/bin/sh
+init 6
+
+EOF
+
+chmod +x ${DESTDIR}/sbin/reboot
+
+cat > ${DESTDIR}/sbin/shutdown << "EOF"
+#!/bin/sh
+init 0
+
+EOF
+
+chmod +x ${DESTDIR}/sbin/shutdown
+
+ln -s /sbin/shutdown ${DESTDIR}/sbin/halt
+ln -s /sbin/shutdown ${DESTDIR}/sbin/poweroff
+pauseScript 5
+
+echo "Installing Getty services"
+mkdir -vp ${DESTDIR}/etc/sv/getty-1
+  
+cat > ${DESTDIR}/etc/sv/getty-1/run << "EOF"
+#!/bin/sh
+exec chpst -P /sbin/agetty --noclear 38400 tty1 linux
+EOF
+
+cat > ${DESTDIR}/etc/sv/getty-1/finish << "EOF"
+#!/bin/sh
+exec utmpset -w tty1
+EOF
+
+chmod +x ${DESTDIR}/etc/sv/getty-1/*
+ln -s /etc/sv/getty-1 ${DESTDIR}/var/service
+
+for N in 2 3 4 5 6; do
+mkdir -vp ${DESTDIR}/etc/sv/getty-$N
+ 
+cat > ${DESTDIR}/etc/sv/getty-$N/run << EOF
+#!/bin/sh
+exec chpst -P /sbin/agetty tty$N linux
+EOF
+ 
+cat > ${DESTDIR}/etc/sv/getty-$N/finish << EOF
+#!/bin/sh
+exec utmpset -w tty$N
+EOF
+
+chmod +x ${DESTDIR}/etc/sv/getty-$N/*
+ln -sf /etc/sv/getty-$N ${DESTDIR}/var/service
+
+done
+pauseScript 15
+
+echo "Installing specialized 'Pause' runtime for Runit"
+echo ""
+echo "Pause is a small runtime that initiates a brief time"
+echo "time check for services that run asynchronously within"
+echo "the system such as the low level networking."
+cat > pause.c << "EOF"
+main ()
+{
+   exit (pause());
+}
+EOF
+gcc -w pause.c -o pause
+mkdir -vp  ${DESTDIR}/usr/bin
+mv -v pause ${DESTDIR}/usr/bin
+rm -rf pause.c
+pauseScript 5
+
+
+echo ""
+echo "Runit should now be installed for the base LFS system. If you wish to"
+echo "install scripts for BLFS, navigate to the appropriate directory and"
+echo "run the installation scripts within for each daemon."
+
+exit 0

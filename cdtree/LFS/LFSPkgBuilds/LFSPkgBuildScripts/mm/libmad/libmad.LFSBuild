@@ -1,0 +1,70 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="libmad"
+TARNAME="$PKGNAME"
+VERSION="0.15.1"
+BUILD=${BUILD:-1}
+SECTION="MM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}b.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://downloads.sourceforge.net/mad/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/7.7/libmad-0.15.1b-fixes-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}b"
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/libmad-0.15.1b-fixes-1.patch
+	sed "s@AM_CONFIG_HEADER@AC_CONFIG_HEADERS@g" -i configure.ac
+	touch NEWS AUTHORS ChangeLog
+	autoreconf -fi
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	mkdir -vp $PKG/usr/lib64/pkgconfig || true
+	cat >$PKG/usr/lib64/pkgconfig/mad.pc <<"EOF"
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib64
+includedir=${prefix}/include
+
+Name: mad
+Description: MPEG audio decoder
+Requires:
+Version: 0.15.1b
+Libs: -L${libdir} -lmad
+Cflags: -I${includedir}
+EOF
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}b"

@@ -1,0 +1,69 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="source-highlight-3.1.8"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="source-highlight-qt"
+TARNAME="$PKGNAME"
+VERSION="0.2.3"
+BUILD=${BUILD:-1}
+SECTION="LIBS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://freefr.dl.sourceforge.net/project/srchiliteqt/source-highlight-qt/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i 's@include <QComboBox@include <QtWidgets/QComboBox@' lib/srchiliteqt/StyleComboBox.h
+	sed -i 's@include <QComboBox@include <QtWidgets/QComboBox@' lib/srchiliteqt/LanguageComboBox.h
+	sed -i 's@include <QComboBox@include <QtWidgets/QComboBox@' lib/srchiliteqt/OutputFormatComboBox.h
+	sed -i 's@include <QTextEdit@include <QtWidgets/QTextEdit@' lib/srchiliteqt/TextEditHighlighted.h
+	sed -i 's@include <QtGui/QWidget@include <QtWidgets/QWidget@' lib/srchiliteqt/LanguageElemColorForm.h
+	sed -i 's@include <QColorDialog@include <QtWidgets/QColorDialog@' lib/srchiliteqt/LanguageElemColorForm.cpp
+	sed -i 's@include <QtGui/QWidget@include <QtWidgets/QWidget@' lib/srchiliteqt/MainColorForm.h
+	sed -i 's@include <QColorDialog@include <QtWidgets/QColorDialog@' lib/srchiliteqt/MainColorForm.cpp
+	sed -i 's@include <QtGui/QDialog@include <QtWidgets/QDialog@' lib/srchiliteqt/ColorDialog.h
+	sed -i 's@include <QMessageBox@include <QtWidgets/QMessageBox@' lib/srchiliteqt/SourceHighlightExceptionBox.cpp
+	sed -i 's@include <QFileDialog@include <QtWidgets/QFileDialog@' lib/srchiliteqt/SourceHighlightSettingsPage.cpp
+	sed -i 's@include <QWidget@include <QtWidgets/QWidget@' lib/srchiliteqt/SourceHighlightSettingsPage.h
+	sed -i 's@include <QDialog@include <QtWidgets/QDialog@' lib/srchiliteqt/SourceHighlightSettingsDialog.h
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

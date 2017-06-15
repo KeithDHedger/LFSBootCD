@@ -1,0 +1,78 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="BinaryJDK-1.8.0.121 alsa-lib-1.1.3 certdata-8.0 giflib-5.1.4 cpio-2.12 Cups-2.2.2 UnZip-6.0 Wget-1.19.1 Which-2.21 xorg-libs-8.0 Zip-3.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="OpenJDK"
+TARNAME="$PKGNAME"
+VERSION="1.8.0.121"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+
+TARROOTPKGNAME="jdk8u"
+TARROOTPKGSUBVERSION="b13"
+TARROOTPKGVERSION="121-${TARROOTPKGSUBVERSION}"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://hg.openjdk.java.net/${TARROOTPKGNAME}/${TARROOTPKGNAME}/archive/${TARROOTPKGNAME}${TARROOTPKGVERSION}.tar.bz2" $SECTION
+
+pushd ${SOURCEARCHIVES}/${SECTION}
+	for subproject in corba hotspot jaxp jaxws langtools jdk nashorn
+		do
+			wget -c http://hg.openjdk.java.net/${TARROOTPKGNAME}/${TARROOTPKGNAME}/${subproject}/archive/${TARROOTPKGNAME}${TARROOTPKGVERSION}.tar.bz2 -O ${subproject}.tar.bz2
+		done
+popd
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARROOTPKGNAME}${TARROOTPKGVERSION}.tar.bz2"
+pushd "${TARROOTPKGNAME}-${TARROOTPKGNAME}${TARROOTPKGVERSION}"
+	for subproject in corba hotspot jaxp jaxws langtools jdk nashorn
+		do
+			mkdir -pv ${subproject}
+			tar -xf ${SOURCEARCHIVES}/${SECTION}/${subproject}.tar.bz2 --strip-components=1 -C ${subproject}
+		done
+	unset JAVA_HOME
+	PATH="${PATH}:/opt/jdk/bin"
+
+	sh ./configure --with-update-version=${TARROOTPKGVERSION} --with-build-number=${TARROOTPKGSUBVERSION} --with-milestone=BLFS --enable-unlimited-crypto --with-zlib=system --with-giflib=system --with-extra-cflags="-std=c++98 -Wno-error -fno-delete-null-pointer-checks -fno-lifetime-dse" --with-extra-cxxflags="-std=c++98 -fno-delete-null-pointer-checks -fno-lifetime-dse"
+	make DEBUG_BINARIES=true SCTP_WERROR= all
+	find build/*/images/j2sdk-image -iname \*.diz -delete
+	mkdir -vp $PKG/opt/${PKGNAME}-${VERSION} $PKG/opt/jdk $PKG/usr/share/pixmaps||true
+	cp -RT build/*/images/j2sdk-image $PKG/opt/${PKGNAME}-${VERSION}
+	chown -R root:root $PKG/opt/${PKGNAME}-${VERSION}
+	cp ../javaws.png $PKG/usr/share/pixmaps
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARROOTPKGNAME}-${TARROOTPKGNAME}${TARROOTPKGVERSION}"
+

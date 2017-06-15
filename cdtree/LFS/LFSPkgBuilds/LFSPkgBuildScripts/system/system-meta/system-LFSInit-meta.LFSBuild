@@ -1,0 +1,120 @@
+#!/bin/bash
+
+. /usr/share/LFSPkg/LFSFunctions
+
+export CHECKETC=0
+export CONFIGOPTIONS="--prefix=/usr --disable-debug"
+
+THISTTY=$(tty)
+export THISTTY
+
+DEPENDS="linuxheaders-4.9.9
+Man-pages-4.09
+Glibc-1.06.95
+Zlib-1.2.11
+File-5.30
+Binutils-2.27
+GMP-6.1.2
+MPFR-3.1.5
+MPC-1.0.3
+GCC-6.3.0
+Bzip2-1.0.6
+Pkg-config-0.29.1
+Ncurses-6.0
+attr-2.4.47
+acl-2.2.52
+libcap-2.25
+Sed-4.4
+Shadow-4.4
+Psmisc-22.21
+Iana-Etc-2.30
+M4-1.4.18
+Bison-3.0.4
+Flex-2.6.3
+Grep-3.0
+Readline-7.0
+Bash-4.4
+Bc-1.06.95
+Libtool-2.4.6
+GDBM-1.12
+gperf-3.0.4
+Expat-2.2.0
+Inetutils-1.9.4
+Perl-5.24.1
+XML-Parser-2.44
+intltool-0.51.0
+Autoconf-2.69
+Automake-1.15
+xz-5.2.3
+Kmod-23
+Gettext-0.19.8.1
+Procps-ng-3.3.12
+E2fsprogs-1.43.4
+Coreutils-8.26
+Diffutils-3.5
+Gawk-4.1.4
+Findutils-4.6.0
+Groff-1.22.3
+GRUB-2.02
+Less-481
+Gzip-1.8
+IPRoute2-4.9.0
+Kbd-2.0.4
+Libpipeline-1.4.1
+Make-4.2.1
+Patch-2.7.5
+Sysklogd-1.5.1
+eudev-3.2.1
+Util-linux-2.29.1
+Man-DB-2.7.6.1
+Tar-1.29
+Texinfo-6.3
+Vim-8.0.069
+OpenSSL-1.0.2
+Wget-1.19.1
+unzip-6.0
+Init-For-LFS-0.0.3
+GPM-1.20.7
+Links-2.14"
+
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="system-meta"
+VERSION="8.0"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG"
+
+exit 0

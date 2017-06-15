@@ -1,0 +1,2 @@
+The Gettext package contains utilities for internationalization and localization.
+These allow programs to be compiled with NLS (Native Language Support), enabling them to output messages in the user's native language.

@@ -1,0 +1,67 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="xorg-libs-8.0 OpenJPEG-1.5.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="mupdf"
+TARNAME="$PKGNAME"
+VERSION="1.10"
+BUILD=1
+SECTION="PRINT"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}a-source.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://www.mupdf.com/downloads/archive/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/8.0/${TARNAME}-${VERSION}a-shared_libs-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}a-source"
+	rm -rf thirdparty/curl
+	rm -rf thirdparty/freetype
+	rm -rf thirdparty/harfbuzz
+	rm -rf thirdparty/jpeg
+	rm -rf thirdparty/openjpeg
+	rm -rf thirdparty/zlib
+	sed '/OPJ_STATIC$/d' -i source/fitz/load-jpx.c
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/${TARNAME}-${VERSION}a-shared_libs-1.patch
+	make build=release
+	make $MAKEFLAGS build=release||make build=release|| exit 1
+	make docdir=/usr/share/doc/${TARNAME}-${VERSION}a prefix=/usr build=release install DESTDIR=$PKG || exit 1
+	ln -sfv mupdf-x11-curl $PKG/usr/bin/mupdf
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+cp ./preinstall ./postinstall ./info "$PKG" &>/dev/null || true
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}a-source"

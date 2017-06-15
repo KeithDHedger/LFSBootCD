@@ -1,0 +1,68 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="libffi-3.2.1 Python-2.7.13 CMake-3.7.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="llvm"
+TARNAME="$PKGNAME"
+VERSION="3.9.1"
+BUILD=${BUILD:-1}
+SECTION="XORG"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.src.tar.xz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://llvm.org/releases/${VERSION}/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}.src"
+#	sed -e "s:/docs/llvm:/share/doc/${PKGNAME}-${VERSION}:" -i Makefile.config.in
+#	CC=gcc CXX=g++ ./configure --prefix=/usr --sysconfdir=/etc --enable-libffi --enable-optimized --enable-shared --enable-targets=all --disable-assertions --disable-debug-runtime --disable-expensive-checks --enable-experimental-targets=R600
+	mkdir build
+	pushd build
+#		CC=gcc CXX=g++ ../configure --prefix=/usr --sysconfdir=/etc --enable-libffi --enable-optimized --enable-shared --enable-targets=all --disable-assertions --disable-debug-runtime --disable-expensive-checks
+
+		CC=gcc CXX=g++ cmake -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_ENABLE_FFI=ON -DCMAKE_BUILD_TYPE=Release -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_TARGETS_TO_BUILD="host;AMDGPU" -Wno-dev ..
+		make $MAKEFLAGS||make || exit 1
+		make install DESTDIR=$PKG || exit 1
+	popd
+
+	for file in $PKG/usr/lib/lib{clang,LLVM,LTO,profile_rt}*.a
+		do
+			test -f $file && chmod -v 644 $file
+		done
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}.src"

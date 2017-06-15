@@ -1,0 +1,9 @@
+udevil (removable devices manager)
+udevil is a command line Linux program which mounts and unmounts
+removable devices without a password, shows device info, and monitors
+device changes. It can also mount ISO files, nfs://, smb://, ftp://,
+ssh:// URLs, and tmpfs/ramfs filesystems.
+udevil is highly configurable, requires no daemon running, and depends
+only on udev and glib. To use it, just prefix a normal mount command
+with 'udevil'.
+homepage: http://ignorantguru.github.com/udevil/

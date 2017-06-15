@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="acl"
+TARNAME="$PKGNAME"
+VERSION="2.2.52"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.src.tar.gz"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/$TARBALL"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i -e 's|/@pkg_name@|&-@pkg_version@|' include/builddefs.in
+	sed -i "s:| sed.*::g" test/{sbits-restore,cp,misc}.test
+	sed -i -e "/TABS-1;/a if (x > (TABS-1)) x = (TABS-1);" libacl/__acl_to_any_text.c
+#	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure --prefix=/usr --bindir=/bin --libexecdir=/usr/lib${LIBDIRSUFFIX} --libdir=/lib${LIBDIRSUFFIX}
+	./configure --prefix=/usr --bindir=/bin --libexecdir=/usr/lib
+	make $MAKEFLAGS||make|| exit 1
+	make install install-dev install-lib DESTDIR=$PKG || exit 1
+	#rm $PKG/usr/lib${LIBDIRSUFFIX}/libacl.so
+	chmod -v 755 $PKG/usr/lib/libacl.so
+	mkdir -vp $PKG/lib||true
+	mv -v $PKG/usr/lib/libacl.so.* $PKG/lib
+	ln -sfv ../../lib/$(readlink $PKG/usr/lib/libacl.so) $PKG/usr/lib/libacl.so
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

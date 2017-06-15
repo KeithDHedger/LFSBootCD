@@ -1,0 +1,2 @@
+The FriBidi package is an implementation of the Unicode Bidirectional Algorithm (BIDI).
+This is useful for supporting Arabic and Hebrew alphabets in other packages.

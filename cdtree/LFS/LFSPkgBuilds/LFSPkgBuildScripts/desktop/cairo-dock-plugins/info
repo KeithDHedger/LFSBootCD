@@ -1,0 +1,6 @@
+cairo-dock-plugins (plugins for cairo-dock)
+This package contains a set of official plug-ins for cairo-dock.
+It provides some new functionality such as controling music players,
+note-taking, a clock, and a desktop switcher, but also some views,
+dialogs and desklets skins, etcetera.
+Homepage: http://www.glx-dock.org/tt_project.php

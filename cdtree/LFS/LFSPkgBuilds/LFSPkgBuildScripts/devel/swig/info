@@ -1,0 +1,2 @@
+SWIG (Simplified Wrapper and Interface Generator) is a compiler that integrates C and C++ with languages including Perl, Python, Tcl, Ruby, PHP, Java, C#, D, Go, Lua, Octave, R, Scheme, Ocaml, Modula-3, Common Lisp, and Pike.
+SWIG can also export its parse tree into Lisp s-expressions and XML.

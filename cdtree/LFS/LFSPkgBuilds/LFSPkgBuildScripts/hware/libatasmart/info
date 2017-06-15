@@ -1,0 +1,3 @@
+The libatasmart package is a disk reporting library.
+It only supports a subset of the ATA S.M.A.R.T.
+functionality.

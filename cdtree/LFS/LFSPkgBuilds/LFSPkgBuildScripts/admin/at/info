@@ -1,0 +1,2 @@
+The at package provide delayed job execution and batch processing.
+It is required for Linux Standards Base (LSB) conformance.

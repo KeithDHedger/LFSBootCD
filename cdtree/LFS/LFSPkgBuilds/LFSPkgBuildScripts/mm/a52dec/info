@@ -1,0 +1,8 @@
+a52dec (test program for liba52)
+a52dec is a test program for liba52.  It decodes ATSC A/52 streams
+and also includes a demultiplexer for mpeg-1 and mpeg-2 program
+streams.  This package also includes liba52, which is a free
+library for decoding ATSC A/52 streams.  The A/52 standard is used
+in a variety of applications, including digital television and DVD.
+It is also known as AC-3.
+Homepage: http://liba52.sourceforge.net/

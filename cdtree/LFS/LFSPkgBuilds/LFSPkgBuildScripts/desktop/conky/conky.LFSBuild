@@ -1,0 +1,78 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="lua-5.1.5 tolua++-1.0.93 Imlib2-1.4.7 lm-sensors-3.4.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="conky"
+TARNAME="$PKGNAME"
+VERSION="1.10.6"
+BUILD=${BUILD:-1}
+SECTION="DESKTOP"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://github.com/brndnmtthws/$PKGNAME/archive/v${VERSION}.tar.gz" $SECTION $TARBALL
+
+PKG="${OUTPUT}/${PKGNAME}"
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	mkdir -p build
+	cd build
+	cmake $CMAKEINSTALLPREFIX $CMAKELIBDIRSUFFIX $CMAKEUSEQT5 $CMAKEPREFIXPATH \
+    -DDOC_PATH=/usr/doc/$PKGNAME-$VERSION \
+    -DMAN_INSTALL_DIR=/usr/man \
+    -DMAINTAINER_MODE=OFF \
+    -DBUILD_XDBE=ON \
+    -DBUILD_AUDACIOUS=OFF \
+    -DBUILD_NVIDIA=OFF \
+    -DBUILD_CURL=ON \
+    -DBUILD_WLAN=OFF \
+    -DBUILD_RSS=ON \
+    -DBUILD_WEATHER_METAR=ON \
+    -DBUILD_WEATHER_XOAP=ON \
+    -DBUILD_MPD=ON \
+    -DBUILD_IMLIB2=ON \
+    -DBUILD_LUA_CAIRO=ON \
+    -DBUILD_LUA_IMLIB2=ON \
+    -DCMAKE_BUILD_TYPE=Release ..
+
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	
+	cd ../doc
+	xsltproc "http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl" docs.xml > docs.html
+	cp docs.html $PKG/usr/doc/${PKGNAME}-${VERSION}
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

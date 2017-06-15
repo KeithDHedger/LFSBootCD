@@ -1,0 +1,2 @@
+FLTK (pronounced "fulltick") is a cross-platform C++ GUI toolkit.
+FLTK provides modern GUI functionality and supports 3D graphics via OpenGL and its built-in GLUT emulation libraries used for creating graphical user interfaces for applications.

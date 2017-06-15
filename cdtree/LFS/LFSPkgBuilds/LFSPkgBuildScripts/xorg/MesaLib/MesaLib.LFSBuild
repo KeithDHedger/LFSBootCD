@@ -1,0 +1,66 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="xorg-libs-8.0 libdrm-2.4.75 Python-2.7.13 elfutils-0.168 libvdpau-1.1.1 LLVM-3.9.1"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="mesalib"
+TARNAME="mesa"
+VERSION="13.0.4"
+BUILD=${BUILD:-1}
+SECTION="XORG"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "ftp://ftp.freedesktop.org/pub/mesa/${VERSION}/${TARBALL}" $SECTION
+gettar "http://www.linuxfromscratch.org/patches/blfs/${LFSVERSION}/${TARNAME}-${VERSION}-add_xdemos-1.patch" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	patch -Np1 -i ${SOURCEARCHIVES}/${SECTION}/${TARNAME}-${VERSION}-add_xdemos-1.patch
+	sed -i "/pthread_stubs_possible=/s/yes/no/" configure.ac
+	GLL_DRV="r600,r300,nouveau,radeonsi,svga,swrast"
+	./autogen.sh CFLAGS="-O2" CXXFLAGS="-O2" --prefix=$XORG_PREFIX --sysconfdir=/etc --enable-texture-float --enable-gles1 --enable-gles2 --enable-osmesa --enable-xa --enable-gbm --enable-glx-tls --with-egl-platforms="drm,x11" --with-gallium-drivers=$GLL_DRV
+	unset GLL_DRV
+	make $MAKEFLAGS||make || exit 1
+	make $MAKEFLAGS -C xdemos DEMOS_PREFIX=$XORG_PREFIX || make -C xdemos DEMOS_PREFIX=$XORG_PREFIX ||exit 1
+	make install DESTDIR=$PKG || exit 1
+	make -C xdemos DEMOS_PREFIX=$XORG_PREFIX DESTDIR="$PKG" install || exit 1
+	install -v -dm755 $PKG/usr/share/doc/${TARNAME}-${VERSION}
+	cp -rfv docs/* $PKG/usr/share/doc/${TARNAME}-${VERSION}
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

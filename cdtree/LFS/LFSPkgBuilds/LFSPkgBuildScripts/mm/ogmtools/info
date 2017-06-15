@@ -1,0 +1,5 @@
+ogmtools (Ogg Media Tools)
+Tools to allow information, extraction or creation of
+Ogg media streams.  Utilities include ogmmerge, ogminfo,
+ogmdemux, ogmsplit, ogmcat and dvdxchap.
+Homepage: http://www.bunkus.org/videotools/ogmtools/

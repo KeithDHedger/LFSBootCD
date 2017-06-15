@@ -1,0 +1,70 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="development-meta"
+VERSION="8.0"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+
+#scriptLog "${PKGNAME}-${VERSION}"
+
+DEPENDS="abs-guide-6.6
+bazaar-2.5.1
+ctags-5.8
+libglade-2.6.4
+Ruby-2.4.0
+Subversion-1.9.5
+Git-2.11.1
+Qt5-5.8.0
+CMake-3.7.2
+apache-ant-1.10.1
+OpenJDK-1.8.0.121
+orc-0.4.23
+astyle-3.0
+webkitgtk-2.4.9
+devhelp-2.32.0
+dialog-1.2
+gtkdialog-0.8.3
+help2man-1.46.4
+man2html-1.6
+meld-1.8.6
+mm-meta-8.0
+poedit-1.8.12
+yad-0.38.1
+xforms-1.2.4
+ddd-3.3.12
+ManPageEditor-0.1.2"
+
+
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG"

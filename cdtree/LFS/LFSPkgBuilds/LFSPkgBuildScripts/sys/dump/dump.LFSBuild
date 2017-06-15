@@ -1,0 +1,67 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="e2fsprogs-1.43.4"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="dump"
+TARNAME="$PKGNAME"
+VERSION="0.4.44"
+BUILD=${BUILD:-1}
+SECTION="SYS"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-0.4b44.tar.gz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://kent.dl.sourceforge.net/project/dump/dump/0.4b44/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-0.4b44"
+	EXT2FS_LIBS="-lext2fs -lcom_err" ./configure ${CONFIGOPTIONS} --enable-rmt=no --enable-transselinux=no --localstatedir=/var --mandir=$PKG/usr/man --with-binowner=root --with-bingrp=root --with-manowner=root --with-mangrp=root
+	# --enable-static
+
+	make $MAKEFLAGS||make|| exit 1
+	make install  prefix=$PKG || exit 1
+	mv $PKG/sbin/dump $PKG/sbin/dump-static
+	mv $PKG/sbin/restore $PKG/sbin/restore-static
+
+	make distclean
+
+	EXT2FS_LIBS="-lext2fs -lcom_err" ./configure ${CONFIGOPTIONS} --enable-rmt=no --enable-transselinux=no --localstatedir=/var --mandir=$PKG/usr/man --with-binowner=root --with-bingrp=root --with-manowner=root --with-mangrp=root
+
+	make $MAKEFLAGS||make|| exit 1
+	make install  prefix=$PKG || exit 1
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-0.4b44"

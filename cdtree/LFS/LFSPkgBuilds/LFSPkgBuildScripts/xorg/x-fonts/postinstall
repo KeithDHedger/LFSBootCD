@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 10 Feb 13:57:04 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+mkdir -vp /usr/share/fonts||true
+ln -svfn $XORG_PREFIX/share/fonts/X11/OTF /usr/share/fonts/X11-OTF||true
+ln -svfn $XORG_PREFIX/share/fonts/X11/TTF /usr/share/fonts/X11-TTF||true

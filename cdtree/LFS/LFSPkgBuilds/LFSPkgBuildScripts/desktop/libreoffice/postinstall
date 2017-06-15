@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#©keithhedger Wed 11 Feb 15:55:07 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+pushd ${BUILDSCRIPTSlibs}/libs/freetype
+	./freetype.LFSBuild install
+popd
+exit 0
+

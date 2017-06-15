@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#©keithhedger Mon 2 Feb 12:38:29 GMT 2015 kdhedger68713@gmail.com
+
+#Warn and quit
+#Set The variables between this -------------->
+#And then remove/comment out the next line
+#echo -e "\n!!! WARNING !!!\nYou must set the variables in ./SystemData before proceeding!\n";exit 1
+
+if [ -e "SystemData.local" ];then
+	. "SystemData.local"
+fi
+
+#basic stuff
+#Mount point for your new LFS system
+LFS=${LFS:-/media/LFSJane}
+#LFS Version
+LFSVERSION=${LFSVERSION:-8.0}
+#Computer name
+LFSNAME=${LFSNAME:-"LFSJane"}
+#LFS init type eithe bbinit or sysvinit
+INITTYPE=LFSInit
+#Place to store built packages, defaults to /tmp
+BUILTPACKAGES=${BUILTPACKAGES:-"/media/SkyNet/LFSBuiltPackages-${LFSVERSION}"}
+#Place to store downloaded source archives, defaults to /tmp
+SOURCEARCHIVES=${SOURCEARCHIVES:-"/media/SkyNet/LFSSourceArchives/${LFSVERSION}"}
+
+#kernal version
+#if the kernel version you want to use is not the same as the book you will have to manually download the source to $SOURCEARCHIVES
+KERNELVERSION=4.9.9
+
+#keyboard
+#set keyboad lang for auto detect use
+#KEYBOARD="$(setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}')"
+KEYBOARD=uk
+
+#network
+#Set up the network
+GATEWAY="192.168.1.254"
+SUBNET="255.255.255.0"
+NAMESERVERS="208.67.222.222 208.67.220.220 8.8.8.8 $GATEWAY"
+
+#File system type, probably ext2 or ext4
+ROOTFSTYPE="ext2"
+#And this <------------
+
+#Variable below this line are computed and probably don't need changing, but feel free.
+#computed stuff
+LANGUAGE=$LANG
+ROOTDEV=$(df|grep -i $LFS|awk '{print $1}')
+SWAP=$(fdisk -l|grep swap|awk '{print $1}')
+case $(uname -m) in
+	x86_64)
+		LIBDIRSUFFIX=64
+		;;
+	*)
+		LIBDIRSUFFIX=""
+		;;
+esac
+
+#set kernel version in build scripts
+#build scripts should be at $LFS/LFSPkgBuildScripts
+sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/LFSPkgBuildScripts/system/linuxheaders/linuxheaders.LFSBuild
+sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/LFSPkgBuildScripts/kernel/kernel.LFSBuild
+sed -ri "s/linuxheaders-[0-9]+.[0-9]+.[0-9]+/linuxheaders-${KERNELVERSION}/i" ${LFS}/LFSPkgBuildScripts/system/system-meta/system-${INITTYPE}-meta.LFSBuild
+
+#network
+IP="192.168.1.1"$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')
+
+if [ -e SystemData.local ];then
+	. SystemData.local
+fi
+

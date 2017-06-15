@@ -1,0 +1,2 @@
+The libmusicbrainz package contains a library which allows you to access the data held on the MusicBrainz server.
+This is useful for adding MusicBrainz lookup capabilities to other applications.

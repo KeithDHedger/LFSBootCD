@@ -1,0 +1,5 @@
+dvdauthor (A simple set of tools to help you author a DVD)
+dvdauthor is a program that will generate a DVD movie from a valid
+mpeg2 stream.
+The resulting movie should play in a standard DVD player.
+Homepage: http://dvdauthor.sf.net

@@ -1,0 +1,33 @@
+OUTPUT=${OUTPUT:-/tmp/LFS}
+SOURCEARCHIVES=${SOURCEARCHIVES:-/tmp/LFSSourceArchives}
+BUILDSCRIPTS=${BUILDSCRIPTS:-"/LFSPkgBuildScripts/"}
+EXITONFAIL=${EXITONFAIL:-1}
+CONFIGOPTIONS=${CONFIGOPTIONS:-"--prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib${LIBDIRSUFFIX} --enable-gtk-doc --disable-debug --disable-nls --disable-static"}
+CHECKETC=${CHECKETC:-1}
+MAKEFLAGS=${MAKEFLAGS:-" -j$(nproc) "}
+XORG_PREFIX=${XORG_PREFIX:-"/usr"}
+XORG_CONFIG=${XORG_CONFIG:-"--prefix=$XORG_PREFIX --sysconfdir=/etc --mandir=$XORG_PREFIX/share/man --localstatedir=/var --disable-static"}
+JAVA_HOME=${JAVA_HOME:-"/opt/jdk"}
+
+#qt5 and cmake stuff
+QT5DIR=/usr/lib64/qt5
+CMAKE_INSTALL_PREFIX=/usr
+CMAKE_PREFIX_PATH=$QT5DIR/cmake
+PATH="${QT5DIR}:${PATH}"
+
+DEFLIBSUFFIX=64
+DEFUSEQT5=TRUE
+DEFCMAKELINKERFLAGS='-L/usr/lib64/qt5'
+
+CMAKEINSTALLPREFIX="-DCMAKE_INSTALL_PREFIX=/usr"
+CMAKEPREFIXPATH="-DCMAKE_PREFIX_PATH=/usr/lib64/qt5/cmake"
+CMAKELIBDIRSUFFIX="-DLIB_SUFFIX=64"
+CMAKEUSEQT5="-DUSE_QT5=TRUE"
+CMAKELDFLAGS="-DCMAKE_EXE_LINKER_FLAGS='-L/usr/lib64/qt5'"
+
+export CMAKE_PREFIX_PATH
+export CMAKE_INSTALL_PREFIX
+export PATH
+export QT5DIR
+
+LFSVERSION=8.0

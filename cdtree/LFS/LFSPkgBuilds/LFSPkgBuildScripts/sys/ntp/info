@@ -1,0 +1,2 @@
+The ntp package contains a client and server to keep the time synchronized between various computers over a network.
+This package is the official reference implementation of the NTP protocol.

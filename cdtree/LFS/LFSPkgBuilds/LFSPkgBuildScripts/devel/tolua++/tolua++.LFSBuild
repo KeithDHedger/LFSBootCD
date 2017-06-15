@@ -1,0 +1,63 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="Lua-5.1.5 SCons-2.3.6"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="tolua++"
+TARNAME="$PKGNAME"
+VERSION="1.0.93"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+gettar "http://ponce.cc/slackware/sources/repo/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+# thanks to:
+# Slackware build script for tolua++
+# from slacbuilds.org
+# Written by Larry Hajali <larryhaja[at]gmail[dot]com>
+
+	sed -i "s|'/lib'|'/lib${LIBDIRSUFFIX}'|g" SConstruct
+	sed -i "s|\"tolua++-1.0.92\"|\"tolua++-1.0.93\"|" include/tolua++.h || true
+	cat >> custom.py << EOF
+LIBS = ['lua', 'dl', 'm']
+LIBPATH = ['/lib', '/usr/lib']
+EOF
+	scons install CCFLAGS="-I/usr/include -ansi -Wall" prefix="$PKG/usr" shared="TRUE" || exit 1
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

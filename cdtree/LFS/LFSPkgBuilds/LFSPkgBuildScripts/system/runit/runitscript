@@ -1,0 +1,315 @@
+#!/bin/bash
+
+mkdir -pv runit-2.1.1
+cd runit-2.1.1
+tar -xvf ../runit-2.1.1.tar.gz
+cd admin/runit-2.1.1
+
+package/compile
+cd command
+install runit runit-init /sbin
+install runsvdir runsvchdir runsv /usr/sbin
+install svlogd sv chpst utmpset /usr/sbin
+cp ../man/* /usr/share/man/man8
+ln -sf /sbin/runit-init /sbin/init
+mkdir -pv /var/service
+mkdir -pv /etc/sv
+
+mkdir /etc/runit
+cat > /etc/runit/1 << "EOF"
+#!/bin/sh
+
+# System one time tasks
+# The Stage 1 script for runit.
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+# Mount the kernel filesystems
+/etc/rc.d/init.d/mountvirtfs start
+
+# Load any modules we must have
+/etc/rc.d/init.d/modules start
+
+# Start udev to create the device nodes
+# in a tempfs mounted on /dev
+/etc/rc.d/init.d/udev start
+
+# Mount the swap partition(s)
+/etc/rc.d/init.d/swap start
+
+# Set the System Clock from the Hardware Clock
+/etc/rc.d/init.d/setclock start
+
+# Check the filesystems we are about to mount
+#/etc/rc.d/init.d/checkfs start
+
+# Remount root rw,
+# and mount all other non-proc auto partitions
+/etc/rc.d/init.d/mountfs start
+
+# Rerty any missing udev events not triggered initially
+# by the first phase.
+/etc/rc.d/init.d/udev_retry start
+
+# Clean up after the last boot session by
+# removing stale /var/run and /var/lock files
+# and setting up utmp etc.
+/etc/rc.d/init.d/cleanfs start
+
+# Set up the console
+/etc/rc.d/init.d/console start
+
+# Bring up the local loopback network
+/etc/rc.d/init.d/localnet start
+
+# Start the system kernel runtime parameters
+/etc/rc.d/init.d/sysctl start
+
+# Start the system logger
+# This can be replaced later by a runscript
+/etc/rc.d/init.d/sysklogd start
+
+# Initialise the random number generator
+# If RNG script is not installed from BLFS Chapter 3
+# This line can be commented out.
+/etc/rc.d/init.d/random start
+
+touch /etc/runit/stopit
+chmod 0 /etc/runit/stopit
+EOF
+
+chmod +x /etc/runit/1
+
+cat > /etc/runit/2 << "EOF"
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+exec env - PATH=$PATH \
+runsvdir /var/service 'log: ............................................................
+........................................................................................
+........................................................................................
+........................................................................................
+.......................................................................'
+EOF
+
+chmod +x /etc/runit/2
+
+cat > /etc/runit/3 << "EOF"
+#!/bin/sh
+exec 2>&1
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+LAST=0
+test -x /etc/runit/reboot && LAST=6
+
+echo 'Waiting for services to stop...'
+sv -w10 force-stop /var/service/*
+sv exit /var/service/*
+
+# save the random number generator seed
+/etc/rc.d/init.d/random stop
+
+# turn swapping off
+/etc/rc.d/init.d/swap stop
+
+# Bring down the localnet
+/etc/rc.d/init.d/localnet stop
+
+EOF
+
+chmod +x /etc/runit/3
+
+cat > /etc/runit/ctrlaltdel << "EOF"
+#!/bin/sh
+
+PATH=/bin:/usr/bin
+MSG="System is going down in 10 seconds..."
+
+# echo 'disabled.' ; exit
+touch /etc/runit/stopit
+chmod 100 /etc/runit/stopit && echo "$MSG" | wall
+/bin/sleep 10
+
+EOF
+
+chmod +x /etc/runit/ctrlaltdel
+
+cat > /sbin/reboot << "EOF"
+#!/bin/sh
+init 6
+
+EOF
+
+chmod +x /sbin/reboot
+
+cat > /sbin/shutdown << "EOF"
+#!/bin/sh
+init 0
+
+EOF
+
+chmod +x /sbin/shutdown
+
+ln -sf /sbin/shutdown /sbin/halt
+ln -sf /sbin/shutdown /sbin/poweroff
+
+mkdir -vp /etc/sv/getty-1
+cat > /etc/sv/getty-1/run << "EOF"
+#!/bin/sh
+exec /sbin/agetty --noclear 38400 tty1 linux
+EOF
+
+cat > /etc/sv/getty-1/finish << "EOF"
+#!/sbin/sh
+exec utmpset -w tty1
+EOF
+
+chmod +x /etc/sv/getty-1/*
+ln -sf /etc/sv/getty-1 /var/service
+
+for N in 2 3 4 5 6; do
+mkdir -vp /etc/sv/getty-$N
+ 
+cat > /etc/sv/getty-$N/run << EOF
+#!/bin/sh
+exec /sbin/agetty 38400 tty$N linux
+EOF
+ 
+cat > /etc/sv/getty-$N/finish << EOF
+#!/bin/sh
+exec utmpset -w tty$N
+EOF
+
+chmod +x /etc/sv/getty-$N/*
+ln -sf /etc/sv/getty-$N /var/service
+
+done
+ 
+cat > pause.c << "EOF"
+  main ()
+  {
+	   exit (pause());
+  }
+EOF
+
+gcc pause.c -o pause
+cp pause /usr/bin
+
+mkdir /etc/sv/eth-0
+cat > /etc/sv/eth-0/run << "EOF"
+#!/bin/bash
+# modprobe eth0 if this is required to load a NIC module
+exec 2>&1
+# use the regular LFS network script to bring up the connection
+#/etc/sysconfig/network-devices/ifup eth0
+/etc/init.d/network start
+# and wait until we get a TERM or KILL signal
+exec pause
+EOF
+
+cat > /etc/sv/eth-0/finish << "EOF"
+#!/bin/bash
+# bring the connection down
+#/etc/sysconfig/network-devices/ifdown eth0
+/etc/init.d/network stop
+EOF
+
+mkdir /etc/sv/eth-0/log
+cat > /etc/sv/eth-0/log/run << "EOF"
+#!/bin/sh
+# start the logging process
+exec /usr/sbin/svlogd -tt /var/log/eth/eth-0
+EOF
+
+chmod +x /etc/sv/eth-0/run /etc/sv/eth-0/finish /etc/sv/eth-0/log/run
+mkdir -p /var/log/eth/eth-0
+ln -sf /etc/sv/eth-0 /var/service/eth-0
+
+mkdir -pv /etc/runit/runsvdir/default
+mkdir -pv /etc/runit/runsvdir/single
+ln -sf /etc/sv/getty-1 /etc/runit/runsvdir/single
+ln -sf default /etc/runit/runsvdir/current
+cp -pvR /var/service/* /etc/runit/runsvdir/current/
+mv -fv /var/service /var/service.old||true
+ln -sf /etc/runit/runsvdir/current /var/service
+rm -rfv /var/service.old||true
+
+cat > /etc/runit/2 << "EOF"
+#!/bin/sh
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+runsvchdir default >/dev/null
+
+exec env - PATH=$PATH \
+runsvdir /var/service 'log: ............................................................
+........................................................................................
+........................................................................................
+........................................................................................
+.......................................................................'
+EOF
+
+chmod +x /etc/runit/2
+
+mkdir -pv /etc/sv/gpm
+mkdir -pv /etc/sv/gpm/log
+
+cat > /etc/sv/gpm/run << "EOF"
+#!/bin/sh
+# Begin gpm service run file
+# concatenate stdout and stderr into one stream for logging.
+exec 2>&1
+# if the configuration file exists, source it.
+if [ -f /etc/sysconfig/mouse ]
+	  then
+	  . /etc/sysconfig/mouse
+fi
+# and if it doesn't, or if it's wrong, shout and exit.
+if [ -z "$MDEVICE" ] || [ -z "$PROTOCOL" ]
+	  then
+	  echo "Please create an /etc/sysconfig/mouse file containing"
+	  echo "MDEVICE and PROTOCOL values"
+	  exit 1;
+fi
+# setup and run the service
+exec  gpm -D -m $MDEVICE -t $PROTOCOL
+# End of gpm service run file
+EOF
+
+cat > /etc/sv/gpm/log/run << "EOF"
+#!/bin/sh
+# Begin gpm log service run file
+# start the logging process
+exec /usr/sbin/svlogd -tt /var/log/gpm
+# End of gpm log service run file
+EOF
+
+chmod +x /etc/sv/gpm/run
+chmod +x /etc/sv/gpm/log/run
+mkdir -pv /var/log/gpm
+ln -sf /etc/sv/gpm /var/service
+
+mkdir -pv /etc/sv/openssh
+mkdir -pv /etc/sv/openssh/log
+
+cat > /etc/sv/openssh/run << "EOF"
+#!/bin/sh
+# Begin OpenSSH service run file
+/usr/bin/ssh-keygen -A
+exec /usr/sbin/sshd -De 2>&1
+# End of OpenSSH service run file
+EOF
+
+cat > /etc/sv/openssh/log/run << "EOF"
+#!/bin/sh
+# Begin OpenSSH log service file
+exec /usr/bin/svlogd -tt /var/log/openssh
+# End of OpenSSH log service run file
+EOF
+
+chmod +x /etc/sv/openssh/run
+chmod +x /etc/sv/openssh/log/run
+mkdir -pv /var/log/openssh
+ln -sf /etc/sv/openssh /var/service

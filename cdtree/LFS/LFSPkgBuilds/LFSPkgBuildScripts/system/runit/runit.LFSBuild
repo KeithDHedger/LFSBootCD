@@ -1,0 +1,356 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="runit"
+TARNAME="$PKGNAME"
+VERSION="2.1.1"
+BUILD=${BUILD:-1}
+SECTION="SYSTEM"
+SUFFIX="LFSPKG"
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+mkdir -pv ${TARNAME}-${VERSION}
+
+pushd "${TARNAME}-${VERSION}"
+	tar -xvf "../${TARNAME}-${VERSION}.tar.gz"
+	cd admin/${TARNAME}-${VERSION}
+	package/compile
+	cd command
+	mkdir -vp $PKG/usr/sbin $PKG/usr/bin $PKG/usr/share/man/man8 $PKG/sbin
+	install runit runit-init $PKG/sbin
+	install runsvdir runsvchdir runsv $PKG/usr/sbin
+	install svlogd sv chpst utmpset $PKG/usr/sbin
+	cp ../man/* $PKG/usr/share/man/man8
+	ln -sf /sbin/runit-init $PKG/sbin/init
+	mkdir -pv $PKG/var
+	mkdir -pv $PKG/etc/sv
+#	mkdir -pv $PKG/etc/runit/runsvdir/default
+#	ln -sv default $PKG/etc/runit/runsvdir/current
+#	ln -sv ../etc/runit/runsvdir/current $PKG/var/service
+
+	DESTDIR=$PKG
+	export DESTDIR
+#	echo "AAAAAAAA" >/tmp/xx
+#	THISTTY=$(tty)||true
+#	echo "XXX${THISTTY}ZZZ" >>/tmp/xx
+#	export THISTTY
+#	echo $THISTTY
+#	echo "XXX${THISTTY}ZZZ" >>/tmp/xx
+#	exit 1
+	../../../../setup-runit||true
+
+#	cat > $PKG/etc/runit/1 << "EOF"
+##!/bin/sh
+#PATH=/sbin:/bin:/usr/sbin:/usr/bin
+#
+#for i in /etc/runit/start/*
+#	do
+#		if [ -x "$i" ];then
+#			"$i" start
+#			if [ $? -ne 0 ];then
+#				echo "Problem running $i"
+#				/sbin/sulogin
+#				exit 1
+#			fi
+#		fi
+#	done
+#
+#touch /etc/runit/stopit
+#chmod 0 /etc/runit/stopit
+#
+#EOF
+#
+#	chmod +x $PKG/etc/runit/1
+#
+#	mkdir -vp $PKG/etc/runit/start
+#	pushd $PKG/etc/runit/start
+#		ln -sv /etc/rc.d/init.d/mountvirtfs 00-mountvirtfs
+#		ln -sv /etc/rc.d/init.d/modules 02-modules
+#		ln -sv /etc/rc.d/init.d/udev 04-udev
+#		ln -sv /etc/rc.d/init.d/swap 06-swap
+#		ln -sv /etc/rc.d/init.d/setclock 08-setclock
+#		ln -sv /etc/rc.d/init.d/mountfs 10-mountfs
+#		ln -sv /etc/rc.d/init.d/udev_retry 12-udev_retry
+#		ln -sv /etc/rc.d/init.d/cleanfs 14-cleanfs
+#		ln -sv /etc/rc.d/init.d/console 16-console
+#		ln -sv /etc/rc.d/init.d/localnet 18-localnet
+#		ln -sv /etc/rc.d/init.d/sysctl 20-sysctl
+#		ln -sv /etc/rc.d/init.d/sysklogd 22-sysklogd
+#		ln -sv /etc/rc.d/init.d/network 24-network
+#	popd
+#
+#	cat > $PKG/etc/runit/2 << "EOF"
+##!/bin/sh
+#
+#PATH=/bin:/sbin:/usr/bin:/usr/sbin
+#
+#exec env - PATH=$PATH runsvdir /var/service 'log: ............................................................
+#........................................................................................
+#........................................................................................
+#........................................................................................
+#.......................................................................'
+#EOF
+#
+#	chmod +x $PKG/etc/runit/2
+#	cat > $PKG/etc/runit/3 << "EOF"
+##!/bin/sh
+#exec 2>&1
+#
+#PATH=/sbin:/bin:/usr/sbin:/usr/bin
+#
+#LAST=0
+#test -x /etc/runit/reboot && LAST=6
+#
+#echo 'Waiting for services to stop...'
+#sv -w10 force-stop /var/service/*
+#sv exit /var/service/*
+#
+## Save the alsamixer volumes
+#/usr/sbin/alsactl store &>/dev/null
+#
+## Sync the hardware clock
+#exec hwclock --systohc --utc &>/dev/null
+#
+## Save the random number generator seed
+#/bin/dd if=/dev/urandom of=/var/tmp/random-seed count=1 &>/dev/null
+#
+## Unmount all non-virtual partitions
+#umount -a -d -r -t notmpfs,nosysfs,nodevtmpfs,noproc,nodevpts &>/dev/null
+#mount -o remount,ro / &>/dev/null
+#
+## Turn swapping off
+#swapoff -a &>/dev/null
+#
+## Bring down the localnet
+#ip link set lo down &>/dev/null
+#EOF
+#
+##	cat > $PKG/etc/runit/3 << "EOF"
+###!/bin/sh
+##exec 2>&1
+##
+##PATH=/sbin:/bin:/usr/sbin:/usr/bin
+##
+##LAST=0
+##test -x /etc/runit/reboot && LAST=6
+##
+##echo 'Waiting for services to stop...'
+##sv -w10 force-stop /var/service/*
+##sv exit /var/service/*
+##
+### save the random number generator seed
+###/etc/rc.d/init.d/random stop
+##
+### turn swapping off
+##/etc/rc.d/init.d/swap stop
+##
+### Bring down the localnet
+##/etc/rc.d/init.d/localnet stop
+##
+##EOF
+##
+#	chmod +x $PKG/etc/runit/3
+#
+#	cat > $PKG/etc/runit/ctrlaltdel << "EOF"
+##!/bin/sh
+#
+#PATH=/bin:/usr/bin
+#MSG="System is going down in 10 seconds..."
+#
+## echo 'disabled.' ; exit
+#touch /etc/runit/stopit
+#chmod 100 /etc/runit/stopit && echo "$MSG" | wall
+#/bin/sleep 10
+#
+#EOF
+#
+#	chmod +x $PKG/etc/runit/ctrlaltdel
+#
+#cat > $PKG/sbin/reboot << "EOF"
+##!/bin/sh
+#init 6
+#
+#EOF
+#
+#	chmod +x $PKG/sbin/reboot
+#
+#cat > $PKG/sbin/shutdown << "EOF"
+##!/bin/sh
+#init 0
+#
+#EOF
+#
+#	chmod +x $PKG/sbin/shutdown
+#	ln -sf /sbin/shutdown $PKG/sbin/halt
+#	ln -sf /sbin/shutdown $PKG/sbin/poweroff
+#
+#	mkdir -vp $PKG/etc/sv/getty-1
+#	cat > $PKG/etc/sv/getty-1/run << "EOF"
+##!/bin/sh
+#exec chpst -P /sbin/agetty --noclear tty1 linux
+#EOF
+#
+#	cat > $PKG/etc/sv/getty-1/finish << "EOF"
+##!/bin/sh
+#exec utmpset -w tty1
+#EOF
+#
+#	chmod +x $PKG/etc/sv/getty-1/*
+#	ln -sf /etc/sv/getty-1 $PKG/var/service/
+#
+#	MAXTTYS=10
+#	for N in $(seq 2 $MAXTTYS)
+#		do
+#			mkdir -vp $PKG/etc/sv/getty-$N
+#			cat > $PKG/etc/sv/getty-$N/run << EOF
+##!/bin/sh
+#exec chpst -P /sbin/agetty tty$N linux
+#EOF
+#			cat > $PKG/etc/sv/getty-$N/finish << EOF
+##!/bin/sh
+#exec utmpset -w tty$N
+#EOF
+#
+#			chmod +x $PKG/etc/sv/getty-$N/*
+#			ln -sf /etc/sv/getty-$N $PKG/var/service/
+#		done
+# 
+#	cat > pause.c << "EOF"
+#		main()
+#			{
+#				exit (pause());
+#			}
+#EOF
+#
+#	gcc pause.c -o pause
+#	cp pause $PKG/usr/bin
+#
+#	mkdir -pv $PKG/etc/runit/runsvdir/default
+#	mkdir -pv $PKG/etc/runit/runsvdir/single
+#	ln -sf /etc/sv/getty-1 $PKG/etc/runit/runsvdir/single
+#	ln -sf default $PKG/etc/runit/runsvdir/current
+#	cp -pvR $PKG/var/service/* $PKG/etc/runit/runsvdir/current/
+#	mv -fv $PKG/var/service $PKG/var/service.old||true
+#	ln -sf ../etc/runit/runsvdir/current $PKG/var/service
+#	rm -rfv $PKG/var/service.old||true
+#
+#	cat > $PKG/etc/runit/2 << "EOF"
+##!/bin/sh
+#
+#PATH=/bin:/sbin:/usr/bin:/usr/sbin
+#
+#runsvchdir default >/dev/null
+#
+#exec env - PATH=$PATH runsvdir /var/service 'log: ............................................................
+#........................................................................................
+#........................................................................................
+#........................................................................................
+#.......................................................................'
+#EOF
+#
+#	chmod +x $PKG/etc/runit/2
+#
+#	mkdir -pv $PKG/etc/sv/gpm
+#	mkdir -pv $PKG/etc/sv/gpm/log
+#
+#	cat > $PKG/etc/sv/gpm/run << "EOF"
+##!/bin/sh
+## Begin gpm service run file
+## concatenate stdout and stderr into one stream for logging.
+#exec 2>&1
+## if the configuration file exists, source it.
+#if [ -f /etc/sysconfig/mouse ]
+#	  then
+#	  . /etc/sysconfig/mouse
+#fi
+## and if it doesn't, or if it's wrong, shout and exit.
+#if [ -z "$MDEVICE" ] || [ -z "$PROTOCOL" ]
+#	  then
+#	  echo "Please create an /etc/sysconfig/mouse file containing"
+#	  echo "MDEVICE and PROTOCOL values"
+#	  exit 1;
+#fi
+## setup and run the service
+#exec  gpm -D -m $MDEVICE -t $PROTOCOL
+## End of gpm service run file
+#EOF
+#
+#	cat > $PKG/etc/sv/gpm/log/run << "EOF"
+##!/bin/sh
+## Begin gpm log service run file
+## start the logging process
+#exec /usr/sbin/svlogd -tt /var/log/gpm
+## End of gpm log service run file
+#EOF
+#
+#	chmod +x $PKG/etc/sv/gpm/run
+#	chmod +x $PKG/etc/sv/gpm/log/run
+#	mkdir -pv $PKG/var/log/gpm
+#
+#	ln -sf /etc/sv/gpm $PKG/var/service/
+#
+#	mkdir -pv $PKG/etc/sv/openssh
+#	mkdir -pv $PKG/etc/sv/openssh/log
+#
+#	cat > $PKG/etc/sv/openssh/run << "EOF"
+##!/bin/sh
+## Begin OpenSSH service run file
+#/usr/bin/ssh-keygen -A
+#exec /usr/sbin/sshd -De 2>&1
+## End of OpenSSH service run file
+#EOF
+#
+#	cat > $PKG/etc/sv/openssh/log/run << "EOF"
+##!/bin/sh
+## Begin OpenSSH log service file
+#exec /usr/bin/svlogd -tt /var/log/openssh
+## End of OpenSSH log service run file
+#EOF
+#
+#	chmod +x $PKG/etc/sv/openssh/run
+#	chmod +x $PKG/etc/sv/openssh/log/run
+#	mkdir -pv $PKG/var/log/openssh
+#	ln -sf /etc/sv/openssh $PKG/var/service
+#
+#	cat > $PKG/etc/issue << EOF
+#n (t) l
+
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"
+
+cat > /root/.profile << "EOF"
+#!/bin/bash
+
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
+	exec startx
+fi
+EOF

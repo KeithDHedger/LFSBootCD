@@ -1,0 +1,646 @@
+#!/bin/bash
+
+if [ X"$THISTTY" = "X" ];then
+	export THISTTY=$(tty)
+fi
+
+WHERE=""
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+BLACK='\e[0;30m'
+NORMAL='\e[0;0m'
+BLUE='\e[1;34m'
+
+ARCH=${ARCH:-$(uname -m)}
+case "$ARCH" in
+	"i486")
+		LFSFLAGS="-O2 -march=i486 -mtune=i686"
+		LIBDIRSUFFIX=""
+		;;
+	"i686")
+		LFSFLAGS="-O2 -march=i686 -mtune=i686"
+		LIBDIRSUFFIX=""
+		;;
+	"x86_64")
+		LFSFLAGS="-O2 -fPIC"
+		LIBDIRSUFFIX="64"
+		;;
+	*)
+		LFSFLAGS="-O2"
+		LIBDIRSUFFIX=""
+		;;
+esac
+
+export LIBDIRSUFFIX LFSFLAGS
+
+if [ -e /etc/lfspkg.rc ];then
+	. /etc/lfspkg.rc
+fi
+
+if [ -e ~/.lfspkg.rc ];then
+	. ~/.lfspkg.rc
+fi
+
+TMP=${TMP:-/tmp/LFS}
+OUTPUT=${OUTPUT:-$TMP}
+XORG_PREFIX=${XORG_PREFIX:-/usr}
+
+if [ ! -d "$TMP" ];then mkdir -p "$TMP" &>/dev/null;fi
+if [ ! -d "$OUTPUT" ];then mkdir -p "$OUTPUT" &>/dev/null;fi
+if [ ! -d "$SOURCEARCHIVES" ];then mkdir -p "$SOURCEARCHIVES" &>/dev/null;fi
+if [ ! -d "$XORG_PREFIX" ];then mkdir -p "$XORG_PREFIX" &>/dev/null;fi
+
+export TMP OUTPUT XORG_PREFIX
+SCRIPTLOG=${SCRIPTLOG:-0}
+LOGDIR=${LOGDIR:-"/tmp/logs"}
+
+scriptLog ()
+{
+	local timestr
+	if [ $SCRIPTLOG -eq 1 ];then
+		if [ -e /bin/date ];then
+			timestr="$(date +"-%H:%M:%S")"
+		else
+			timestr=""
+		fi
+		mkdir -p "$LOGDIR" &>/dev/null||true
+		exec > >(tee -ia "${LOGDIR}/${1}${timestr}.log")
+	fi
+}
+
+log ()
+{
+	for arg in "$@"
+		do
+			echo "$arg"|tee -a /tmp/lfspkg.log
+		done
+}
+
+findnextgid ()
+{
+	local nextgid=1
+	local gidtype=$1
+	local sysmax=$(cat /etc/login.defs|grep "^SYS_GID_MAX"|awk '{print $2}')
+	local usermin=$(cat /etc/login.defs|grep "^GID_MIN"|awk '{print $2}')
+
+	if [ "X$gidtype" = "Xsystem" ];then
+		nextgid=0
+	else
+		nextgid=$usermin
+	fi
+
+	while read ANS
+		do
+			if [ X$ANS != "X" ];then
+				if [ $ANS -lt $sysmax -a X$gidtype = "Xsystem" -o $ANS -ge $usermin -a X$gidtype = "X" ];then
+					if [ $nextgid -lt $ANS ];then
+						echo $nextgid
+						return
+					else
+						((nextgid=nextgid+1))
+					fi
+				fi
+			fi
+		done < <(cat /etc/group | sed -e 's/:/ /g' | awk '{print $3}' | sort -n)
+
+		echo $nextgid
+}
+
+findnextuid ()
+{
+	local nextuid=0
+	local usertype=$1
+	local sysmax=$(cat /etc/login.defs|grep "^SYS_UID_MAX"|awk '{print $2}')
+	local usermin=$(cat /etc/login.defs|grep "^UID_MIN"|awk '{print $2}')
+
+	if [ "X$usertype" = "Xsystem" ];then
+		nextuid=0
+	else
+		nextuid=$usermin
+	fi
+
+	while read ANS
+		do
+			if [ X$ANS != "X" ];then
+				if [ $ANS -lt $sysmax -a X$usertype = "Xsystem" -o $ANS -ge $usermin -a X$usertype = "X" ];then
+					if [ $nextuid -lt $ANS ];then
+						echo $nextuid
+						return
+					else
+						((nextuid=nextuid+1))
+					fi
+				fi
+			fi
+		done < <(cat /etc/passwd | sed -e 's/:/ /g' | awk '{print $3}' | sort -n)
+
+		echo $nextuid
+}
+
+findnextpair ()
+{
+	local type=$1
+	local gid=0
+	local uid=0
+
+	gid=$(findnextgid $1)
+	uid=$(findnextuid $1)
+
+	if [ $gid -gt $uid ];then
+		echo $gid
+	else
+		echo $uid
+	fi
+}
+
+findArchive ()
+{
+	local url="$1"
+	local name="$2"
+	local suffix="$3"
+
+	echo -e "${GREEN}Checking ...${NORMAL}" >&2
+	links -dump "$url"|grep "$name" |awk '{print $NF}'|grep "${suffix}$"|sort -r|head -n1
+}
+
+checkversion ()
+{
+	local maxlen=0
+	local val1=( ${1//./ } )
+	local val2=( ${2//./ } )
+	local value1
+	local value2
+	local j
+	local mult
+
+	maxlen=${#val1[@]}
+
+	if [ ${#val2[@]} -gt $maxlen ];then
+		maxlen=${#val2[@]}
+	fi
+	for ((j=0;j<$maxlen;j++))
+		do
+			if [ "X${val1[$j]}" = "X" ];then
+				val1[$j]=0
+			fi
+			if [ "X${val2[$j]}" = "X" ];then
+				val2[$j]=0
+			fi
+		done
+
+	value1=0
+	mult=1
+	for ((j=${#val1[@]}-1;j>-1;j--))
+		do
+			value1=$((10#$value1))
+			val1[$j]=$((10#${val1[$j]}))
+			value1=$(($value1+(${val1[$j]}*mult)))
+			mult=$((mult*100))
+		done
+	value2=0
+	mult=1
+	for ((j=${#val2[@]}-1;j>-1;j--))
+		do
+			value2=$((10#$value2))
+			val2[$j]=$((10#${val2[$j]}))
+			value2=$(($value2+(${val2[$j]}*mult)))
+			mult=$((mult*100))
+		done
+
+	if [ $value1 -gt $value2 ];then
+		echo 1
+	fi
+	if [ $value1 -lt $value2 ];then
+		echo -1
+	fi
+	if [ $value1 -eq $value2 ];then
+		echo 0
+	fi
+}
+
+checketc ()
+{
+	local package="$1"
+	local inputflag=true
+	local dest
+	local testflag=false
+
+	if [ ! -d "${package}/etc" -o $CHECKETC -eq 0 ];then
+		return 0
+	else
+
+	if [ X"$THISTTY" = "X" ];then
+		export THISTTY=$(tty)
+	fi
+
+	exec 6<&0
+	exec 0<$THISTTY
+
+	while read ETCFILES
+		do
+			from="$ETCFILES"
+			to="${ETCFILES#$PKG}"
+			if [ -e "$from" -a -e "$to" ];then
+				if ! diff -Bs "$from" "$to" &>/dev/null;then
+					testflag=true
+				fi
+			fi
+		done < <(find "${package}/etc" -type f)
+
+	if $testflag;then
+		echo "Possible config files have neen found!"
+		while $inputflag
+			do
+				read -p "Do you want to (R)eplace new files with old,(I)gnore new files,(O)verwrite old files with new,(K)eep new files with .new suffix? " ANSWER
+				case $ANSWER in
+					I|i)
+						rm -rf "${package}/etc"
+						inputflag=false
+						;;
+					K|k)
+						while read ETCFILES
+							do
+								mv "$ETCFILES" "${ETCFILES}.new"||true
+								dest=$(dirname "${ETCFILES#$package}")
+								cp "${ETCFILES#$package}" "${package}${dest}"||true
+							done < <(find "${package}/etc" -type f)
+						inputflag=false
+						;;
+					O|o)
+						echo "All default config files for this package in /etc will be replaced with the default files!"
+						inputflag=false
+						;;
+					R|r)
+						while read ETCFILES
+							do
+								from="$ETCFILES"
+								to="${ETCFILES#$PKG}"
+								cp "$to" "$from"||true
+							done < <(find "${package}/etc" -type f)
+						inputflag=false
+						;;
+					*)
+						echo "Please enter I,K or O"
+						;;
+				esac
+			done
+		fi
+		return 0
+	fi
+	exec 0<&6 6<&-
+}
+
+gettar ()
+{
+	local url="$1" tarname outname
+	local section
+
+	if [ ${NODOWNLOAD:-0} -eq 1 ];then
+		return
+	fi
+
+	if [ "X$2" != "X" ];then
+		section="$2"
+	else
+		section=""
+	fi
+ 
+ 	if [ "X$3" != "X" ];then
+		outname="-O $3"
+	else
+		outname=""
+	fi
+ 
+
+	if [ ! -e "$SOURCEARCHIVES" ];then
+		mkdir -vp "$SOURCEARCHIVES"||true
+	fi
+
+	mkdir -vp "${SOURCEARCHIVES}/$section" 2>/dev/null||true
+	pushd "${SOURCEARCHIVES}/$section"
+		if ! type wget &> /dev/null;then
+			echo "No 'wget' installed cannot download archive"
+			popd
+			return
+		fi
+
+		tarname="$(basename "$url")"
+		if [ -e $tarname ];then
+			popd
+			return
+		fi
+
+		if ! wget --no-check-certificate -c "$url" $outname;then
+			echo "!!!!!!!Can't download file $1!!!!!"
+			if [ $EXITONFAIL -eq 1 ];then
+				popd
+				exit -1
+			fi
+		fi
+	popd
+}
+
+noblastlink ()
+{
+	local name="$1"
+
+	find "$name" -iname "*.la" -exec rm '{}' \;
+
+	pushd "$name"
+		while read DIR
+			do
+				if [ $DIR != "." ];then
+					realclean=/${DIR/"./"/}
+					if [ X"$(file "$realclean"|grep symbolic)" != "X" ];then
+						echo $DIR is a link
+						pushd "${name}/$(dirname "$DIR")"
+							mkdir -vp "${name}/$(readlink -f "$realclean")"
+							mv "$(basename "${DIR}")"/* "${name}$(readlink -f "$realclean")"
+							rm -r "${name}/${DIR}"
+						popd
+					fi
+				fi
+			done < <(find -type d)
+	popd
+
+	ldconfig||true
+}
+
+getindexes ()
+{
+	echo -e "${GREEN}Getting index pages ...${NORMAL}" 1>&2
+	pushd /tmp &>/dev/null
+		if [ $USESTABLE -eq 1 ];then
+			wget http://www.linuxfromscratch.org/blfs/view/stable/longindex.html -O blfsindex.html 2>/dev/null
+			wget http://www.linuxfromscratch.org/lfs/view/stable/longindex.html -O lfsindex.html 2>/dev/null
+		else
+			wget http://www.linuxfromscratch.org/blfs/view/svn/longindex.html -O blfsindex.html 2>/dev/null
+			wget http://www.linuxfromscratch.org/lfs/view/development/longindex.html -O lfsindex.html 2>/dev/null
+		fi
+	popd &>/dev/null
+}
+
+makepkginfo ()
+{
+	local appname="$1"
+	local page
+	local subpage
+	local infodata
+	local vers
+
+	pushd "${DATABASEFOLDER}" &>/dev/null
+		for usepage in "blfsstable" "lfsstable" "blfsdev" "lfsdev"
+			do
+				page=""
+				case $usepage in
+					"blfsstable")
+						echo -e "${GREEN}Checking BLFS (stable) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat blfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/blfs/view/stable/${subpage}"
+						fi
+						;;
+					"lfsstable")
+						echo -e "${GREEN}Checking LFS (stable) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat lfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/lfs/view/stable/${subpage}"
+						fi
+						;;
+					"blfsdev")
+						echo -e "${GREEN}Checking BLFS (development) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat blfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/blfs/view/svn/${subpage}"
+						fi
+						;;
+					"lfsdev")
+						echo -e "${GREEN}Checking LFS (development) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat lfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/lfs/view/development/${subpage}"
+						fi
+						;;
+				esac
+
+				if [ X"$page" != "X" ];then
+					echo "$page"
+					if [ ! -e ${appname}.html ];then
+						wget $page -O ${appname}.html 2>/dev/null
+					fi
+					case $usepage in
+					"blfsstable" | "blfsdev")
+						infodata=$(cat ${appname}.html | tr "\n" "|" | grep -o '</h2>.*<p>.*</p>.*<p>' | awk -F'<p>' '{print $2}'|awk -F'</p>' '{print $1}'|sed 's/|/\n/g')
+						;;
+					"lfsdev" | "lfsstable")
+						infodata=$(cat ${appname}.html | tr "\n" "|" | grep -o '</h1>.*</p>'|awk -F'<p>' '{printf $2}'|awk -F'</p>' '{print $1}'|sed 's/|/\n/g')
+						;;
+					esac
+					echo $infodata|sed 's/<[^<>]*>//g;s/\. /\.\n/g'
+					return
+				fi
+			done
+
+		for vers in "14.2" "14.1" "14.0" "13.37" "13.1"
+			do
+				echo -e "${GREEN}Checking Slackbuilds version $vers for Info ...${NORMAL}" 1>&2
+				subpage=$(grep -i "SLACKBUILD LOCATION:[ ]*\./[[:alnum:]]*/${appname}$" "${vers}.txt" 2>/dev/null)||true
+				if [ X"${subpage}" != "X" ];then
+					subpage=${subpage#?*./}
+					page="http://slackbuilds.org/slackbuilds/$vers/${subpage}/slack-desc"
+					if [ ! -e ${appname}-info ];then
+						wget $page -O ${appname}-info 2>/dev/null
+					fi
+					infodata=$(tail -n11 ${appname}-info|tr "\n" "|"|sed "s@${appname}:[ ]*@@Ig;s@[|][|]*@\n@g")
+					echo "$infodata"
+					return
+				fi
+			done
+	echo -e "${RED}No info found ..." 1>&2
+	popd &>/dev/null
+}
+
+showwebpage ()
+{
+	local appname="$1"
+	local page
+	local subpage
+	local infodata
+	local vers
+
+	pushd "${DATABASEFOLDER}" &>/dev/null
+		for usepage in "blfsstable" "lfsstable" "blfsdev" "lfsdev"
+			do
+				page=""
+				case $usepage in
+					"blfsstable")
+						echo -e "${GREEN}Checking BLFS (stable) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat blfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/blfs/view/stable/${subpage}"
+						fi
+						;;
+					"lfsstable")
+						echo -e "${GREEN}Checking LFS (stable) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat lfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/lfs/view/stable/${subpage}"
+						fi
+						;;
+					"blfsdev")
+						echo -e "${GREEN}Checking BLFS (development) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat blfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/blfs/view/svn/${subpage}"
+						fi
+						;;
+					"lfsdev")
+						echo -e "${GREEN}Checking LFS (development) for $appname version ...${NORMAL}" 1>&2
+						subpage=$(cat lfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+						if [ X${subpage} != "X" ];then
+							page="http://www.linuxfromscratch.org/lfs/view/development/${subpage}"
+						fi
+						;;
+				esac
+
+				if [ X"$page" != "X" ];then
+					xdg-open "$page"
+					return
+				fi
+			done
+
+		for vers in "14.2" "14.1" "14.0" "13.37" "13.1"
+			do
+				echo -e "${GREEN}Checking Slackbuilds version $vers for Info ...${NORMAL}" 1>&2
+				subpage=$(grep -i "SLACKBUILD LOCATION:[ ]*\./[[:alnum:]]*/${appname}$" "${vers}.txt" 2>/dev/null)||true
+				if [ X"${subpage}" != "X" ];then
+					subpage=${subpage#?*./}
+					page="http://slackbuilds.org/slackbuilds/$vers/${subpage}"
+					xdg-open "$page"
+					return
+				fi
+			done
+	echo -e "${RED}No info found ..." 1>&2
+	popd &>/dev/null
+}
+
+printversioninfo ()
+{
+	case $(checkversion $1 $2) in
+		1)
+			echo -e "${BLUE}Package $3 may need updating to $1${NORMAL}" >&2
+#			echo "$4"
+			;;
+		-1)
+			echo -e "${RED}Package $3 build script version greater than documented version ???${NORMAL}" >&2
+			echo -e "${RED}Package $3 build script version=$2, documented version=$1${NORMAL}" >&2
+			
+			;;
+		0)
+			echo -e "${GREEN}Package $3 version $2 is Ok ...${NORMAL}" >&2
+			;;
+	esac
+	echo "$4"
+}
+
+checkforversion ()
+{
+	local appname
+	local page
+	local subpage
+	local infodata
+	local vers
+	local packageversion
+	local packages
+
+	pushd "${DATABASEFOLDER}" &>/dev/null
+		for packages in ${OPTS[@]}
+			do
+				appname=$packages
+				for usepage in "lfsstable" "blfsstable" "14.2" "14.1" "14.0" "13.37" "13.1" "lfsdev" "blfsdev"
+					do
+						case $usepage in
+							"lfsstable")
+								echo -e "${GREEN}Checking LFS (stable) for $appname version ...${NORMAL}" 1>&2
+								subpage=$(cat lfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+								if [ X${subpage} != "X" ];then
+									page="http://www.linuxfromscratch.org/lfs/view/stable/${subpage}"
+								fi
+								;;
+							"blfsstable")
+								echo -e "${GREEN}Checking BLFS (stable) for $appname version ...${NORMAL}" 1>&2
+								subpage=$(cat blfsindex1.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+								if [ X${subpage} != "X" ];then
+									page="http://www.linuxfromscratch.org/blfs/view/stable/${subpage}"
+								fi
+								;;
+							"lfsdev")
+								echo -e "${GREEN}Checking LFS (development) for $appname version ...${NORMAL}" 1>&2
+								subpage=$(cat lfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+								if [ X${subpage} != "X" ];then
+									page="http://www.linuxfromscratch.org/lfs/view/development/${subpage}"
+								fi
+								;;
+							"blfsdev")
+								echo -e "${GREEN}Checking BLFS (development) for $appname version ...${NORMAL}" 1>&2
+								subpage=$(cat blfsindex0.html | grep -i "/${appname}.html"|sed -n 's/.*\(".*.html"\).*/\1/g;s/"//gp'|head -n1)
+								if [ X${subpage} != "X" ];then
+									page="http://www.linuxfromscratch.org/blfs/view/svn/${subpage}"
+								fi
+								;;
+							*)
+								echo -e "${GREEN}Checking Slackbuilds version $usepage for $appname version ...${NORMAL}" 1>&2
+								linenumber=$(grep --line-number -i "SLACKBUILD NAME:[ ]*${appname}$" "${usepage}.txt"|awk -F: '{print $1}')
+								if [ X$linenumber != "X" ];then
+									vers=$(sed -n "$((linenumber+3))p" "${usepage}.txt"|awk -F: '{print $2}')
+									infodata=$(sed -n "/name=${appname}/I,/Installed version=/p" "${DATABASE}")
+									packageversion=$(echo "$infodata"|sed -n '2p'|awk -F= '{print $2}')
+									printversioninfo $vers $packageversion $appname "$infodata"
+									subpage=$(grep -i "SLACKBUILD LOCATION:[ ]*\./[[:alnum:]]*/${appname}$" "${usepage}.txt")
+									subpage=${subpage#?*./}
+									page="http://slackbuilds.org/repository/${usepage}/${subpage}/?search=${appname}"
+									echo "More info here: $page"
+									continue 2
+								fi
+								;;
+						esac
+
+						if [ X${page} != "X" ];then
+							if [ ! -e ${appname}.html ];then
+								wget $page -O ${appname}.html 2>/dev/null
+							fi
+							infodata=$(cat ${appname}.html|grep -i "\b$appname\b"|head -n1)							
+							vers=${infodata##?*-}
+							infodata=$(sed -n "/name=${appname}$/I,/Installed version=/p" "${DATABASE}")
+							packageversion=$(echo "$infodata"|sed -n '2p'|awk -F= '{print $2}')
+							printversioninfo $vers $packageversion $appname "$infodata"
+							continue 2
+					fi
+					done
+				echo -e "${RED}No version info for $appname found ...${NORMAL}" 1>&2
+			done
+	popd &>/dev/null
+}
+
+packageclean ()
+{
+	local name="$1"
+
+	if [ -e ./preinstall ];then
+		cp ./preinstall "$name"
+	fi
+
+	if [ -e ./postinstall ];then
+		cp ./postinstall "$name"
+	fi
+
+	if [ -e ./info ];then
+		cp ./info "$name"
+	fi
+
+	pushd "$name"
+		find "$name" -iname "*.la" -exec rm '{}' \;
+		find | xargs file | grep -e "executable" -e "shared object" | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+	popd
+	ldconfig||true
+}
+

@@ -1,0 +1,1 @@
+The UDisks package provides a storage daemon that implements well-defined D-Bus interfaces that can be used to query and manipulate storage devices.

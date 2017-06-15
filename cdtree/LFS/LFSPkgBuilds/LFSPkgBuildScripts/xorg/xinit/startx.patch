@@ -1,0 +1,27 @@
+*** startx	2015-03-20 17:13:20.000000000 +0000
+--- startx.mine	2015-04-05 15:21:31.000000000 +0100
+***************
+*** 104,114 ****
+      # When starting the defaultserver start X on the current tty to avoid
+      # the startx session being seen as inactive:
+      # "https://bugzilla.redhat.com/show_bug.cgi?id=806491"
+!     tty=$(tty)
+!     if expr match "$tty" '^/dev/tty[0-9]\+$' > /dev/null; then
+!         tty_num=$(echo "$tty" | grep -oE '[0-9]+$')
+!         vtarg="vt$tty_num"
+!     fi
+  
+  
+      # For compatibility reasons, only use xserverrc if there were no server command line arguments
+--- 104,114 ----
+      # When starting the defaultserver start X on the current tty to avoid
+      # the startx session being seen as inactive:
+      # "https://bugzilla.redhat.com/show_bug.cgi?id=806491"
+! #    tty=$(tty)
+! #    if expr match "$tty" '^/dev/tty[0-9]\+$' > /dev/null; then
+! #        tty_num=$(echo "$tty" | grep -oE '[0-9]+$')
+! #        vtarg="vt$tty_num"
+! #    fi
+  
+  
+      # For compatibility reasons, only use xserverrc if there were no server command line arguments

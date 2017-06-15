@@ -1,0 +1,1 @@
+The IcedTea-Sound package contains the PulseAudio-5.0 provider which was removed from IcedTea itself from version 2.5.0 onwards. More providers may be included in the future.

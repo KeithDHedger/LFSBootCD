@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+#©keithhedger Fri 20 Feb 18:02:39 GMT 2015 kdhedger68713@gmail.com
+
+. /usr/share/LFSPkg/LFSFunctions
+
+UIDGIDPAIR=$(findnextpair "system")
+groupadd -rfg $UIDGIDPAIR davfs2||true
+useradd  -d /dev/null -s /bin/false  -g davfs2 -ru $UIDGIDPAIR davfs2||true

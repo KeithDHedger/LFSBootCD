@@ -1,0 +1,2 @@
+Colord is a system activated daemon that maps devices to color profiles.
+It is used by GNOME Color Manager for system integration and use when there are no users logged in.

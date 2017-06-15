@@ -1,0 +1,7 @@
+Xarchiver (A GTK+2 only Archive Manager)
+Xarchiver is a Desktop Environment independent archiver frontend.
+All common archive types are supported. RPM and DEB packages are
+handled without their package managers. To run it you only need
+GTK+2 libraries and obviously the various rar, arj and 7z for
+these archive types.
+Homepage: http://xarchiver.sourceforge.net/

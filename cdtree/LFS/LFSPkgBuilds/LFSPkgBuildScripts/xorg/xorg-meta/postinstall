@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 10 Feb 16:38:38 GMT 2015 kdhedger68713@gmail.com
+
+fc-cache -f

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#©keithhedger Wed 11 Feb 15:18:13 GMT 2015 kdhedger68713@gmail.com
+
+
+. /usr/share/LFSPkg/LFSFunctions
+
+mkdir -vp /usr/share/glib-2.0/||true
+
+glib-compile-schemas /usr/share/glib-2.0/schemas
+
+exit 0

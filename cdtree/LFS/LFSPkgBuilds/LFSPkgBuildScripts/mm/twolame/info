@@ -1,0 +1,7 @@
+twolame (an MP2 Encoder)
+TwoLAME is an optimized MPEG Audio Layer 2 (MP2) encoder.
+TwoLAME should be able to be used as a drop-in replacement for
+LAME (a MPEG Layer 3 encoder). The frontend takes very similar
+command line options to LAME, and the backend library has a very
+similar API to LAME.
+Homepage: http://www.twolame.org/

@@ -1,0 +1,67 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="aria2"
+TARNAME="$PKGNAME"
+VERSION="1.31.0"
+BUILD=1
+SECTION="NET"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.xz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://github.com/${PKGNAME}/${PKGNAME}/releases/download/release-${VERSION}/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	mkdir -vp $PKG/etc/bash_completion.d
+	ln -sv /usr/share/doc/aria2/bash_completion/aria2c $PKG/etc/bash_completion.d
+	wget -c "https://github.com/ziahamza/webui-aria2/archive/master.zip"
+	unzip master.zip
+	cd webui-aria2-master
+	mkdir -vp $PKG/usr/share/doc/aria2/webiface||true
+	cp -rf css flags fonts js configuration.js favicon.ico index.html $PKG/usr/share/doc/aria2/webiface
+	cat > >$PKG/usr/bin/startariawebif << EOF
+#!/bin/bash -e
+
+#©keithhedger Sun 14 May 13:27:34 BST 2017 kdhedger68713@gmail.com
+aria2c --enable-rpc --rpc-listen-all &
+xdg-open /usr/share/doc/aria2/webiface/index.html
+EOF
+	chmod +x $PKG/usr/bin/startariawebif
+popd
+
+checketc "$PKG"
+packageclean "$PKG"
+
+cp ./preinstall ./postinstall ./info "$PKG" &>/dev/null || true
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

@@ -1,0 +1,67 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="x-apps-8.0"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="xterm"
+TARNAME="$PKGNAME"
+VERSION="327"
+BUILD=${BUILD:-1}
+SECTION="XORG"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tgz"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "ftp://invisible-island.net/xterm/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	sed -i '/v0/,+1s/new:/new:kb=^?:/' termcap
+	echo -e '\tkbs=\\177,' >>terminfo
+	TERMINFO=/usr/share/terminfo ./configure $XORG_CONFIG --with-app-defaults=/etc/X11/app-defaults
+	make $MAKEFLAGS||make || exit 1
+	make install DESTDIR=$PKG || exit 1
+	make install-ti DESTDIR=$PKG || exit 1
+	mkdir -vp $PKG/etc/X11/app-defaults/ || true
+	cat >> $PKG/etc/X11/app-defaults/XTerm << "EOF"
+*VT100*locale: true
+*VT100*faceName: Monospace
+*VT100*faceSize: 10
+*backarrowKeyIsErase: true
+*ptyInitialErase: true
+EOF
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"

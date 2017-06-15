@@ -1,0 +1,73 @@
+# If you have a multicore machine, firefox will now use all the cores by
+# default. Exceptionally, you can reduce the number of cores, e.g. to 1,
+# by uncommenting the next line and setting a valid number of CPU cores.
+#mk_add_options MOZ_MAKE_FLAGS="-j4"
+
+# If you have installed DBus-Glib comment out this line:
+#ac_add_options --disable-dbus
+
+# If you have installed wireless-tools comment out this line:
+ac_add_options --disable-necko-wifi
+
+# Uncomment this option if you wish to build with gtk+-2
+ac_add_options --enable-default-toolkit=cairo-gtk2
+
+# If you have installed libnotify comment out this line:
+
+#ac_add_options --disable-libnotify
+
+# Uncomment these lines if you have installed optional dependencies:
+#ac_add_options --enable-system-hunspell
+ac_add_options --enable-startup-notification
+
+# Comment out following option if you have PulseAudio installed
+ac_add_options --disable-pulseaudio
+
+# If you have installed GConf, comment out this line
+#ac_add_options --disable-gconf
+
+# Comment out following options if you have not installed
+# recommended dependencies:
+ac_add_options --enable-system-sqlite
+ac_add_options --with-system-libevent
+ac_add_options --with-system-libvpx
+ac_add_options --with-system-nspr
+ac_add_options --with-system-nss
+ac_add_options --with-system-icu
+
+# If you are going to apply the patch for system graphite
+# and system harfbuzz, uncomment these lines:
+#ac_add_options --with-system-graphite2
+#ac_add_options --with-system-harfbuzz
+
+# It is recommended not to touch anything below this line
+ac_add_options --prefix=/usr
+ac_add_options --enable-application=browser
+ac_add_options --libdir=/usr/libLIBDIRSUFFIX
+
+ac_add_options --disable-crashreporter
+ac_add_options --disable-updater
+ac_add_options --disable-debug
+ac_add_options --disable-tests
+
+ac_add_options --enable-optimize
+ac_add_options --enable-strip
+ac_add_options --enable-install-strip
+
+ac_add_options --enable-gio
+ac_add_options --enable-official-branding
+ac_add_options --enable-safe-browsing
+ac_add_options --enable-url-classifier
+
+ac_add_options --enable-system-cairo
+ac_add_options --enable-system-ffi
+ac_add_options --enable-system-pixman
+
+ac_add_options --with-pthreads
+
+ac_add_options --with-system-bz2
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-png
+ac_add_options --with-system-zlib
+
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/firefox-build-dir

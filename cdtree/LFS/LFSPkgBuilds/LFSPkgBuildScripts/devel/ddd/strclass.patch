@@ -1,0 +1,12 @@
+*** ddd-3.3.12/ddd/strclass.C	Wed Feb 11 17:25:06 2009
+--- ddd-3.3.12/ddd/strclass.C-1	Wed Sep 12 18:21:14 2012
+***************
+*** 39,44 ****
+--- 39,45 ----
+  #include <limits.h>
+  #include <new>
+  #include <stdlib.h>
++ #include <cstdio>
+  
+  void string::error(const char* msg) const
+  {

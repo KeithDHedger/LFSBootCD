@@ -1,0 +1,4 @@
+help2man (automatic man page generator) 
+help2man is a tool for automatically generating simple manual pages
+from program output.
+Homepage:  http://www.gnu.org/software/help2man

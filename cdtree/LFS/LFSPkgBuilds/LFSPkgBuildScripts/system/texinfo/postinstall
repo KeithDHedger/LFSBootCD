@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+#©keithhedger Tue 3 Feb 19:10:00 GMT 2015 kdhedger68713@gmail.com
+
+pushd /usr/share/info
+	rm -v dir
+	for f in *
+	do
+		install-info $f dir 2>/dev/null
+	done
+popd

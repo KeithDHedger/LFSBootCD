@@ -1,0 +1,7 @@
+libvdpau (VDPAU wrapper library)
+This package contains the libvdpau wrapper library and the
+libvdpau_trace debugging library, along with the header files needed
+to build VDPAU applications. To actually use a VDPAU device, you
+need a vendor-specific implementation library, like the one
+shipped with nvidia's binary graphics driver.
+Homepage: http://cgit.freedesktop.org/~aplattner/libvdpau

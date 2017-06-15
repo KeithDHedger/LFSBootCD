@@ -1,0 +1,2 @@
+The libXdmcp package contains a library implementing the X Display Manager Control Protocol.
+This is useful for allowing clients to interact with the X Display Manager.

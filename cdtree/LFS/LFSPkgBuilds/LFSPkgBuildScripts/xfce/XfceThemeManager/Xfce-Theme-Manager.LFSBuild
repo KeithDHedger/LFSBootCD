@@ -1,0 +1,51 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+PKGNAME="Xfce-Theme-Manager"
+TARNAME="$PKGNAME"
+VERSION="0.3.8"
+BUILD=${BUILD:-1}
+SECTION="XFCE"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.zip"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "https://github.com/KeithDHedger/Xfce-Theme-Manager/archive/master.zip" $SECTION ${TARBALL}
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+
+unzip "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+pushd "${PKGNAME}-master"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	make $MAKEFLAGS||make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${PKGNAME}-master"

@@ -1,0 +1,1249 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR"
+ content="Mozilla/4.76 [en] (X11; U; Linux 2.2.18 i686) [Netscape]">
+  <meta name="author" content="Martin">
+  <meta name="Description"
+ content="This document descibes a toolset to creaet your own customized rescue CD.">
+  <meta name="Keywords"
+ content="Linux, rescue, CD, mkinitrd, mkbootdisk, mkisofs">
+  <title>Roll your own Linux Rescue or Setup CD</title>
+</head>
+<body
+ style="background-image: url(palazzo2.jpg);">
+<center>
+<h1><img src="cd.gif" style="height: 50px; width: 50px;" align="middle"
+ title="" alt="">&nbsp;&nbsp;&nbsp;<font color="#006600">Roll your own
+Linux Rescue or Setup CD&nbsp;</font>&nbsp;<img src="cd.gif"
+ style="height: 50px; width: 50px;" align="middle" title="" alt=""></h1>
+</center>
+<center><a href="http://www.phenix.bnl.gov/%7Epurschke">Martin L.
+Purschke</a> <br>
+<a href="http://www.bnl.gov/">Brookhaven National Laboratory<br>
+<br>
+</a></center>
+<div align="center">
+Version 3.02 April 11, 2013
+<br>
+<br>
+</div>
+<p><br>
+<br>
+</p>
+<p></p> <hr width="100%"> 
+
+
+<h2><font color="#006600">What's new in V3: one-stage boot, udev, USB, PXE, 64bit</font></h2>
+
+This project started back in 2001 or so with
+Version 1, which has been my workhorse installation system for quite
+some years. 
+<p>
+Over time, I have upgraded this system in a number of ways. 
+<ul> 
+<p>
+<li> In the beginning, there was only one way to make a bootable CD
+through a two-stage boot process, emulating a boot floppy. This is
+long gone, although I had kept a two-stage boot process until version
+2.  Now we are booting in one step from a ram disk.
+
+<p>
+<li> udev support: The system is now using udev to manage its devices.
+
+<p>
+<li> USB and PXE support: Although a bootable CD remains the main
+medium, the project supports booting from a USB stick, as well as a
+network boot through PXE. 
+
+<p>
+<li> The kernel and all executables used to be 32bit binaries, which
+is fully adequate in many cases. However, booting into a 32bit
+environment prevents one from chroot'ing on a 64bit machine, which is
+very useful at times. Out of the box, the system now comes with both
+32- and 64bit installations, which you can select at boot time.
+
+</ul>
+
+
+<h2><font color="#006600">Why you might need a Rescue CD</font></h2>
+
+How often have you found yourself with a machine that doesn't quite
+boot? Kernel went missing? New kernel doesn't boot? Forgot to run grub
+or change the configuration file? Your emergency boot medium is from
+14 kernel versions back? Or you need to quickly set up a few racks
+worth of new machines with just nothing on their harddisks, which you
+want to clone from a master?
+<p>
+
+You will need some way of booting them first to make repairs 
+or  download the OS.  This is where a boot CD comes in handy - it allows
+you to boot your system, independent from anything on the disks, and
+you will be able to make repairs or get your system into a bootable
+state.
+
+<p>
+
+<h2><font color="#006600">Your Own Custom Boot CD</font></h2>
+
+Since the first versions of this project back in 2001 or so, quite a
+number of standard bootable CDs have appeared on the scene. These
+days, virtually every distribution provides a bootable installation CD
+or some standalone Live-CD, which allows you to test drive a particular
+distribution.
+ 
+<p>
+
+This project has a slightly different purpose. It is meant to be a
+customizable Swiss army knife that allows you to get done what you
+need, quickly. This setup enables you to quickly produce
+<b>your own custom</b> boot CD tailored to your needs. The bare-bones
+CD typically boots in less than 30 seconds on modern hardware.
+
+(I'm always referring to a CD, but the same goes for a USB boot stick,
+or a PXE (network) boot setup.)
+
+<p>
+
+Although I'll provide you with a ready-made 
+<a href="bootcd_3.02.iso.bz2">CD image</a> that you can burn and use as my
+personal version of a rescue CD, the real product here is a script
+and a template setup which you can easily customize to produce your
+own toolset or application. The script automates the whole process of
+producing the various images and comes up with the CD ISO image which
+you can burn.
+
+<p>
+For example, you could use an older PC that's just sitting there as a
+disk-less firewall using the CD, or (that's my main use) use it to
+automate the installation of large Linux clusters. Or you can just
+keep the CD handy for the day when you need to repair a machine. Or
+you can produce your own installation CD (probably a DVD). Whatever
+you need, you can roll your own.
+
+<p>
+
+You will see that there is no X window system here - you get a few
+virtual consoles. Good enough for what we have in mind here. However,
+if you feel you can't do without X... well, you can put it on.
+
+<p>
+<b>Note:</b> I provide the ready-made boot iso file mostly as a
+reference to help you find problems in case you produce a CD which
+doesn't work as expected. It is fully functional, but if you'd ever
+want to use a ssh server on that Rescue system, you can't do that out
+of the box, because the template setup does not ship with ssh host
+keys, and the ssh server is configured to not honor passwords, only
+ssh keys (and obviously, your ssh key isn't on it). Before you make a
+production setup, read the "Using ssh" chapter below.
+
+
+<h2><font color="#006600">Some Basics</font></h2> 
+
+All the magic of making a bootable CD is contained in a standard called
+<a href="http://en.wikipedia.org/wiki/El_Torito_(CD-ROM_standard)">
+"ElTorito"</a>, which specifies the ins and outs of how a bootable CD
+should look like. Luckily, 
+<a href="http://www.itg.uiuc.edu/help/mkisofs/mkisofs.htm">mkisofs</a>,
+the utility that we use to create the CD image, knows all there is to
+know about it, and so the "El Torito" end of this business is really
+easy. With isolinux, I do 
+
+
+
+<font size="+1"><pre>
+mkisofs -b isolinux/isolinux.bin -c isolinux/boot.cat \
+               -o bootcd.iso \
+               -no-emul-boot -boot-load-size 4 -boot-info-table \
+               -J -r -T \
+               -p "purschke@bnl.gov" \
+               -A "Rescue Disk" \
+               cd_top_area
+</pre></font>
+
+and you have a CD that boots. In version 1 of this project, before isolinux, I 
+had make a bootable floppy image, which was much more complicated. 
+
+<h2><font color="#006600">How my Rescue CD boots</font></h2>
+
+The kernel starts booting off the CD. It already knows that its root
+device is a ramdisk under /dev/ram0 (which, at this moment, is still
+completely empty). The kernel recognizes an initial ramdisk first. The
+standard kernel behavior is to unpack that initial ramdisk, which holds
+now the contents of the in-memory root file system.
+
+<p>
+
+Maybe this is a good moment to download and unpack the template to a
+fresh directory, so you can look at what I'm talking about here. You
+will find a number of scripts, a Makefile, and (next to a few others)
+the directories "cdtree", "root_tree32", and "root_tree64".  "cdtree"
+is the area where the ready-made later CD contents will be and where
+the ISO image will be made from. "root_tree32" and "root_tree64" hold the
+contents of the later root file systems of the OS, one for a 32bit
+installation, one for 64bit. Most of the changes and customizations
+you might want to make will take place in the root_treeXX
+areas.
+
+
+<p>
+Again, quickly the sequence: 
+<ul> 
+
+<li> the kernel boots, finds and recognizes the initial ramdisk and 
+unpacks it
+<p>
+
+<li> the kernel then boots using the just-created file system on
+the ramdisk.
+
+</ul>
+
+<p>
+
+If this is confusing, don't worry. Just remember that your normal
+Linux installation usually has the root file system already sitting on
+some physical disk, such as /dev/hda1 or /dev/sda5 or something like
+that. You just need to mount that disk and are ready to go. Here we
+don't have such a ready-made disk, but we have to prepare it on the
+fly first. That's what's happening with the initial ramdisk mechanism.
+
+<p>
+
+You will have realized that the whole OS that we run after the boot is
+entirely ramdisk-based. It does not use or touch any physical disk,
+and even the CD is no longer needed, unless you need it for some special 
+purpose. The whole OS can now function without the CD. 
+
+<p>
+
+<h2><font color="#006600">Before we go on</font></h2>
+
+Let's get ourselves a working setup first. Your host system where you
+build the CD has to provide some minimal functionality, and you will
+need to perform the following steps as root.
+
+Get yourself a fresh directory, and untar the template there. You need 
+to define this topmost directory as TOPDIR. For example:
+
+<font size="+1"><pre>
+mkdir /root/first_try
+cd   /root/first_try
+tar xfj /location/of/the/thing/rescuecd_3.02.tar.bz2 
+export TOPDIR=`pwd`
+</pre></font>
+
+
+<p>
+
+I typically have different boot CD projects sitting in various
+places. Just define TOPDIR to point to the right place you are working
+with.
+
+<p>
+All default settings and definitions are kept in a file
+<tt><font size="+2">$TOPDIR/settings.sh</font></tt>.  While the
+default settings are reasonable (I think), this allows you to adapt
+the project to the environment of your system. There is no need to
+change any of them if the default works for you. 
+
+<p>
+The build process can take a few minutes. The Makefile takes care that only 
+those components which are truly changed are rebuilt.  
+
+<p>
+The Makefile and assorted scripts assume that they can use (and your
+system supports) loopback devices. By default, it wants to use the
+device /dev/loop2 (I found that loop0 and loop1 are occasionally taken
+by some system processes). If you can't use loop2 for any reason (this
+is rare), you can change the loop device in the settings.sh file.
+
+<p>
+Why don't you just type "make" at this point -- that should reproduce the 
+standard bootcd.iso image without any problems. 
+
+
+<h2><font color="#006600">Customizing and Adding Scripts</font></h2>
+
+<b>Note:</b> The above-mentioned "root_tree32" and "root_tree64" areas
+hold the later root file systems for the 32 and 64bit system,
+respectively. For your customizations, you will typically make changes to the
+startup areas in the eventual /etc area - $TOPDIR/root_tree32/etc, or
+$TOPDIR/root_tree64. I will refer to the areas as "root_treeXX" further down. 
+<p>
+Those areas are completely independent at this point. Modifications
+made to, say, the 32 bit system are not reflected in the 64bit system
+automatically. 
+<p>
+You should probably make the same modifications to both areas in order to 
+avoid confusion.
+
+<p>
+As my personal choice, I like to steer the general behavior of the
+system by choosing a run level, just like you can boot your standard
+installations in different run levels (for example single user, no
+network, just console logins, X windows, etc). My template will show
+you how to expand on this.
+
+<p>
+I find that most of the time, all my customizations are in modifying
+or adding startup scripts, or, on rare occasions, adding binaries. I
+rarely have to go beyond that (which you can, easily enough, by the
+way, that's the next chapter). The choice of what scripts run is taken
+by the run level.
+
+<p>
+Let's take a look at the file $TOPDIR/cdtree/isolinux/isolinux.cfg, which 
+controls the boot process. 
+
+<hr />
+<font size="+1"><pre>
+prompt 1
+timeout 100
+display boot.msg
+
+default r2
+
+label r1
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 1 vga=791
+label r2
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 2 vga=791
+label r3
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 3 vga=791
+
+label r1-nofb
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 1
+label r2-nofb
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 2
+label r3-nofb
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 3
+
+label r1-64
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 1 vga=791
+label r2-64
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 2 vga=791
+label r3-64
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 3 vga=791
+
+label r1-64-nofb
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 1
+label r2-64-nofb
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 2
+label r3-64-nofb
+  kernel vm64
+  append  initrd=sdisk64.img root=/dev/ram0 3
+</pre></font>
+<hr />
+
+<p>
+
+This is set up to give you 3 run levels, in either the 32- or 64bit
+version, and with a choice of using the framebuffer or not (looks
+nicer on a console, but there are consoles where this can appear
+garbled). Also, scrolling under a framebuffer is much slower than
+without it, so you if just want to look at something really quick, you
+might be better off without it.
+
+<p> 
+
+So "r2" boots into run level 2 using the 32bit system and the framebuffer; 
+"r2-nofb" is level2, 32bit, and no framebuffer, r2-64 is level 2 in 64bit,
+and r2-64-nofb is level2, 64bit, no framebuffer. Of course you can modify the labels 
+if you prefer a different naming scheme.
+<p>
+ 
+Isolinux will print the contents of
+$TOPDIR/cdtree/isolinux/boot.msg to the screen, wait 10 seconds, and
+then boot by default in run level 2.  The text in boot.msg, which you
+should adapt if you make changes, reads (I have here removed some
+escape characters that bring out some keywords in color on the console):
+
+<hr />
+<font size="+1"><pre>
+  Welcome to Martin's Rescue CD
+   You can read about it at
+    http://www.phenix.bnl.gov/~purschke/RescueCD/
+
+    Select r<n>-xx-xx for kernel options
+    ( -64 for 64 bit, -nofb for no framebuffer)
+    e.g. r2 for 32bit, r2-64 for 64bit, r2-nofb, r2-64-nofb
+
+  - Run Level 1 goes straight into a 
+     single-user shell -- type r1*
+
+  - Run Level 2 normal login shells 
+        --                type r2*
+
+  - Run Level 3 normal login shells AND we
+    get on the network -- type r3*
+
+
+  So what do you want?
+</pre></font>
+<hr />
+<p>
+
+So you get the idea what run levels 1,2,3 are meant to do. 
+
+<p>
+Once the system has booted, the behavior is controlled by its
+/etc/inittab (remember, this is $TOPDIR/root_treeXX/etc/inittab as we
+look at it). The essential lines are:
+
+<hr />
+<font size="+1"><pre>
+
+id:2:initdefault:
+
+# System initialization.
+si::sysinit:/etc/sysinit
+
+#shutdown
+l0:0:wait:/etc/shutdown shutdown
+
+# normal run levels
+l1:1:wait:/bin/bash -i -l
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+
+# reboot
+l6:6:wait:/etc/shutdown reboot
+
+# Trap CTRL-ALT-DELETE
+ca::ctrlaltdel:/etc/shutdown reboot
+
+# Run gettys in standard runlevels
+c1:2345:respawn:/sbin/agetty 38400 tty1 linux
+c2:2345:respawn:/sbin/agetty 38400 tty2 linux
+c3:2345:respawn:/sbin/agetty 38400 tty3 linux
+
+r2:2:wait:/etc/rc.d/rcend 2
+r3:3:wait:/etc/rc.d/rcend 3
+
+</pre></font>
+<hr />
+
+So here you can see how it works. We execute a script /etc/sysinit for
+general initialization, then we call a script /etc/rc.d/rc (by now you
+should know -- $TOPDIR/root_treeXX/etc/rc.d/rc ) with the run level as
+parameter. That's where most of the behavior is defined. You can use
+the run level parameter for anything you like. In the template, it goes
+
+
+<hr />
+<font size="+1"><pre>
+#! /bin/sh
+
+argv1="$1"
+
+if [ $argv1 -eq 1 ] ; then
+exec init -t1 S
+fi
+
+[ $argv1 -gt 2 ] && /etc/start_network.sh
+</pre></font>
+<hr />
+
+<p>
+The handling of run level 1 is for good measure only, since this
+script is never called with parameter 1; the inittab file
+specifies this differently. But you see, it does nothing really for
+run level 2, but remember run level 3?
+
+<hr />
+<font size="+1"><pre>
+  - Run Level 3 normal login shells AND
+    we get on the network --  type r3*
+</pre></font>
+<hr />
+
+So here we execute an additional
+script <tt><font size="+1">/etc/start_network.sh</font></tt> to get on
+the network.
+
+<p>
+You can use the run levels for whatever purpose you need, and there
+is, to my knowledge, no practical limit to the number of such run
+levels.
+
+<p>
+You could, for example, add level 4 and make "r4" the default boot
+level, and say in boot.msg:
+
+<hr />
+<font size="+1"><pre>
+  - Run Level 4 like run level 3, AND
+    we start the firewall setup <Default>
+</pre></font>
+<hr />
+
+Then the script might read
+
+<hr />
+<font size="+1"><pre>
+#! /bin/sh
+
+argv1="$1"
+
+if [ $argv1 -eq 1 ] ; then
+exec init -t1 S
+fi
+
+[ $argv1 -gt 2 ] && /etc/start_network.sh
+
+[ $argv1 -gt 3 ] && /etc/start_firewall.sh
+</pre></font>
+<hr />
+<p>
+
+Keep in mind, though, that the rc script is executed <i>before</i> we
+get to the handling of the logins. You should not put anything in
+there that takes a long time to complete, or even runs
+indefinitely. You will probably want the ability to login to the
+system when something long is going on. That's the reason that after
+the login handling of the inittab file, we execute yet another script,
+/etc/rc.d/rcend with the same run level parameter, where we can put
+things that will take a long time. For example, on my customized
+install disk, I put the start of the script that will automatically
+install the new OS on the disks into the rcend script. That will run
+for some time, 20, 30 minutes, but I still want to be able to login to
+check on things.
+<p>
+Also keep in mind that you have a full inittab file, so if you need a
+process that needs to run all the time and needs to get restarted if
+it ends or gets killed, you can add it to the inittab file. The
+/sbin/agetty processes you can see above are examples of this.
+
+<h2><font color="#006600">Example: My Custom Install CD</font></h2>
+
+At this point, let me show you some customizations that I made for my
+"automated install" CD. 
+
+Here is my isolinux.cfg (for brevity, I just show one set
+of entries):
+
+<hr />
+<font size="+1"><pre>
+prompt 1
+timeout 100
+display boot.msg
+
+default r5
+
+label r1
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 1 vga=791
+label r2
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 2 vga=791
+label r3
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 3 vga=791
+label r4
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 4 vga=791
+label r5
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 5 vga=791
+
+label r1-nofb
+  kernel vm32
+  append  initrd=sdisk32.img root=/dev/ram0 1
+...
+
+ .... lines deleted ...
+
+</pre></font>
+<hr />
+
+<p>
+
+And the boot.msg file:
+
+<font size="+1"><pre>
+  Welcome to Martin's Rescue CD
+
+         You can read about it at
+    http://www.phenix.bnl.gov/~purschke/RescueCD/
+
+  - Run Level 1 goes straight into a
+        single-user shell --  type r1
+
+  - Run Level 2 normal login shells
+           -- type r2
+
+  - Run Level 3 normal login shells AND
+    we get on the network --  type r3
+
+  - Run Level 4 like 3, AND we mount the
+    distribution area --  type r4
+
+  - Run Level 5 like 4, AND automatically
+    start the installation --  r5 (DEFAULT)
+
+  So what do you want?
+</pre></font>
+
+I added the new run levels 4 and 5 to <font size="+2"><tt>/etc/inittab</tt></font>:
+
+<font size="+1"><pre>
+l2:2:wait:/etc/rc.d/rc 2
+l3:3:wait:/etc/rc.d/rc 3
+l4:4:wait:/etc/rc.d/rc 4
+l5:5:wait:/etc/rc.d/rc 5
+</pre></font>
+
+and
+
+<font size="+1"><pre>
+r2:2:wait:/etc/rc.d/rcend 2
+r3:3:wait:/etc/rc.d/rcend 3
+r4:4:wait:/etc/rc.d/rcend 4
+r5:5:wait:/etc/rc.d/rcend 5
+</pre></font>
+
+
+In the /etc/rc.d/rcend script, I added:
+
+<font size="+1"><pre>
+#! /bin/sh
+#
+
+grep -q /cdrom /etc/mtab && eject /cdrom
+
+[ $1 -gt 3 ] && /etc/mount_distribution.sh
+[ $1 -gt 4 ] && /etc/just_do_it.sh
+</pre></font>
+
+This "just do it" script will go ahead and install the OS. I use this
+fully unattended install for racks of machines where I don't want to hook
+up a console first.
+
+<p>
+
+Do you remember that I said that we do no longer need the CD after the
+boot?  Here in my "rcend" script, I eject the CD before the begin of the
+installation. This is my cue that I can power on the next machine and move
+the CD there, starting the next install. In this way, I can move through a
+typical rack with 32 machines in less than half an hour. The machines
+take much longer to install, but I minimize the time I need to spend in
+the air-conditioned computer room.
+<p>
+I should mention at this point that the CD boots fine from most
+USB-connected CD-ROMS. I noticed that some Live-CDs don't. Most of my
+rack-mounted machines don't have internal CD-ROMs any longer, and in
+any case, moving a USB cable to the next machine is faster than
+moving the actual CD from one drive to the next. 
+
+
+<h2><font color="#006600">Adding or Replacing Binaries</font></font></h2>
+
+<b>Note:</b> I am ready to take suggestions what utilities to add to
+future versions of this project, within reason. For a previous
+version, users had pointed out that I had
+omitted <tt><font size="+2">parted</font></tt> from the distribution,
+and that an earlier version didn't actually come
+with <tt><font size="+2">iptables</font></tt> on board, so running my
+own example above with the firewall would have required substantial
+custom additions to the setup. So if you feel that a given utility
+should be included because it is of general use, please feel free to
+drop me a mail.
+
+<p>
+At some point you will find that you need some application
+or binary that is not on the CD, or you will want to update binaries
+with a newer or different version from your system. That in itself is
+not a big deal, but the binaries need shared libraries and typically a
+number of configuration files, which you will have to find and put on
+the CD as well.
+<p>
+
+Also keep in mind that your host machine has either a 32- or 64bit
+system. Binaries present on your system can only go into either
+root_tree32 or root_tree64 - make sure that you do not mix up the binaries. 
+
+<p>
+Find out what shared libraries the binary you intend to add or replace
+needs. On your system, the ldd command will tell you. See if those
+libraries with the same name are present in the respective
+root_treeXX/lib/ area. 
+<p>
+
+Here is an example that shows what shared libraries the "ls" program needs:
+
+<font size="+1"><pre>
+% ldd /bin/ls
+        linux-vdso.so.1 (0x00007fff87798000)
+        librt.so.1 => /lib64/librt.so.1 (0x00007f646a6d7000)
+        libacl.so.1 => /lib64/libacl.so.1 (0x00007f646a4ce000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007f646a12f000)
+        libpthread.so.0 => /lib64/libpthread.so.0 (0x00007f6469f13000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f646a8e0000)
+        libattr.so.1 => /lib64/libattr.so.1 (0x00007f6469d0e000)
+
+</pre></font>
+
+(You will find that they are all in the right place). 
+
+<p>
+You should try any additions on a copy of your project, or have a good backup
+in case this goes wrong. 
+
+<p>
+Another problem is that ldd will not
+necessarily find all libraries that we need; some programs have
+optional libraries which get loaded dynamically and which will not be
+listed by ldd. One important such program is /bin/sh, where ldd lists
+a rather small list of shared libraries:
+
+<font size="+1"><pre>
+% ldd /bin/sh
+        linux-vdso.so.1 (0x00007fffa67ff000)
+        libncurses.so.5 => /lib64/libncurses.so.5 (0x00007f39350b0000)
+        libdl.so.2 => /lib64/libdl.so.2 (0x00007f3934eac000)
+        libc.so.6 => /lib64/libc.so.6 (0x00007f3934b0d000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f3935302000)
+
+</pre></font>
+
+<p>
+The fact that it loads libdl.so, the dynamic loader, is a bit of a giveaway; 
+you should watch out for those binaries. Here is a way, at least for /bin/sh,
+to find the additional libraries. In a running shell, use
+
+<font size="+1"><pre> 
+$ lsof -p $$
+COMMAND   PID     USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+sh      11324 purschke  cwd    DIR    8,8    32768 3244033 /home/purschke
+sh      11324 purschke  rtd    DIR    8,1     4096       2 /
+sh      11324 purschke  txt    REG    8,1   856344   65554 /bin/bash
+sh      11324 purschke  mem    REG    8,1    52040    3354 /lib/libnss_files-2.15.so
+sh      11324 purschke  mem    REG    8,1    43472    3332 /lib/libnss_nis-2.15.so
+sh      11324 purschke  mem    REG    8,1    88976    3361 /lib/libnsl-2.15.so
+sh      11324 purschke  mem    REG    8,1    31504    3372 /lib/libnss_compat-2.15.so
+sh      11324 purschke  mem    REG    8,1  1689272    3370 /lib/libc-2.15.so
+sh      11324 purschke  mem    REG    8,1    14616    3362 /lib/libdl-2.15.so
+sh      11324 purschke  mem    REG    8,1   333648    3315 /lib/libncurses.so.5.9
+sh      11324 purschke  mem    REG    8,1   140816    3365 /lib/ld-2.15.so
+sh      11324 purschke    0u   CHR 136,10      0t0      13 /dev/pts/10
+sh      11324 purschke    1u   CHR 136,10      0t0      13 /dev/pts/10
+sh      11324 purschke    2u   CHR 136,10      0t0      13 /dev/pts/10
+sh      11324 purschke  255u   CHR 136,10      0t0      13 /dev/pts/10
+</pre></font> 
+
+<p>
+Here you can see that it wants the additional libraries
+libnss_files-2.15.so, libnss_nis-2.15.so, libnsl-2.15.so, and
+libnss_compat-2.15.so.
+
+
+
+<h2><font color="#006600">Upgrading the Kernel/Adding New Drivers</font></font></h2>
+
+The template ships with a recent 3.6.11 kernel which should support
+most of the hardware you might encounter on your system. I enabled
+most disk drivers for different ATA and SATA chipsets, most file systems,
+including most Windows file systems, and so on. Also, the kernel needs
+to support SMP -- many scripts that I use try to find out a lot of
+things about the hardware in order to install the right kernel and set
+the right parameters, and I need to be able to determine if we have a
+single- or multi-CPU system.
+
+<p>
+But sooner or later, you may need a different kernel, or some
+additional driver which is not included, or you need some other
+functionality, or simply a newer version. I assume that you know your
+way around configuring and compiling a new kernel. Start with a fresh
+kernel (if you use your running kernel, be sure to save the config
+file for your system kernel in a safe place). I included my kernel
+config files in $TOPDIR/rescue_kernel32.config (and -64). Use this one
+to initially configure your kernel, then make all the other changes
+that you need.
+
+<p>
+
+Once you have recompiled a new 32bit kernel in <tt><font
+size="+2">/usr/src/linux</font></tt> on your system, copy <tt><font
+size="+2">arch/i386/boot/bzImage</font></tt> to <tt><font
+size="+2">$TOPDIR/cdtree/isolinux/vm32</font></tt>.
+A new 64-bit kernel goes to
+<tt><font size="+2">$TOPDIR/cdtree/isolinux/vm64</font></tt>.
+<p>
+Then run (for 32bit, replace 64 for 32 else)
+
+<font size="+2"><pre>
+INSTALL_MOD_PATH=$TOPDIR/root_tree32 make modules modules_install 
+</pre></font>
+
+You can check the dates of the files in the target directories if you 
+missed a file.
+
+<p>
+While we are making new kernels: There is a parameter in the
+setting.sh file which specifies how large the initial ramdisk file
+systems are that we build. The current setting of 200,000KB makes the
+file system come out to be about 65% full.
+<p>
+If you modify that value in the settings.sh file, you also must
+build new kernels (both 32 and 64bit) with the initial ramdisk size
+adjusted. This is the parameter CONFIG_BLK_DEV_RAM_SIZE in the kernel;
+in the kernel setup, go to "Device Drivers" -> "Block Devices" ->
+"Default Ramdisk size".
+<p>
+Note that you must do this for both kernels.
+
+
+<h2><font color="#006600">Using Space on the CD</font></h2>
+
+As I said before, once the CD is booted, the whole OS is in memory and
+we could do away with the CD. Initially, the CD is mounted as
+/cdrom. You can of course use whatever space you need to store things
+there, and remember that you can also use a DVD instead of 
+a CD if you need more space.
+
+<p>
+
+If you make a CD that is used for some simple task, such as my CD that
+installs an OS on a new machine, you could choose to move some of the
+binaries that I have included in the ramdisk but which are not needed
+for the standard task over to the cdtree/bin area. In this way you make
+the ramdisk smaller, and the CD boots faster because there is simply
+less data to unpack during the preparation of the root file system. On
+the other hand, you still have all other binaries that you might
+occasionally need on the CD.
+
+
+<h2><font color="#006600">Using ssh</font></h2>
+
+The project has supported many network protocols and utilities since
+version 1.  I use a NFS-based distribution for setting up new
+machines, and many other standard utilities are on the CD. You can use
+ssh to log in (and scp) from the machine, and you can run an sshd to
+be able to log in into the machine that's booted from the CD.
+<p>
+
+<b>Warning...</b> I assume that you know what you are doing. Remember
+that you can log into the root account without password, based on the
+assumption that access to this machine is from its console
+only. Starting sshd will change that. For this reason, the standard
+sshd_config files that come with the project will not accept passwords
+at all, only ssh keys. If you decide to change this and let the ssh
+daemon accept passwords, you have been warned. 
+<p>
+In almost all cases I can imagine, I think it is better if you leave
+logins with passwords disabled, and add the ssh keys of the users who might
+need to login via ssh to the <font size="+2"><tt>root_treeXX/root/.ssh/authorized_keys</tt></font>
+files, and then use the ssh agent to manage your keys.
+
+<p>
+
+<a href="https://help.ubuntu.com/community/SSH/OpenSSH/Keys">Here</a>
+is a good explanation how this works.
+
+You should generate a dedicated key pair for this, and use the 
+<a href="http://en.wikipedia.org/wiki/Ssh-agent">ssh-agent</a> to
+manage the key.
+
+<p>
+
+Even more importantly, the project does not come with ssh hosts keys preinstalled,
+which will prevent you from starting the ssh daemon out of the
+box. You would need to generate the keys on the fly on the running
+system, but this is not a good solution, because then they change each
+time you boot the CD.
+
+<p>
+
+I have added a "KEYS" target to the Makefile, which will generate a
+set of hosts keys in $TOPDIR/hostkeys/. I recommend that you not only
+generate them (and distribute them to the root_treeXX areas as
+indicated by the instructions you will get), but that you also
+distribute the same keys to all the different RescueCD projects you
+might have. In this way you will avoid getting the ominous ssh warning
+
+<font size="+1"><pre>
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+</pre></font>
+<p>
+
+In a running system, starting the ssh daemon is a simple as typing
+"/sbin/sshd". You could also start it based on a run levels described
+above.
+
+<p>
+
+
+
+<h2><font color="#006600">Why a CD? Do people actually still use CDs?</font></font></h2>
+
+I get this question now and then...
+<p>
+
+As I said in the introduction, I have added the ability to produce a
+bootable USB stick easily, as well as setting up a PXE network boot
+environment. I carry a bootable stick on my keyring, and it comes in handy at
+times.
+<p>
+That said, my main use of this project is to set up a large number of
+machines quickly. I have a few machines which cannot boot from a stick at
+all, but for those which can, this typically takes going into the BIOS
+setup, selecting the boot medium, then boot - this is the opposite of
+a fast process. With the USB-connected CD-ROM, the BIOS can remain set up 
+to boot off the CD, if any is present, so this is much faster.
+<p>
+And once booted, the USB stick shows up as yet another disk, which,
+depending on the particular BIOS, may show up as /dev/sda, shifting
+all other disk names up. Yes, there are ways to not use physical
+device files through their UUIDs, but it's involved, and it's easier
+if /dev/sda is the same disk as it will be in the eventual system, in
+particular if you have software RAID systems set up with mdadm. You
+don't have this problem with a CD.
+<p>
+But if you want a USB or PXE network boot instead, it's all supported. 
+<p>
+And this brings us to...
+
+
+<h2><font color="#006600">Making a bootable USB stick</font></h2> 
+
+In order to build a bootable USB stick, you first need to format one
+with an ext2 file system. The entire hybrid installation fits on a
+128MB stick, which you often get as promotional items.
+<p>
+
+
+You must set the boot flag of the designated boot partition (and,
+while you are at it, you can change the partition Id to 83). Here is
+what one of my sticks looks like:
+
+
+<font size="+1"><pre> 
+# fdisk /dev/sdb
+
+Command (m for help): p
+
+Disk /dev/sdb: 128 MB, 128974848 bytes
+3 heads, 60 sectors/track, 1399 cylinders, total 251904 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x33c708c2
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1   *        2048      251903      124928   83  Linux
+ 
+</pre></font> 
+
+In fdsik, you can use the "a" command to toggle the boot flag, and "t" to change 
+the type. 
+
+<p>
+The default behavior, customizable in the <tt><font
+size="+2">$TOPDIR/settings.sh</font></tt> file, is to use partition 1 of the 
+device which you identify with the <tt><font
+size="+2">USBDEV</font></tt> variable. For example, if you set this to
+<p>
+<tt><font size="+2">export USBDEV=/dev/sdb</font></tt>
+<p>
+then /dev/sdb1 will be used as the bootable partition. USBDEV needs to point
+to a device and not a particular partition here because the procedure
+needs to set up the master boot record of the device.
+<p>
+
+<b>Be very careful setting this variable. If you mistakenly set this
+to /dev/sda, and this happens to be your system boot disk, you will end
+up with a non-booting system. Review this setting once more before you
+issue the following commands.</b>
+
+<p>
+
+You need to format the stick once (most of the time, they are already
+partioned properly, so we only need to format). 
+<b>In order to avoid disasters, the build system will not format
+the USB stick for you. You need to do that yourself.</b>
+<p>
+Assuming you are using /dev/sdb1 as in the example above:
+<p>
+ <tt><font size="+2">mkfs -t ext2 /dev/sdb1</font></tt>
+<p>
+
+This needs to be done only once. Out of the box, most USB sticks come with a 
+VFAT (Windows) file system. We need an ext2 file system here.
+<p>
+Now issue
+<p>
+ <tt><font size="+2">make USB</font></tt>
+<p>
+and you will end up with a bootable stick.
+<p>
+
+<b>Note1:</b> If you already made your stick bootable with
+"make USB" before, and only wish to update the installation
+with some changes you made, you can issue
+
+<p>
+ <tt><font size="+2">make USBLIGHT</font></tt>
+<p>
+
+This only updates the ramdisk images, kernels, etc, but will not re-do the steps 
+to make the stick bootable. 
+<p>
+<b>Note 2:</b> Building a bootable stick will make temporary changes
+to both the root_tree32 and root_tree64 areas (which are getting
+undone after the build). The areas will appear modified to the
+Makefile, and a full rebuild will be performed the next time you build
+a CD.
+<p>
+The changes we make to the root areas are adding a mount point for the
+USB stick to the /etc/fstab file so you can just say "mount /usbstick"
+(it is not mounted automatically). In addition, we add a file that
+allows the sysinit script to tell that we were booted from USB so it
+will not attempt to mount the CD. It will also change the hostname,
+and with it the later prompt, from "RescueCD" to "RescueUSB".
+
+
+<h2><font color="#006600">Setting up a PXE (Network) Boot Environment</font></h2> 
+
+You can find good documentation for a "Preboot Execution Environment" (PXE)
+<a href="http://en.wikipedia.org/wiki/Preboot_Execution_Environment">here.</a>
+<p>
+A PXE setup allows machines which support it (the BIOS needs to
+support this, but most modern BIOSes do) to boot from the network. 
+<p>
+Basically, the machine to be booted asks for a dynamic IP address from
+the dhcp server. The dhcp servers supplies one, and offers a boot file
+if the machine asks for it. The machine starts to boot, and uses tftp
+to download a configuration file with further instructions, and so
+bootstraps itself.
+<p>
+This is relatively straightforward to set up <b>if you control both
+the dhcp and a tftp server on your network.</b> This is very often not
+the case. If not, this becomes a bit more involved. However, you can
+turn your laptop or another dedicated machine into a standalone boot
+server with a bit of effort. I need this because I have a few machines
+at work where the only way to first-time boot them is through PXE. But
+even outside this application, I have come to appreciate the
+versatility of such a setup. Being able to quickly start a localized
+dhcp server in this way allows another machine, such as a Windows
+Laptop, to easily connect to yours in order to quickly transfer a few
+files, just by connecting them directly with an ethernet cable. I have
+been getting a lot of questions how I set this up, so let me describe
+my setup in a bit more detail.
+<p>
+I sidestep all the complications of running a PXE environment on the
+general network by making a point-to-point network connection between
+my laptop and the machine to be booted, and set up my laptop as the
+boot server. My laptop is typically connected on the wireless network
+at work, which means that the wired ethernet port is available for the
+point-to-point connection. That means:
+<p>
+<ul> 
+<li> The dhcp server that I need to start must only listen on the eth0 
+wired port in order not to conflict with the existing dhcp server on the
+wireless network.
+<li> I set up the tftp server to only listen on eth0.
+</ul>
+<p>
+In particular the first point is important. You should make double
+sure that you are not conflicting with your organization's dhcp
+server. If you do, you might be losing friends really fast.
+<p>
+How this is accomplished varies from distribution to distribution, so
+check the documentation. As an example, here is how it is done on my
+laptop running Gentoo.
+<p>
+In <tt><font size="+2">/etc/conf.d/dhcpd</font></tt> there is a
+section
+
+<font size="+1"><pre>
+# Configure which interface or interfaces to for dhcpd to listen on.
+# List all interfaces space separated. If this is not specified then
+# we listen on all interfaces.
+DHCPD_IFACE="eth0"
+</pre></font>
+<p>
+				   
+I then bring up my eth0 interface with a private address (I
+arbitrarily chose 192.168.80.1) and configure the DHCP server to hand
+out addresses 192.168.80.100 to 192.168.80.254 (which is overkill,
+since we need only one address). Here is my dhcpd.conf file. Note the
+"filename" and "next-server" options, which specify the boot file and
+where to get it from:
+
+<font size="+1"><pre> 
+# cat /etc/dhcp/dhcpd.conf
+
+subnet 192.168.80.0 netmask 255.255.255.0 {
+        range 192.168.80.100 192.168.80.254;
+        default-lease-time 3600;
+        max-lease-time 4800;
+        option subnet-mask 255.255.255.0;
+        filename "PXE/pxelinux.0";
+        next-server 192.168.80.1;
+
+</pre></font> 
+
+I configure my tftp server to only listen on that
+eth0 interface. Here is the configuration for my laptop (again,
+highly distribution-specific):
+<p>
+<font size="+1"><pre>
+$ cat /etc/conf.d/in.tftpd 
+
+# Path to serve files from
+INTFTPD_PATH="/tftpboot/"
+
+INTFTPD_OPTS=" -4 --address 192.168.80.1 -l -v -R 4096:32767 -s ${INTFTPD_PATH}"
+</pre></font>
+<p>
+This makes the tftp server listen only on the IPv4 address given,
+started in standalone mode (not under xinetd control), with the
+specified port range. This is good enough for our server which needs
+to be up only as long as the other machine takes to boot.
+<p>
+So if a host is set up to boot through PXE, it will obtain an address,
+and load the "PXE/pxelinux.0" file from the "next server" 192.168.80.1
+(that's us). All of the following is relative to our tftp area, which
+is, by default, /tftpboot, and then relative to the location of the
+pxelinux.0 file, that is, relative to that "PXE" directory.
+<p>
+In there, we find
+<p>
+<font size="+1"><pre>
+$ ls -l  /tftpboot/PXE
+total 96828
+-rw-r--r-- 1 root root      787 Mar 31 19:58 boot.msg
+-rw-r--r-- 1 root root    26579 Mar 31 19:58 pxelinux.0
+drwxr-xr-x 2 root root        8 Mar 31 19:58 pxelinux.cfg
+-rw-r--r-- 1 root root 49646485 Mar 31 19:58 sdisk32.img
+-rw-r--r-- 1 root root 44860071 Mar 31 19:58 sdisk64.img
+-rw-r--r-- 1 root root  2234240 Mar 31 19:58 vm32
+-rw-r--r-- 1 root root  2370656 Mar 31 19:58 vm64
+</pre></font>
+<p>
+pxelinux.0 is the PXE bootloader, and pxelinux.cfg is the
+configuration directory. You can use this to tailor exactly which 
+machines can use our PXE boot mechanism, but since there is only one
+in our case, we just have a "default" configuration file, which poses
+no restrictions. It is a straight copy of the isolinux.cfg file which
+governs the boot from the CD.
+<p>
+
+Since in most cases your tftp server will be different from
+the machine on which you build the boot images, the "PXE" target
+(<tt><font size="+2">make PXE</font></tt>) will give you a
+<tt><font size="+2">tftp_area.tar.gz</font></tt> tarball, which you can 
+transfer to your server and unpack in your tftp area. It will
+give you the exact directory structure as shown above.
+
+<p>
+In order to streamline setting up the boot server on demand, I have
+made a simple
+script <tt><font size="+2">setup_pxe_boot.sh</font></tt>, which is
+highly distribution-specific, but might help you devise a similar
+setup.  Just executing the script by itself starts the services, and
+calling it with any parameter, such as "stop", will stop them
+again. Along the way, I set the private 192.168.80.0 network up to be
+masqueraded, so the booting machine has a chance to reach out to the
+general internet.  (In the dhcpd configuration file I make no attempt
+to communicate a name server to the booted machine; in the few cases
+where I need this, I can set it by hand).
+<p>
+<font size="+1"><pre>
+#! /bin/sh 
+
+if [ -z $1 ] ; then
+
+    echo "starting network..."
+    ifconfig eth0 192.168.80.1 up
+
+    echo "starting tftp..."
+    /etc/init.d/in.tftpd start
+
+    echo "starting dhcpd..."
+    /etc/init.d/dhcpd  start
+
+    iptables -I INPUT -s 192.168.80.0/24 -j ACCEPT
+    iptables -t nat -A POSTROUTING -o wlan0  -j MASQUERADE
+    echo 1 >   /proc/sys/net/ipv4/ip_forward 
+
+    exit
+fi
+
+echo "stopping tftp..."
+/etc/init.d/in.tftpd stop
+
+echo "stopping dhcpd..."
+/etc/init.d/dhcpd  stop
+
+echo "stopping network..."
+ifconfig eth0 down
+
+iptables -D INPUT -s 192.168.80.0/24 -j ACCEPT
+iptables -t nat -D POSTROUTING -o wlan0  -j MASQUERADE
+echo 0 >   /proc/sys/net/ipv4/ip_forward 
+
+</pre></font>
+<p>
+
+
+<h2><font color="#006600">Download</font></h2>
+
+Here you can download the project:
+<p>
+
+<ul>
+  <li>the <a href="rescuecd_3.02.tar.bz2">template
+setup</a> (md5sum is fd7b9f5b0533476f5f6ae4959269cd84)
+that will allow you to create your own rescue CD. As root, untar this
+one in a new empty area and don't forget to call the area TOPDIR. </li>
+
+
+<p>
+
+  <li>my <a href="bootcd_3.02.iso.bz2">ready-made version of my boot
+CD</a>. (The md5sum of the compressed file is 43d576548871ae968fe8b91937450bd3).
+bunzip2 it and burn the iso as a CD. As I said, it may or may not
+do what you want. But it should boot your system and you can convince
+yourself that it works. If you untar the template and build without
+any modifications, you should restore this exact iso. </li>
+<p>
+
+<li>The <a href="linux-3.6.11.tar.bz2">exact pristine source of
+kernel 3.6.11 </a>that I used. If you want to add drivers or rebuild
+the kernel, you can use this version and the kernel version will match
+what is already in the template. A copy of the configuration file that
+I used comes with the project template.  </li>
+
+</ul>
+
+
+<h2><font color="#006600">Contact me</font></h2>
+I'm Martin Purschke. Find my <a
+ href="http://www.phenix.bnl.gov/%7Epurschke">home page here</a>. And
+you can send me mail at&nbsp; <a href="mailto:purschke@bnl.gov">purschke@bnl.gov.</a>
+<br>
+&nbsp;
+<p></p>
+<hr width="100%">March&nbsp; 30, 2013<br>
+&nbsp;<br>
+<br>
+</body>
+</html>

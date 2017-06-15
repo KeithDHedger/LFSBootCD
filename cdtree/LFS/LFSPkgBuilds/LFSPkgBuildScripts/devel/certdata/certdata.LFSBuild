@@ -1,0 +1,67 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="OpenSSL-1.0.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="certdata"
+TARNAME="$PKGNAME"
+VERSION="8.0"
+BUILD=${BUILD:-1}
+SECTION="DEVEL"
+SUFFIX="LFSPKG"
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+
+rm ./certdata.txt||true
+mkdir -vp $PKG/usr/sbin $PKG/etc/certdata||true
+wget --no-check-certificate "http://anduin.linuxfromscratch.org/BLFS/other/certdata.txt"
+wget --no-check-certificate "http://anduin.linuxfromscratch.org/BLFS/other/make-ca.sh-20170119" -O make-ca.sh
+mv make-ca.sh $PKG/usr/sbin
+chmod +x $PKG/usr/sbin/make-ca.sh
+mv certdata.txt $PKG/etc/certdata
+
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+#certhost='http://mxr.mozilla.org'
+#certdir='/mozilla/source/security/nss/lib/ckfw/builtins'
+#url="$certhost$certdir/certdata.txt?raw=1"
+#
+#wget --no-check-certificate --output-document certdata.txt $url
+#unset certhost certdir url
+#/usr/sbin/make-ca.sh||true
+#
+#SSLDIR=/etc/ssl
+#install -d ${SSLDIR}/certs||true
+#cp -v certs/*.pem ${SSLDIR}/certs||true
+#c_rehash
+#install BLFS-ca-bundle*.crt ${SSLDIR}/ca-bundle.crt||true
+#ln -sv ../ca-bundle.crt ${SSLDIR}/certs/ca-certificates.crt||true
+#unset SSLDIR
+#rm -r certs BLFS-ca-bundle*||true
+
+rm -r "$PKG"

@@ -1,0 +1,7 @@
+krb5 (network authentication protocol)
+Kerberos is a network authentication protocol. It is designed to
+provide strong authentication for client/server applications by using
+secret-key cryptography. A free implementation of this protocol is
+available from the Massachusetts Institute of Technology. Kerberos is
+available in many commercial products as well.
+Homepage: http://web.mit.edu/kerberos/

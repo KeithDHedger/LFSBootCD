@@ -1,0 +1,59 @@
+#!/bin/bash -e
+
+. /usr/share/LFSPkg/LFSFunctions
+
+DEPENDS="babl-0.1.24 Cairo-1.14.8 gdk-pixbuf-2.36.5 Graphviz-2.38.0 libjpeg-turbo-1.5.1 libpng-1.6.28 Pango-1.40.3 Python-2.7.13 gobject-introspection-1.50.0 Vala-0.34.4 json-glib-1.2.2"
+if ! lfspkg -B "$DEPENDS";then
+	exit 100
+fi
+
+PKGNAME="gegl"
+TARNAME="$PKGNAME"
+VERSION="0.3.12"
+BUILD=${BUILD:-1}
+SECTION="DESKTOP"
+SUFFIX="LFSPKG"
+TARBALL="${TARNAME}-${VERSION}.tar.bz2"
+
+scriptLog "${PKGNAME}-${VERSION}"
+gettar "http://download.gimp.org/pub/${PKGNAME}/${VERSION%.?*}/${TARBALL}" $SECTION
+
+PKG="${OUTPUT}/${PKGNAME}"
+
+DOWHAT=${1:-"build"}
+rm -rf "$PKG" || true
+mkdir -p "$PKG"
+tar -xvf "${SOURCEARCHIVES}/${SECTION}/${TARBALL}"
+
+pushd "${TARNAME}-${VERSION}"
+	CFLAGS="$LFSFLAGS" CXXFLAGS="$LFSFLAGS" ./configure ${CONFIGOPTIONS}
+	LC_ALL=en_US make $MAKEFLAGS||LC_ALL=en_US make|| exit 1
+	make install DESTDIR=$PKG || exit 1
+	mkdir -p $PKG/usr/share/gtk-doc/html/gegl/images||true
+	install -v -m644 docs/*.{css,html} $PKG/usr/share/gtk-doc/html/gegl
+	install -v -m644 docs/images/*.{png,ico,svg} $PKG/usr/share/gtk-doc/html/gegl/images
+popd
+
+checketc $PKG
+packageclean "$PKG"
+
+pushd "$PKG"
+	/usr/bin/lfspkg -n "$PKGNAME" -p "$VERSION" -d $SECTION -b $BUILD -s $SUFFIX -m
+popd
+
+case $DOWHAT in
+	up*)
+		lfspkg "^${PKGNAME}-[0-9][0-9]*" "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -u
+		;;
+	"install")
+		lfspkg "${OUTPUT}/${SECTION}/${PKGNAME}-${VERSION}-${BUILD}_${SECTION}_${SUFFIX}.tar.gz" -i
+		;;
+	"build")
+		echo "Just built"
+		;;
+	*)
+		echo "*** Unknown command ***"
+		exit 1
+esac
+
+rm -r "$PKG" "${TARNAME}-${VERSION}"
