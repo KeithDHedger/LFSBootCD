@@ -1,14 +1,21 @@
+
 TOPDIR=$(shell pwd)
 ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*" )
-export TOPDIR
-PUBLICKEYS=$(shell find  $(TOPDIR)/publickeys -iname "*.pub" )
+VERSION=8.0
+BOOTCDNAME=bootcd-$(VERSION).iso
 
-.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean
+export TOPDIR BOOTCDNAME
 
-PACKAGE: $(TOPDIR)/bootcd.iso $(PUBLICKEYS)
-	tar -cvaf $(TOPDIR)/bootcd.tar.xz $(TOPDIR)/bootcd.iso $(TOPDIR)/publickeys
 
-CD: $(TOPDIR)/bootcd.iso
+.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean TEST
+
+TEST:
+	$(TOPDIR)/build_iso.sh
+
+PACKAGE:
+	tar -cvaf $(TOPDIR)/bootcd-$(VERSION).tar.xz $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/publickeys
+
+CD: $(TOPDIR)/$(BOOTCDNAME)
 
 USB: 
 	$(TOPDIR)/build_usb.sh 
@@ -19,7 +26,7 @@ USBLIGHT:
 SOURCES:
 	$(TOPDIR)/getSources
 
-$(TOPDIR)/bootcd.iso: SOURCES KEYS $(ISODEPS) $(TOPDIR)/build_iso.sh $(TOPDIR)/Makefile  $(TOPDIR)/cdtree/isolinux/*.msg $(TOPDIR)/cdtree/isolinux/sdisk32.img $(TOPDIR)/cdtree/isolinux/sdisk64.img
+$(TOPDIR)/$(BOOTCDNAME): SOURCES KEYS $(ISODEPS) $(TOPDIR)/build_iso.sh $(TOPDIR)/Makefile  $(TOPDIR)/cdtree/isolinux/*.msg $(TOPDIR)/cdtree/isolinux/sdisk32.img $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	$(TOPDIR)/getSources
 	$(TOPDIR)/build_iso.sh
 
@@ -39,11 +46,11 @@ $(TOPDIR)/hostkeys/ssh_host_rsa_key.pub:
 	cp $(TOPDIR)/hostkeys/*.pub publickeys
 	
 clean:
-	rm -f $(TOPDIR)/bootcd.iso $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
+	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	rm -rf $(TOPDIR)/loop2
 
 distclean:
-	rm -f $(TOPDIR)/bootcd.iso $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz||true
+	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz||true
 	rm -rf $(TOPDIR)/hostkeys||true
 	rm $(TOPDIR)/*~ ||true
 	rm -rf $(TOPDIR)/publickeys/*||true

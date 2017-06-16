@@ -18,9 +18,10 @@ find $TOPDIR/cdtree -name "*~" -exec rm -f {} \;
 # -P "publisher_id" - again you
 # -A "Application_id"
 
-echo -n "Creating the CD iso image, $TOPDIR/bootcd.iso... "
+echo -n "Creating the CD iso image, $TOPDIR/$BOOTCDNAME ... "
+echo
 mkisofs -b isolinux/isolinux.bin -c isolinux/boot.cat \
-               -o $TOPDIR/bootcd.iso \
+               -o $TOPDIR/$BOOTCDNAME \
                -no-emul-boot -boot-load-size 4 -boot-info-table \
                -J -r -T \
                -p "keithhedger@keithhedger.darktech.org" \
