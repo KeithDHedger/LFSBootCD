@@ -1,11 +1,14 @@
 TOPDIR=$(shell pwd)
 ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*" )
 export TOPDIR
+PUBLICKEYS=$(shell find  $(TOPDIR)/publickeys -iname "*.pub" )
 
-.PHONY: SOURCES CD USB USBLIGHT KEYS clean distclean
+.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean
+
+PACKAGE: $(TOPDIR)/bootcd.iso $(PUBLICKEYS)
+	tar -cvaf $(TOPDIR)/bootcd.tar.xz $(TOPDIR)/bootcd.iso $(TOPDIR)/publickeys
 
 CD: $(TOPDIR)/bootcd.iso
-
 
 USB: 
 	$(TOPDIR)/build_usb.sh 
@@ -34,7 +37,7 @@ $(TOPDIR)/hostkeys/ssh_host_rsa_key:
 $(TOPDIR)/hostkeys/ssh_host_rsa_key.pub:
 	$(TOPDIR)/generate_hostkeys.sh
 	cp $(TOPDIR)/hostkeys/*.pub publickeys
-
+	
 clean:
 	rm -f $(TOPDIR)/bootcd.iso $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	rm -rf $(TOPDIR)/loop2
