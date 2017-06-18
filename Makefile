@@ -6,10 +6,11 @@ BOOTCDNAME=bootcd-$(VERSION).iso
 
 export TOPDIR BOOTCDNAME
 
+TESTFOLDER=$(shell find  $(TOPDIR) -iname "testdirexist" )
 
-.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean TEST
+.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean TEST TESTFOLDER
 
-TEST:
+TEST: $(TESTFOLDER)
 	$(TOPDIR)/build_iso.sh
 
 PACKAGE:
@@ -56,7 +57,5 @@ distclean:
 	rm -rf $(TOPDIR)/publickeys/*||true
 	rm -rf $(TOPDIR)/cdtree/LFS/LFSSourceArchives||true
 	rm $(TOPDIR)/cdtree/LFS/tools32.tar.xz $(TOPDIR)/cdtree/LFS/tools64.tar.xz $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
-
-
-
+	rm $(TOPDIR)/bootcd-$(VERSION).tar.xz
 
