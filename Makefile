@@ -54,7 +54,6 @@ distclean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz||true
 	rm -rf $(TOPDIR)/hostkeys||true
 	rm $(TOPDIR)/*~ ||true
-	rm -rf $(TOPDIR)/publickeys/*||true
 	rm -rf $(TOPDIR)/cdtree/LFS/LFSSourceArchives||true
 	rm $(TOPDIR)/cdtree/LFS/tools32.tar.xz $(TOPDIR)/cdtree/LFS/tools64.tar.xz $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
 	rm $(TOPDIR)/bootcd-$(VERSION).tar.xz
