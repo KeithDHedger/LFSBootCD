@@ -159,10 +159,10 @@ mkdir ${LFS}/tools
 pushd ${LFS}/tools
 	case $(uname -m) in
 		*64)
-			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_64.tar.xz
+			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_64.tar.bz2
 			;;
 		*)
-			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_32.tar.xz .
+			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_32.tar.bz2
 			;;
 	esac
 popd

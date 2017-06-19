@@ -55,6 +55,6 @@ distclean:
 	rm -rf $(TOPDIR)/hostkeys||true
 	rm $(TOPDIR)/*~ ||true
 	rm -rf $(TOPDIR)/cdtree/LFS/LFSSourceArchives||true
-	rm $(TOPDIR)/cdtree/LFS/tools32.tar.xz $(TOPDIR)/cdtree/LFS/tools64.tar.xz $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
-	rm $(TOPDIR)/bootcd-$(VERSION).tar.xz
+	rm $(TOPDIR)/cdtree/LFS/tools-8.0_32.tar.bz2 $(TOPDIR)/cdtree/LFS/tools-8.0_64.tar.bz2 $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
+	rm $(TOPDIR)/bootcd-$(VERSION).tar.xz||true
 
