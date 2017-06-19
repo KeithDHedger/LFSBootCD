@@ -41,6 +41,9 @@ case $(uname -m) in
 		;;
 esac
 
+#set default language
+LANG=${LANG:-"en_GB"}
+
 #cdrom mount point
 CDROMMOUNT=${CDROMMOUNT:-/cdrom}
 readWithDefault "CDROMMOUNT"  "Enter Mountpoint OF CDROM"

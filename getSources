@@ -2,7 +2,7 @@
 
 #©keithhedger Wed 14 Jun 19:51:12 BST 2017 kdhedger68713@gmail.com
 
-LFSVERSION=8.0
+LFSVERSION="8.0"
 SYSTEMSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYSTEM
 NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
 SYSSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYS
@@ -11,8 +11,8 @@ WGETTAR="http://ftp.gnu.org/gnu/wget/wget-1.19.1.tar.xz"
 OPENSSLTAR="https://openssl.org/source/openssl-1.0.2k.tar.gz"
 UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
 
-TOOLS32TAR="https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-$LFSVERSION_32.tar.bz2"
-TOOLS64TAR="https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-$LFSVERSION_64.tar.bz2"
+TOOLS32TAR="https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-${LFSVERSION}_32.tar.bz2"
+TOOLS64TAR="https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-${LFSVERSION}_64.tar.bz2"
 ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
 ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
