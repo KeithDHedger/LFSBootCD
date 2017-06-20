@@ -96,6 +96,9 @@ cd /LFSPkgBuildScripts/kernel
 #Optional install of grub, see here:
 http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
 
+The LFSSetup script will install a basic grub.cfg file in ${LFS}/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
+Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub, or manually do this:
+
 #assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
 grub-install /dev/sda
 
