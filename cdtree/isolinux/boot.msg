@@ -7,4 +7,4 @@ Welcome to Martin's 03Rescue CD
     keithhedger@keithhedger.darktech.org
     http://khapplications.darktech.org
 
-    Select boot32[-nofb] or boot64[-nofb].
+    Select boot32[-nofb] or boot64[-nofb] or just hit return for the default ( boot64 ).

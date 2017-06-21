@@ -1,6 +1,6 @@
 
 TOPDIR=$(shell pwd)
-ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*" )
+ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*")
 VERSION=8.0
 BOOTCDNAME=bootcd-$(VERSION).iso
 
