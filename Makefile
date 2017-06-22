@@ -6,12 +6,13 @@ BOOTCDNAME=bootcd-$(VERSION).iso
 
 export TOPDIR BOOTCDNAME
 
-TESTFOLDER=$(shell find  $(TOPDIR) -iname "testdirexist" )
+#TESTFOLDER=$(shell find  $(TOPDIR) -iname "testdirexist" )
 
-.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean TEST TESTFOLDER
+.PHONY: PACKAGE SOURCES CD USB USBLIGHT KEYS clean distclean 
+#TEST TESTFOLDER
 
-TEST: $(TESTFOLDER)
-	$(TOPDIR)/build_iso.sh
+#TEST: $(TESTFOLDER)
+#	$(TOPDIR)/build_iso.sh
 
 PACKAGE:
 	tar -cvaf $(TOPDIR)/bootcd-$(VERSION).tar.xz $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/publickeys
