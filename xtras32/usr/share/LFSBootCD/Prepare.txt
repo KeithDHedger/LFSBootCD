@@ -1,27 +1,125 @@
 
+
+
+"*************************************************"
+"* LFS System Build Disk                         *"
+"* ©K.D.Hedger                                   *"
+"* keithhedger@keithhedger.darktech.org          *"
+"* http://keithhedger.darktech.org               *"
+"*                                               *"
+"* Released under GPL-3                          *"
+"*************************************************"
+
 Live CD based heavily on this:
 https://www.phenix.bnl.gov/~purschke/RescueCD/
 Thanks!
 
 The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partion for the new LFS system is /dev/sda1, alter as needed.
-The cdrom data may or maynot be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
+The cdrom data may or may not be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
 
 mount /dev/sr0 /cdrom
 
-Use fdisk to create a partition table, partion for LFS etc if needed on the hard drive, WARNING if your hard drive has already go a prtion table be careful not to create a new one as it will delete all partions on the drive , BACKUP YOUR DATA!!!!
+Use fdisk to create a partition table, a partition for LFS etc if needed on the hard drive, WARNING if your hard drive has already has a partition table be careful not to create a new one as it will delete all partions on the drive , BACKUP YOUR DATA!!!!
+
+fdisk /devsda
+...
+Create partition table etc
+...
 
 Format partition for new install of LFS if needed, eg:
 
 mke2fs -L MyNewLFS /dev/sda1
 
-Create a suitable mount point, mount the partition, and cd into it, eg:
+Create a suitable mount point ( /mnt/LFS should already exist unless somthing went wrong ), mount the partition, and cd into it, eg:
 
 mkdir -vp /mnt/LFS
 mount /dev/sda1 /mnt/LFS
 cd /mnt/LFS
 
-Either copy the need files in /cdrom/LFS or use the setup script:
+Run the setup script to copy needed files etc, mostly you can just hit enter to accept the defaults, but you will probably have to change the gateway IP, enter y at the end to complete the transfer:
 
-/cdrom/LFS/LFSSetUp
+LFSSetUp
 
-Change to the LFSScripts folder and follow the Howto, but skip section 1),2),4) as the needed files are already in place in the source archives folder.
+Change to the LFSScripts folder:
+cd /mnt/LFS/LFSScripts
+
+Run Build File System script:
+./BuildFileSystem
+
+Chroot into temporary system:
+./Chroot system
+
+You should now be in the chroot.
+First install lfspkg:
+cd /LFSPkgBuildScripts/admin/LFSPkg
+BOOTSTRAP=1 ./LFSPkg.LFSBuild install
+
+As part of the LFSSetUp script /root/.lfspkg.rc has been created to contain basic info needed by lfspkg, review and change if needed.
+#Set $LFS/etc/lfspkg.rc or $LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS sytem source files are, you can do this either from in the chroot environment or from the host with root permisions.
+
+Build main system
+cd /LFSPkgBuildScripts/system/system-meta
+Use system-sysvinit-meta for standard sysvinit like so:
+./system-sysvinit-meta.LFSBuild install
+
+Or use system-bbinit-meta.LFSBuildfor a RECOMMENDED busy box init system ( non standard ) like so:
+./system-bbinit-meta.LFSBuild install
+
+Or for ##experimental## custom init system use:
+./system-LFSInit-meta.LFSBuild install
+
+
+Wait for script to complete ...
+Have coffee
+Walkt the dog
+...
+
+logout from temporary system
+exit
+
+Remove the tools folder from your LFS install disk.
+sudo rm -rf ${LFS}/tools
+
+Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ).
+sudo ./Chroot
+
+You MUST rebuild lfspkg after completeing the the basic system and removing the tools folder.
+Use same process as before EXCEPT do NOT use BOOTSTRAP=1
+If you have set any vairiable in /etc/lfspkg.rc then reply 'R' ( without the quotes ) when asked about replacing files in /etc.
+If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
+
+cd /LFSPkgBuildScripts/admin/LFSPkg
+./LFSPkg.LFSBuild install
+
+Configure and build the kernel:
+cd /LFSPkgBuildScripts/kernel
+./kernel.LFSBuild install
+
+
+Optional install of grub, see here:
+http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
+
+The LFSSetup script will install a basic grub.cfg file in ${LFS}/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
+Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub, or manually do this:
+
+assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
+grub-install /dev/sda
+
+cat > /boot/grub/grub.cfg << "EOF"
+# Begin /boot/grub/grub.cfg
+set default=0
+set timeout=30
+
+insmod ext2
+set root=(hd0,1)
+
+menuentry "GNU/Linux, Linux 4.9.9-lfs-8.0" {
+	linux /boot/vmlinuz-4.9.9-lfs-8.0 root=/dev/sda1 ro
+}
+EOF
+
+Exit fro chroot and reboot to your new LFS system to check that all is well, don't forget to eject the CD:
+exit
+reboot
+
+You may now add extra packages from the LFSPkgBuildScripts see the HowTo in the /LFSScripts folder on instructions to build a complete desktop, what you add now is up to you good luck!
