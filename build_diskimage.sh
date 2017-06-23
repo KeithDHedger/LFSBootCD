@@ -74,6 +74,7 @@ pushd $TOPDIR/loop2/
 	tar -xvpf $TOPDIR/root_tree${version}.tar.xz
 	cp $TOPDIR/hostkeys/* etc/ssh
 	cp -rp $TOPDIR/xtras{version}/* .
+	cp -rp $TOPDIR/xtrasanyarch/* .
 popd
 
 df  $TOPDIR/loop2
