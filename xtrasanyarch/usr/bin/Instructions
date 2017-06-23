@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#©keithhedger Fri 23 Jun 12:36:11 BST 2017 kdhedger68713@gmail.com
+
+echo "*************************************************"
+echo "* LFS System Build Disk                         *"
+echo "* ©K.D.Hedger                                   *"
+echo "* keithhedger@keithhedger.darktech.org          *"
+echo "* http://keithhedger.darktech.org               *"
+echo "*                                               *"
+echo "* Based on this:                                *"
+echo "* https://www.phenix.bnl.gov/~purschke/RescueCD *"
+echo "*                                               *"
+echo "* Released under GPL-3                          *"
+echo "*************************************************"
+
+less ../share/LFSBootCD/Prepare.txt
