@@ -1,0 +1,208 @@
+#!/bin/bash -e
+
+#
+# ©K. D. Hedger. Mon 12 Jun 15:48:46 BST 2017 kdhedger68713@gmail.com
+#
+# This file (LFSSetUp) is part of BootCD.
+#
+# BootCD is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# at your option) any later version.
+
+# BootCD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with BootCD.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#$1=varname $2=message
+readWithDefault ()
+{
+	local varname="$1"
+	local varcontents="${!varname}"
+	local message="$2"
+
+	read -e -p "$message [ ${varcontents} ] "
+	if [ "X$REPLY" != "X" ];then
+		eval "${varname}=$REPLY"
+	fi
+}
+
+case $(uname -m) in
+	x86_64)
+		LIBDIRSUFFIX=64
+		;;
+	*)
+		LIBDIRSUFFIX=""
+		;;
+esac
+
+#set default language
+LANG=${LANG:-"en_GB"}
+
+#cdrom mount point
+CDROMMOUNT=${CDROMMOUNT:-/cdrom}
+readWithDefault "CDROMMOUNT"  "Enter Mountpoint OF CDROM"
+
+#Mount point for your new LFS system
+LFS=${LFS:-"/mnt/LFS"}
+readWithDefault "LFS"  "Enter Mountpoint For LFS"
+
+#LFS Version
+LFSVERSION=${LFSVERSION:-8.0}
+readWithDefault "LFSVERSION"  "Enter Version"
+
+#Computer name
+LFSNAME=${LFSNAME:-"LFSDev"}
+readWithDefault "LFSNAME"  "Enter Hostname"
+
+#LFS init type eithe bbinit or sysvinit
+INITTYPE=${INITTYPE:-"LFSInit"}
+readWithDefault "INITTYPE"  "Enter Init Type"
+
+#libdir suffix
+readWithDefault "LIBDIRSUFFIX"  "Enter Suffix For Lib Folders"
+
+#buildscripts location
+BUILDSCRIPTS="/LFSPkgBuildScripts/"
+#readWithDefault "BUILDSCRIPTS"  "Enter Folder For Build Scripts"
+
+#Place to store built packages, defaults to /LFSBuiltPackages/${LFSVERSION}
+BUILTPACKAGES=${BUILTPACKAGES:-"/LFSBuiltPackages/${LFSVERSION}"}
+readWithDefault "BUILTPACKAGES"  "Enter Folder For Built Packages"
+
+#Place to store downloaded source archives, defaults to /LFSSourceArchives/${LFSVERSION}
+SOURCEARCHIVES=${SOURCEARCHIVES:-"/LFSSourceArchives/${LFSVERSION}"}
+readWithDefault "SOURCEARCHIVES"  "Enter Folder For Source Archives"
+
+#kernal version
+#if the kernel version you want to use is not the same as the book you will have to manually download the source to $SOURCEARCHIVES
+KERNELVERSION=${KERNELVERSION:-"4.9.9"}
+readWithDefault "KERNELVERSION"  "Enter Kernel Version"
+
+#keyboard
+#set keyboad lang for auto detect use
+#KEYBOARD="$(setxkbmap -print | awk -F'+' '/xkb_symbols/ {print $2}')"
+KEYBOARD=${KEYBOARD:-"uk"}
+read -e -p "Enter Keyboard " -i "[ $KEYBOARD ] "
+
+#File system type, probably ext2 or ext4
+ROOTFSTYPE=${ROOTFSTYPE:-"ext2"}
+readWithDefault "ROOTFSTYPE"  "Enter Root FS Type"
+
+#Variable below this line are computed and probably don't need changing, but feel free.
+#computed stuff
+
+ROOTDEV=$(df|grep -i $LFS|awk '{print $1}')
+readWithDefault "ROOTDEV"  "Enter Root Device"
+
+SWAP=$(fdisk -l|grep swap|awk '{print $1}')
+readWithDefault "SWAP"  "Enter Swap Device"
+
+LANGUAGE=${LANGUAGE:-$LANG}
+readWithDefault "LANGUAGE"  "Enter Language"
+
+#network
+IP="192.168.1.1"$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')
+readWithDefault "IP"  "Enter IP"
+
+#Set up the network
+GATEWAY=${GATEWAY:-"192.168.1.254"}
+readWithDefault "GATEWAY"  "Enter Gateway IP"
+
+SUBNET=${SUBNET:-"255.255.255.0"}
+readWithDefault "SUBNET"  "Enter Subnet IP"
+
+NAMESERVERS=${NAMESERVERS:-"208.67.222.222 208.67.220.220 8.8.8.8 $GATEWAY"}
+readWithDefault "NAMESERVERS"  "Enter Name Servers IP List"
+
+echo "----SUMMARY----"
+echo "CDROMMOUNT=$CDROMMOUNT"
+echo 
+echo "LFS=$LFS"
+echo "LFSVERSION=$LFSVERSION"
+echo "LFSNAME=$LFSNAME"
+echo "INITTYPE=$INITTYPE"
+
+echo "LIBDIRSUFFIX=$LIBDIRSUFFIX"
+#echo "BUILDSCRIPTS=$BUILDSCRIPTS"
+echo "BUILTPACKAGES=$BUILTPACKAGES"
+echo "SOURCEARCHIVES=$SOURCEARCHIVES"
+echo "KERNELVERSION=$KERNELVERSION"
+echo "KEYBOARD=$KEYBOARD"
+echo "ROOTFSTYPE=$ROOTFSTYPE"
+echo "ROOTDEV=$ROOTDEV"
+echo "SWAP=$SWAP"
+
+echo "LANGUAGE=$LANGUAGE"
+
+echo "IP=$IP"
+echo "GATEWAY=$GATEWAY"
+echo "SUBNET=$SUBNET"
+echo "NAMESERVERS=\"$NAMESERVERS\""
+echo "--------"
+
+SUMMARY="n"
+readWithDefault "SUMMARY"  "Write Config Files And Copy Data Etc"
+
+if [ $SUMMARY = "n" ];then
+	exit 1
+fi
+
+#cp files etc
+cp -r ${CDROMMOUNT}/LFS/LFSPkgBuilds ${LFS}
+ln -sv LFSPkgBuilds/LFSPkgBuildScripts ${LFS}/LFSPkgBuildScripts
+ln -sv LFSPkgBuilds/LFSScripts ${LFS}/LFSScripts
+
+mkdir ${LFS}/tools
+pushd ${LFS}/tools
+	case $(uname -m) in
+		*64)
+			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_64.tar.bz2
+			;;
+		*)
+			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_32.tar.bz2
+			;;
+	esac
+popd
+
+mkdir -vp "${LFS}/$SOURCEARCHIVES"
+cp -rv ${CDROMMOUNT}/LFS/LFSSourceArchives/8.0/* ${LFS}/$SOURCEARCHIVES
+
+#set kernel version in build scripts
+#build scripts should be at $LFS/LFSPkgBuildScripts
+sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/system/linuxheaders/linuxheaders.LFSBuild
+sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/kernel/kernel.LFSBuild
+sed -ri "s/linuxheaders-[0-9]+.[0-9]+.[0-9]+/linuxheaders-${KERNELVERSION}/i" ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-${INITTYPE}-meta.LFSBuild
+
+cat > $LFS/LFSScripts/SystemData.local << EOF
+CDROMMOUNT=$CDROMMOUNT
+
+LFS=$LFS
+LFSNAME=$LFSNAME
+LFSVERSION=$LFSVERSION
+KERNELVERSION=$KERNELVERSION
+INITTYPE=$INITTYPE
+
+LIBDIRSUFFIX=$LIBDIRSUFFIX
+BUILTPACKAGES=$BUILTPACKAGES
+SOURCEARCHIVES=$SOURCEARCHIVES
+BUILDSCRIPTS=$BUILDSCRIPTS
+
+KEYBOARD=$KEYBOARD
+ROOTFSTYPE=$ROOTFSTYPE
+ROOTDEV=$ROOTDEV
+SWAP=$SWAP
+
+LANGUAGE=$LANGUAGE
+
+IP=$IP
+GATEWAY=$GATEWAY
+SUBNET=$SUBNET
+NAMESERVERS="$NAMESERVERS"
+EOF
+

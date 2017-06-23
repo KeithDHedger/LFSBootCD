@@ -14,4 +14,4 @@ echo "*                                               *"
 echo "* Released under GPL-3                          *"
 echo "*************************************************"
 
-less ../../etc/Prepare.txt
+less ../share/LFSBootCD/Prepare.txt
