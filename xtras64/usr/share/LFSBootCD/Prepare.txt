@@ -1,0 +1,27 @@
+
+Live CD based heavily on this:
+https://www.phenix.bnl.gov/~purschke/RescueCD/
+Thanks!
+
+The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partion for the new LFS system is /dev/sda1, alter as needed.
+The cdrom data may or maynot be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
+
+mount /dev/sr0 /cdrom
+
+Use fdisk to create a partition table, partion for LFS etc if needed on the hard drive, WARNING if your hard drive has already go a prtion table be careful not to create a new one as it will delete all partions on the drive , BACKUP YOUR DATA!!!!
+
+Format partition for new install of LFS if needed, eg:
+
+mke2fs -L MyNewLFS /dev/sda1
+
+Create a suitable mount point, mount the partition, and cd into it, eg:
+
+mkdir -vp /mnt/LFS
+mount /dev/sda1 /mnt/LFS
+cd /mnt/LFS
+
+Either copy the need files in /cdrom/LFS or use the setup script:
+
+/cdrom/LFS/LFSSetUp
+
+Change to the LFSScripts folder and follow the Howto, but skip section 1),2),4) as the needed files are already in place in the source archives folder.
