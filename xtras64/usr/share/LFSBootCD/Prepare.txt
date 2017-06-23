@@ -1,27 +1,26 @@
 
 
-
-"*************************************************"
-"* LFS System Build Disk                         *"
-"* ©K.D.Hedger                                   *"
-"* keithhedger@keithhedger.darktech.org          *"
-"* http://keithhedger.darktech.org               *"
-"*                                               *"
-"* Released under GPL-3                          *"
-"*************************************************"
+		*************************************************
+		* LFS System Build Disk                         *
+		* ©K.D.Hedger                                   *
+		* keithhedger@keithhedger.darktech.org          *
+		* http://keithhedger.darktech.org               *
+		*                                               *
+		* Released under GPL-3                          *
+		*************************************************
 
 Live CD based heavily on this:
 https://www.phenix.bnl.gov/~purschke/RescueCD/
 Thanks!
 
-The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partion for the new LFS system is /dev/sda1, alter as needed.
+The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1, alter as needed.
 The cdrom data may or may not be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
 
 mount /dev/sr0 /cdrom
 
-Use fdisk to create a partition table, a partition for LFS etc if needed on the hard drive, WARNING if your hard drive has already has a partition table be careful not to create a new one as it will delete all partions on the drive , BACKUP YOUR DATA!!!!
+Use fdisk to create a partition table, a partition for LFS etc if needed on the hard drive, WARNING if your hard drive has already has a partition table be careful not to create a new one as it will delete all partitions on the drive , BACKUP YOUR DATA!!!!
 
-fdisk /devsda
+fdisk /dev/sda
 ...
 Create partition table etc
 ...
@@ -30,7 +29,7 @@ Format partition for new install of LFS if needed, eg:
 
 mke2fs -L MyNewLFS /dev/sda1
 
-Create a suitable mount point ( /mnt/LFS should already exist unless somthing went wrong ), mount the partition, and cd into it, eg:
+Create a suitable mount point ( /mnt/LFS should already exist unless something went wrong ), mount the partition, and cd into it, eg:
 
 mkdir -vp /mnt/LFS
 mount /dev/sda1 /mnt/LFS
@@ -55,7 +54,7 @@ cd /LFSPkgBuildScripts/admin/LFSPkg
 BOOTSTRAP=1 ./LFSPkg.LFSBuild install
 
 As part of the LFSSetUp script /root/.lfspkg.rc has been created to contain basic info needed by lfspkg, review and change if needed.
-#Set $LFS/etc/lfspkg.rc or $LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS sytem source files are, you can do this either from in the chroot environment or from the host with root permisions.
+#Set $LFS/etc/lfspkg.rc or $LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
 
 Build main system
 cd /LFSPkgBuildScripts/system/system-meta
@@ -83,9 +82,9 @@ sudo rm -rf ${LFS}/tools
 Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ).
 sudo ./Chroot
 
-You MUST rebuild lfspkg after completeing the the basic system and removing the tools folder.
+You MUST rebuild lfspkg after completing the the basic system and removing the tools folder.
 Use same process as before EXCEPT do NOT use BOOTSTRAP=1
-If you have set any vairiable in /etc/lfspkg.rc then reply 'R' ( without the quotes ) when asked about replacing files in /etc.
+If you have set any variable in /etc/lfspkg.rc then reply 'R' ( without the quotes ) when asked about replacing files in /etc.
 If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
 
 cd /LFSPkgBuildScripts/admin/LFSPkg

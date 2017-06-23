@@ -73,6 +73,7 @@ rm -rf $TOPDIR/loop2/lost+found
 pushd $TOPDIR/loop2/
 	tar -xvpf $TOPDIR/root_tree${version}.tar.xz
 	cp $TOPDIR/hostkeys/* etc/ssh
+	cp -rp $TOPDIR/xtras{version}/* .
 popd
 
 df  $TOPDIR/loop2
