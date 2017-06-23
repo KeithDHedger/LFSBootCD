@@ -4,7 +4,7 @@
 
 echo "*************************************************"
 echo "* LFS System Build Disk                         *"
-echo "* ©K.D.Hedger                                   *"
+echo "* (c)K.D.Hedger                                   *"
 echo "* keithhedger@keithhedger.darktech.org          *"
 echo "* http://keithhedger.darktech.org               *"
 echo "*                                               *"
@@ -14,4 +14,5 @@ echo "*                                               *"
 echo "* Released under GPL-3                          *"
 echo "*************************************************"
 
+cd $(dirname $0)
 less ../share/LFSBootCD/Prepare.txt
