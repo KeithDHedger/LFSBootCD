@@ -1,0 +1,16 @@
+#! /bin/sh 
+#
+
+argv1="$1"
+
+if [ $argv1 -eq 3 ] ; then
+	/sbin/sshd
+	mkdir -vp /mnt/LFS &>/dev/null||true
+	if [ -e /etc/sysconfig/mouse ];then
+		. /etc/sysconfig/mouse
+		echo -e "\r\n"
+		echo "[01;33mStartin GPM ...[00m"
+		/sbin/gpm -m "${MDEVICE}" -t "${PROTOCOL}" ${GPMOPTS}
+	fi
+fi
+

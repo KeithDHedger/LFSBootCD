@@ -11,6 +11,5 @@ sed -i 's@/lib/udev/udevd@/sbin/udevd@g' "/etc/rc.d/init.d/udev"
 /sbin/udevadm hwdb --update
 chmod +x /lib/udev/init-net-rules.sh
 /lib/udev/init-net-rules.sh
-/tools/bin/find /{,usr/}{bin,lib,sbin} -type f -exec /tools/bin/strip --strip-debug '{}' ';'
 
 

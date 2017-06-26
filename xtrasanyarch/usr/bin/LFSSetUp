@@ -62,7 +62,7 @@ readWithDefault "LFSNAME"  "Enter Hostname"
 
 #LFS init type eithe bbinit or sysvinit
 INITTYPE=${INITTYPE:-"LFSInit"}
-readWithDefault "INITTYPE"  "Enter Init Type"
+readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|bbinit|sysvinit)"
 
 #libdir suffix
 readWithDefault "LIBDIRSUFFIX"  "Enter Suffix For Lib Folders"
@@ -206,6 +206,7 @@ SUBNET=$SUBNET
 NAMESERVERS="$NAMESERVERS"
 EOF
 
+mkdir -vp $LFS/root||true
 cat > $LFS/root/.lfspkg.rc << EOF
 OUTPUT=$BUILTPACKAGES
 SOURCEARCHIVES=$SOURCEARCHIVES

@@ -13,7 +13,7 @@ Live CD based heavily on this:
 https://www.phenix.bnl.gov/~purschke/RescueCD/
 Thanks!
 
-The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1, alter as needed.
+The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1 with swap on /dev/sda2, alter as needed.
 The cdrom data may or may not be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
 
 mount /dev/sr0 /cdrom
@@ -28,6 +28,11 @@ Create partition table etc
 Format partition for new install of LFS if needed, eg:
 
 mke2fs -L MyNewLFS /dev/sda1
+
+Create swap space if needed and turn on:
+
+mkswap /dev/sda2
+swapon /dev/sda2
 
 Create a suitable mount point ( /mnt/LFS should already exist unless something went wrong ), mount the partition, and cd into it, eg:
 

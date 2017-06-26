@@ -1,0 +1,7 @@
+# Begin /etc/sysconfig/mouse
+
+MDEVICE="/dev/input/mice"
+PROTOCOL="ps2"
+GPMOPTS=""
+
+# End /etc/sysconfig/mouse
