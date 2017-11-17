@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-#©keithhedger Wed 11 Feb 20:27:01 GMT 2015 kdhedger68713@gmail.com
-
-. /usr/share/LFSPkg/LFSFunctions
-
-UIDGIDPAIR=$(findnextpair "system")
-useradd -c "Color Daemon Owner" -d /var/lib/colord -ru $UIDGIDPAIR -s /bin/false colord||true
-

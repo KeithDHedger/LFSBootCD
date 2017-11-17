@@ -1,1 +1,0 @@
-The xcb-util-cursor package provides a module that implements the XCB cursor library. It is a the XCB replacement for libXcursor.

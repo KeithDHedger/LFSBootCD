@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=ObTheme
-Comment=A GUI theme editor for Openbox.
-Exec=obtheme
-Type=Application
-Categories=DesktopSettings;
-Icon=obtheme

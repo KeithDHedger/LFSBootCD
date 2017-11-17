@@ -16,28 +16,48 @@ TOOLS64TAR="https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-${LFSVERSION}_64.tar
 ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
 ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
+LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
+
 mkdir -vp $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
-	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
-	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
-	mv md5sums $SYSTEMSOURCE
-	wget -i wget-list -c -P $SYSTEMSOURCE
+#	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
+#	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
+#	mv md5sums $SYSTEMSOURCE
+#	wget -i wget-list -c -P $SYSTEMSOURCE
 
 #wget/openssl/unzip from the blfs book I prefer to make this as part of the main system
-	wget -c "$WGETTAR" -P $NETSOURCE
-	wget -c "$OPENSSLTAR" -P $NETSOURCE
-	wget -c "$UNZIPTAR" -P $SYSSOURCE
+#	wget -c "$WGETTAR" -P $NETSOURCE
+#	wget -c "$OPENSSLTAR" -P $NETSOURCE
+#	wget -c "$UNZIPTAR" -P $SYSSOURCE
 
 	touch $SYSTEMSOURCE/gotsystemsources
 	rm wget-list
 
-	wget -c "$TOOLS32TAR" -P cdtree/LFS
-	wget -c "$TOOLS64TAR" -P cdtree/LFS
+	pushd $SYSTEMSOURCE
+		if ! md5sum -c md5sums;then
+			echo "WARNING ... md5 hashes did NOT match, Exiting ..."
+			exit 0
+		fi
+	popd
+#	wget -c "$TOOLS32TAR" -P cdtree/LFS
+#	wget -c "$TOOLS64TAR" -P cdtree/LFS
 
-	wget -c "$ROOT32TAR"
-	wget -c "$ROOT64TAR"
+#	wget -c "$ROOT32TAR"
+#	wget -c "$ROOT64TAR"
+
+#	wget -c "$LFSPKGBUILDS" -P cdtree/LFS
+#	pushd cdtree/LFS
+#		unzip version8.zip
+#	popd
 fi
+
+pushd cdtree/LFS
+	wget -c "$LFSPKGBUILDS"
+	unzip version8.zip
+	mv LFSPkgBuilds-version8 LFSPkgBuilds
+	rm -r LFSPkgBuilds/.gitignore LFSPkgBuilds/Updating/
+popd
 
 exit 0
 

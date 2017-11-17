@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-#©keithhedger Fri 13 Feb 13:24:37 GMT 2015 kdhedger68713@gmail.com
-
-mkdir -vp /etc/gimp/2.0||true
-
-gtk-update-icon-cache --ignore-theme-index --force /usr/share/icons/hicolor||true
-update-desktop-database -v /usr/share/applications||true
-echo '(web-browser "firefox> %s")' >> /etc/gimp/2.0/gimprc

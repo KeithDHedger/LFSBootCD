@@ -1,8 +1,0 @@
-#!/bin/bash
-#©keithhedger Sun 22 Feb 16:50:36 GMT 2015
-
-. /usr/share/LFSPkg/LFSFunctions
-
-UIDGIDPAIR=$(findnextpair "system")
-groupadd -g $UIDGIDPAIR mysql &&
-useradd -c "MySQL Server" -d /srv/mysql -g mysql -s /bin/false -u $UIDGIDPAIR mysql

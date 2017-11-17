@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-#©keithhedger Thu 22 Jan 17:20:37 GMT 2015 kdhedger68713@gmail.com
-
-. /usr/share/LFSPkg/LFSFunctions
-
-UIDGIDPAIR=$(findnextpair "system")
-groupadd -g $UIDGIDPAIR clamav||true
-useradd -c "Clam" -d /dev/null -g clamav -s /bin/false -u $UIDGIDPAIR clamav||true

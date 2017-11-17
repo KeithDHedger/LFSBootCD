@@ -13,8 +13,9 @@ Live CD based heavily on this:
 https://www.phenix.bnl.gov/~purschke/RescueCD/
 Thanks!
 
-The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1 with swap on /dev/sda2, alter as needed.
+The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1 mounted on /mnt/LFS with swap on /dev/sda2, alter as needed.
 The cdrom data may or may not be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
+All these commands must be run as root.
 
 mount /dev/sr0 /cdrom
 
@@ -83,7 +84,7 @@ logout from temporary system
 exit
 
 Remove the tools folder from your LFS install disk.
-sudo rm -rf /mnt/LFS/tools
+rm -rf /mnt/LFS/tools
 
 Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ).
 ./Chroot

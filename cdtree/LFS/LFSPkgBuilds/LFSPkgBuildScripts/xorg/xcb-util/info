@@ -1,1 +1,0 @@
-The xcb-util package provides additional extensions to the XCB library, many that were previously found in Xlib, but are not part of core X protocol.

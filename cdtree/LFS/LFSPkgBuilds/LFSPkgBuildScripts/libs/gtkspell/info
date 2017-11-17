@@ -1,6 +1,0 @@
-gtkspell3 (GTK3 spell checker interface library)
-GtkSpell provides word-processor-style highlighting and replacement
-of misspelled words in a GtkTextView widget.
-Right-clicking a misspelled word pops up a menu of suggested
-replacements.
-Homepage: http://gtkspell.sourceforge.net/

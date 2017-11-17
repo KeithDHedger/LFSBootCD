@@ -1,1 +1,0 @@
-The libcap package was installed in LFS, but if PAM support is desired, it needs to be reinstalled after PAM is built.

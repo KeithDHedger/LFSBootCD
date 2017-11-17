@@ -1,7 +1,0 @@
-#!/bin/bash
-#©keithhedger Thu 21 May 12:22:02 BST 2015
-
-. /usr/share/LFSPkg/LFSFunctions
-
-install -dm755 /usr/share/hwdata
-wget http://www.linux-usb.org/usb.ids -O /usr/share/hwdata/usb.ids

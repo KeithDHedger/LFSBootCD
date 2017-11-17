@@ -1,6 +1,0 @@
-#!/bin/bash
-#©keithhedger Sat  7 Mar 14:19:21 GMT 2015
-
-. /usr/share/LFSPkg/LFSFunctions
-
-chmod -v 1777 /var/mail

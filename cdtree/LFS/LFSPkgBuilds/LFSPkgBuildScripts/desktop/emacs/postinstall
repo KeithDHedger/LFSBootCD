@@ -1,6 +1,0 @@
-#!/bin/bash
-#©keithhedger Wed  1 Jul 15:51:11 BST 2015
-
-. /usr/share/LFSPkg/LFSFunctions
-
-gtk-update-icon-cache -qf /usr/share/icons/hicolor

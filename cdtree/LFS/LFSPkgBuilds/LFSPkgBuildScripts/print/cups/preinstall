@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-#©keithhedger Wed 11 Feb 20:34:18 GMT 2015 kdhedger68713@gmail.com
-
-. /usr/share/LFSPkg/LFSFunctions
-
-UIDGIDPAIR=$(findnextpair "system")
-groupadd -rf lpadmin||true
-useradd -c "Print Service User" -d /var/spool/cups -s /bin/false -ru $UIDGIDPAIR lp||true

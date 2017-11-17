@@ -1,2 +1,0 @@
-The libsoup is HTTP client/server library for GNOME.
-It uses GObject and the GLib main loop to integrate with GNOME applications and it also has an asynchronous API for use in threaded applications.

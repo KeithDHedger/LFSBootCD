@@ -1,2 +1,0 @@
-The ALSA OSS package contains the ALSA OSS compatibility library.
-This is used by programs which wish to use the ALSA OSS sound interface.

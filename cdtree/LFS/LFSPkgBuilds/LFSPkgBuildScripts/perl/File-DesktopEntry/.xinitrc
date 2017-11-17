@@ -1,1 +1,0 @@
-xinits/xinitrc.lfs

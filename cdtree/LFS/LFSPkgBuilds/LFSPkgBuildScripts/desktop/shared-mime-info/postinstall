@@ -1,5 +1,0 @@
-#!/bin/bash -e
-
-#©keithhedger Fri 13 Feb 11:24:39 GMT 2015 kdhedger68713@gmail.com
-
-update-mime-database -V /usr/share/mime
