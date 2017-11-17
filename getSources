@@ -17,6 +17,7 @@ ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
 ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
+LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"
 
 mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
@@ -55,6 +56,10 @@ pushd cdtree/LFS
 	mv LFSPkgBuilds-version8 LFSPkgBuilds
 	rm -r LFSPkgBuilds/.gitignore LFSPkgBuilds/Updating/ version8.zip LFSPkgBuilds/LFSScripts
 	cp -r ../../LFSScripts LFSPkgBuilds
+	cd LFSPkgBuilds/LFSPkgBuildScripts/admin/LFSPkg
+	wget -c $LFSPKG
+	unzip master.zip
+	rm master.zip
 popd
 
 exit 0
