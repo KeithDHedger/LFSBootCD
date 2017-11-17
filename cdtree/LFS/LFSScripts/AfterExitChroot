@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+#©keithhedger Thu 21 Feb 14:52:08 GMT 2013 kdhedger68713@gmail.com
+
+if [ -e ./SystemData ];then
+	. ./SystemData
+else
+	echo "No SystemData file found ..."
+	exit 0
+fi
+
+umount ${LFS}/dev/pts ||true
+umount -lf ${LFS}/dev ||true  
+umount ${LFS}/proc ||true
+umount ${LFS}/sys ||true
+umount ${LFS}/run ||true

@@ -28,7 +28,7 @@ USBLIGHT:
 SOURCES:
 	$(TOPDIR)/getSources
 
-$(TOPDIR)/$(BOOTCDNAME): SOURCES KEYS $(ISODEPS) $(TOPDIR)/build_iso.sh $(TOPDIR)/Makefile  $(TOPDIR)/cdtree/isolinux/*.msg $(TOPDIR)/cdtree/isolinux/sdisk32.img $(TOPDIR)/cdtree/isolinux/sdisk64.img
+$(TOPDIR)/$(BOOTCDNAME): KEYS $(ISODEPS) $(TOPDIR)/build_iso.sh $(TOPDIR)/Makefile  $(TOPDIR)/cdtree/isolinux/*.msg $(TOPDIR)/cdtree/isolinux/sdisk32.img $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	$(TOPDIR)/getSources
 	$(TOPDIR)/build_iso.sh
 
