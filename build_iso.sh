@@ -23,7 +23,7 @@ echo
 mkisofs -b isolinux/isolinux.bin -c isolinux/boot.cat \
                -o $TOPDIR/$BOOTCDNAME \
                -no-emul-boot -boot-load-size 4 -boot-info-table \
-               -J -r -T \
+               -J -r \
                -p "keithhedger@keithhedger.darktech.org" \
                -A "LFS CD Build System" \
 	       .
