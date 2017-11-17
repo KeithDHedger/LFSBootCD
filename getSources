@@ -48,7 +48,7 @@ if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 	wget -c "$ROOT64TAR"
 fi
 
-rm -r cdtree/LFS/$LFSPKGBUILDS
+rm -r cdtree/LFS/LFSPkgBuilds
 pushd cdtree/LFS
 	wget -c "$LFSPKGBUILDS"
 	unzip version8.zip
