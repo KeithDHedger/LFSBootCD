@@ -1,3 +1,7 @@
+getSources script now checks md5sum of downloaded sources.
+Get latest lfspkg build scripts from git hub repo.
+Tree cleaning.
+
 1st commit
 ...
 Added load large external files from dropbox via sources script

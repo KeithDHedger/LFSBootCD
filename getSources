@@ -18,7 +18,7 @@ ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
 
-mkdir -vp $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
+mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
