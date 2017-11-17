@@ -54,7 +54,7 @@ pushd cdtree/LFS
 	unzip version8.zip
 	mv LFSPkgBuilds-version8 LFSPkgBuilds
 	rm -r LFSPkgBuilds/.gitignore LFSPkgBuilds/Updating/ version8.zip LFSPkgBuilds/LFSScripts
-	cp ../LFSScripts LFSPkgBuilds
+	ln -sv ../LFSScripts LFSPkgBuilds/LFSScripts
 popd
 
 exit 0
