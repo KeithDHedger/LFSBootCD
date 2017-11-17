@@ -21,15 +21,15 @@ LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
 mkdir -vp $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
-#	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
-#	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
-#	mv md5sums $SYSTEMSOURCE
-#	wget -i wget-list -c -P $SYSTEMSOURCE
+	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
+	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
+	mv md5sums $SYSTEMSOURCE
+	wget -i wget-list -c -P $SYSTEMSOURCE
 
 #wget/openssl/unzip from the blfs book I prefer to make this as part of the main system
-#	wget -c "$WGETTAR" -P $NETSOURCE
-#	wget -c "$OPENSSLTAR" -P $NETSOURCE
-#	wget -c "$UNZIPTAR" -P $SYSSOURCE
+	wget -c "$WGETTAR" -P $NETSOURCE
+	wget -c "$OPENSSLTAR" -P $NETSOURCE
+	wget -c "$UNZIPTAR" -P $SYSSOURCE
 
 	touch $SYSTEMSOURCE/gotsystemsources
 	rm wget-list
@@ -40,23 +40,20 @@ if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 			exit 0
 		fi
 	popd
-#	wget -c "$TOOLS32TAR" -P cdtree/LFS
-#	wget -c "$TOOLS64TAR" -P cdtree/LFS
 
-#	wget -c "$ROOT32TAR"
-#	wget -c "$ROOT64TAR"
+	wget -c "$TOOLS32TAR" -P cdtree/LFS
+	wget -c "$TOOLS64TAR" -P cdtree/LFS
 
-#	wget -c "$LFSPKGBUILDS" -P cdtree/LFS
-#	pushd cdtree/LFS
-#		unzip version8.zip
-#	popd
+	wget -c "$ROOT32TAR"
+	wget -c "$ROOT64TAR"
 fi
 
+rm -r cdtree/LFS/$LFSPKGBUILDS
 pushd cdtree/LFS
 	wget -c "$LFSPKGBUILDS"
 	unzip version8.zip
 	mv LFSPkgBuilds-version8 LFSPkgBuilds
-	rm -r LFSPkgBuilds/.gitignore LFSPkgBuilds/Updating/
+	rm -r LFSPkgBuilds/.gitignore LFSPkgBuilds/Updating/ version8.zip
 popd
 
 exit 0
