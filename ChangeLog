@@ -1,3 +1,4 @@
+Changed addresses.
 getSources script now checks md5sum of downloaded sources.
 Get latest lfspkg build scripts from git hub repo.
 Tree cleaning.

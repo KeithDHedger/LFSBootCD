@@ -3,8 +3,8 @@
 		*************************************************
 		* LFS System Build Disk                         *
 		* (c)K.D.Hedger                                 *
-		* keithhedger@keithhedger.darktech.org          *
-		* http://keithhedger.darktech.org               *
+		* keithdhedger@gmail.com			            *
+		* http://keithhedger.freeddns.org/              *
 		*                                               *
 		* Released under GPL-3                          *
 		*************************************************
