@@ -15,9 +15,6 @@ fi
 
 . $TOPDIR/settings.sh
 
-
-
-
 # in case the loop device doesn't exist, we try to load the module
 if ! [ -b $LOOP ] ; then
     modprobe loop 

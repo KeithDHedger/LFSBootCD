@@ -1,8 +1,8 @@
 
+VERSION=8.2
 TOPDIR=$(shell pwd)
 ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*")
-VERSION=8.0
-BOOTCDNAME=bootcd-$(VERSION).iso
+BOOTCDNAME=LFSBootCD-$(VERSION).iso
 
 export TOPDIR BOOTCDNAME
 
@@ -15,7 +15,7 @@ export TOPDIR BOOTCDNAME
 #	$(TOPDIR)/build_iso.sh
 
 PACKAGE:
-	tar -cvaf $(TOPDIR)/bootcd-$(VERSION).tar.xz $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/publickeys
+	tar -cvaf $(TOPDIR)/bootcd.tar.xz $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/publickeys
 
 CD: $(TOPDIR)/$(BOOTCDNAME)
 
@@ -48,14 +48,16 @@ $(TOPDIR)/hostkeys/ssh_host_rsa_key.pub:
 	cp $(TOPDIR)/hostkeys/*.pub publickeys
 	
 clean:
+	rm -rf $(TOPDIR)/cdtree/LFS/*
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	rm -rf $(TOPDIR)/loop2
+	rm -f $(TOPDIR)/wget-list*
 
 distclean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz||true
 	rm -rf $(TOPDIR)/hostkeys||true
 	rm $(TOPDIR)/*~ ||true
-	rm -rf $(TOPDIR)/cdtree/LFS/LFSSourceArchives||true
-	rm $(TOPDIR)/cdtree/LFS/tools-8.0_32.tar.bz2 $(TOPDIR)/cdtree/LFS/tools-8.0_64.tar.bz2 $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
-	rm $(TOPDIR)/bootcd-$(VERSION).tar.xz||true
+	rm -rf $(TOPDIR)/cdtree/LFS/*||true
+	rm $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
+	rm $(TOPDIR)/bootcd.tar.xz||true
 

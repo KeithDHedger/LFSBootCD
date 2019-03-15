@@ -11,7 +11,7 @@ OR to remove the ssh keys folder
 *make distclean
 
 Grab external sources etc, this may take some time if you have a slow connection approx download 825M, this includes all the sources to build a functioning LFS system
-make SOURCES
+*make SOURCES
 
 *make CD
 
@@ -23,6 +23,7 @@ See the file "Roll your own Linux Rescue or Setup CD.html" for more details ( or
 
 A pre-built iso is avaialable here:
 https://www.dropbox.com/s/5ut7v7sgobgykyu/bootcd-8.0.iso
+https://www.dropbox.com/s/7o09ayfg9pc3pyo/LFSBootCD-8.2.iso
 
 This uses the ssh public keys in the pulblickeys folder.
 This will need to be burnt to a dvd writable if you mean to use a physical disk as it's slightly too large for a cdrom.

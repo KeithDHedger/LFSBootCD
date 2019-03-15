@@ -51,6 +51,15 @@ cd /mnt/LFS/LFSScripts
 Run Build File System script:
 ./BuildFileSystem
 
+#Include the data set up previously
+. SystemData
+
+#Create a link from downloaded linux tarball to /LFSSourceArchives/8.2/KERNEL to prevent re-downloading source tarball.
+mkdir  /mnt/LFS/LFSSourceArchives/8.2/KERNEL
+pushd /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
+	ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
+popd
+
 Chroot into temporary system:
 ./Chroot system
 
@@ -70,6 +79,11 @@ Set /mnt/LFS/etc/lfspkg.rc or /mnt/LFS/root/.lfspkg.rc (preferred) variables, ma
 Build main system:
 
 cd /LFSPkgBuildScripts/system/system-meta
+
+LFSSetUp will have created a symlink to your desired init type so use:
+./system-meta.LFSBuild install
+
+Or if you have changed your mind you can install a different init system like so:
 
 Use system-sysvinit-meta for standard sysvinit like so:
 ./system-sysvinit-meta.LFSBuild install

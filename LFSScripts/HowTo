@@ -1,105 +1,166 @@
 
 1)
+
+#It will be assumed that your LFS partition is mounted on /mnt/LFS, using /dev/sda1 and /dev/sda2 as swap, alter as needed.
+#Use sudo where necessary to create links etc.
+
+#If compiling on raspberian you need to install some extra files like so:
+apt-get update
+apt-get install bison gawk m4 texinfo
+#Also make sure /bin/sh points to /bin/bash
+
 #Get the build scripts and helper scripts from:
 #https://github.com/KeithDHedger/LFSPkgBuilds
 #either via git clone or downloading the zip file and unpacking it.
 #you should place the LFSPkgBuildScripts and LFSScripts folder in the root of what will be your new LFS eg /mnt/lfs/LFSPkgBuildScripts
 
 ###RECOMMENDED####
-#or cd into the mounted partition wher you intend to build LFS
-#sudo git clone https://github.com/KeithDHedger/LFSPkgBuilds.git --branch version8 --single-branch
+#or cd into the mounted partition wher you intend to build LFS:
+#LFS should point to your mounted LFS partition ( eg LFS=/mnt/LFS ).
+cd /mnt/LFS
+[sudo] git clone https://github.com/KeithDHedger/LFSPkgBuilds.git
 
-#sudo chown -R $USER:$USER LFSPkgBuilds
-#sudo ln -sv LFSPkgBuilds/LFSPkgBuildScripts LFSPkgBuildScripts
-#sudo ln -sv LFSPkgBuilds/LFSScripts LFSScripts
-
-2)
-#get the package manager archive wvia the host system
-cd LFSPkgBuildScripts/admin/LFSPkg
-wget -c --no-check-certificate "https://github.com/KeithDHedger/LFSPkg/archive/master.zip" -O LFSPkg.zip||true
-unzip LFSPkg.zip
+Own the files:
+[sudo] chown -R $USER:$USER $LFS/LFSPkgBuilds
+[sudo] ln -sv LFSPkgBuilds/LFSPkgBuildScripts $LFS/LFSPkgBuildScripts
+[sudo] ln -sv LFSPkgBuilds/LFSScripts $LFS/LFSScripts
 
 3)
 #cd into the lfsscripts folder
-cd ./LFSScripts
-#Set variables in ./SystemData !!IMPORTANT!!
-#Run
+cd /mnt/LFS/LFSScripts
+#Set up config files !!IMPORTANT!!
+#You can just press 'Return' to accept the default.
+#Run:
+[sudo] ./LFSSetUp
+
+#To check config:
 ./ShowSystemData
-#to check all ok.
 
 4)
-#Run BuildTools script.
+#Run BuildTools script:
 ./BuildTools
 
+4.5)
+#Mount bind external folder if set and if not already mounted.
+. ./SystemData
+mkdir -vp ${LFS}/${SOURCEARCHIVES}||true
+mkdir -vp ${LFS}/${BUILTPACKAGES}||true
+if [ "X$EXTFOLDER" != "X" ];then
+	sudo mount --bind $EXTFOLDER/${BUILTPACKAGES} $LFS/${BUILTPACKAGES}
+	sudo mount --bind $EXTFOLDER/${SOURCEARCHIVES} $LFS/${SOURCEARCHIVES}
+fi
+
 5)
-#Run BuildFileSystem script.
+#Run BuildFileSystem script:
 ./BuildFileSystem
 
+5.2)
+#You may/will have to re-own the source folder etc, so:
+[sudo] chown -R $USER:$USER $LFS/LFSPkgBuilds
+
+5.5)
+#Create a link from downloaded linux tarball to /LFSSourceArchives/8.2/KERNEL to prevent re-downloading source tarball.
+mkdir  $LFS/LFSSourceArchives/$LFSVERSION/KERNEL
+cd $LFS/LFSSourceArchives/$LFSVERSION/KERNEL
+ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
+
+5.6)
+#get the package manager archive via the host system:
+cd $LFS/LFSPkgBuildScripts/admin/LFSPkg
+wget -c --no-check-certificate "https://github.com/KeithDHedger/LFSPkg/archive/master.zip" -O LFSPkg.zip
+unzip LFSPkg.zip
+
 6)
-#Chroot into tempory system.
-./Chroot system
+#Change back to $LFS/LFSScripts folder.
+cd $LFS/LFSScripts
+
+#If you are building over ssh you may want to start a screen session that you can come back to later.
+screen
+
+#Chroot into temporary system:
+[sudo] ./Chroot system
 
 7)
 #You should now be in the chroot
-#First install lfspkg
+#First install lfspkg:
 cd /LFSPkgBuildScripts/admin/LFSPkg
 BOOTSTRAP=1 ./LFSPkg.LFSBuild install
 
-#Set $LFS/etc/lfspkg.rc or $LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData as that's where the main LFS sytem source files are, you can do this either from in the chroot environment or from the host with root permisions.
-#The default SOURCEARCHIVES vaiable is set to /tmp/LFSSourceArchives.
-#You may also want to save built packages by setting the OUTPUT variable in lfspkg.rc, you may want to mount another folder in the chroot environment from the host for this, as you will need a fair amount of storage space for all the built packages for a full desktop system, you don't of course need to keep the built packages you can if space is short just delete them, in which case leave the OUTPUT variable as is and periodically delete everything in it.
-#It is handy to keep the built packages as if somthing goes wrong its's usually simpler and quicker to reinstall the binary package rather than building from source again, things like qt5 and firefox take a LOOooooonnng time to build from source.
-#
-#after first installing lfspkg and setting up $LFS/etc/lfspkg.rc you may want to manually move the lfspkg built package tarball to the folders set in the rc file, if you have changed them that is.
+#As part of the LFSSetUp script /mnt/LFS/root/.lfspkg.rc has been created to contain basic info needed by lfspkg, review and change if needed.
+#Set /mnt/LFS/etc/lfspkg.rc or /mnt/LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from #SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
+#At this point wget/openssl is not installed so you will get a load of complaints from lfspkg, ignore them as lfspkg will be reinstalled later with the main system.
+
+#You should run lfspkg --setup to create the lfspkg.rc file ( in ~ (/root) )
+#Rc files are sourced from /etc/lfspkg.rc then ~/.lfspkg.rc.
+#lfspkg --setup can be run again later if you need/want to change source/build folders etc.
+#For building the main system you should probably set the configure options config files in /etc and log options.
+lfspkg --setup
 
 8)
-#Build main system
+#Build main system:
 cd /LFSPkgBuildScripts/system/system-meta
-#Use system-sysvinit-meta
-#for standard sysvinit like so:
+
+#Use system-sysvinit-meta for standard sysvinit like so:
 ./system-sysvinit-meta.LFSBuild install
-#Or use system-bbinit-meta.LFSBuild
-#for a RECOMMENDED busy box init system ( non standard ) like so:
+
+#Or use system-bbinit-meta.LFSBuildfor a busy box init system ( non standard ) like so:
 ./system-bbinit-meta.LFSBuild install
 
 #Or for ##experimental## custom init system use:
 ./system-LFSInit-meta.LFSBuild install
 
+#Or for rpi sysvinit system use:
+./system-pi-sysvinit-meta.LFSBuild install
+
+Wait for script to complete:
+...
+Have coffee
+Walk the dog
+...
+
 9)
-#logout from temporary system
+#logout from temporary system:
 exit
 
 10)
-#Remove tools folder link from host and if you want to save tools archive for futre use move/copy the ${LFS}/tools-${LFSVERSION}.tar.gz somewhere safe.
+#Remove tools folder link from host and if you want to save tools archive for futre use move/copy the ${LFS}/tools-${LFSVERSION}.tar.gz somewhere safe:
 sudo rm /tools
-#Remove the tools folder from your LFS install disk.
-sudo rm -rf ${LFS}/tools
+#Remove the tools folder from your LFS install disk:
+[sudo] rm -rf /mnt/LFS/tools
 
 11)
-#Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ).
-sudo ./Chroot
+#Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ):
+[sudo] ./Chroot
 
 12)
 #You MUST rebuild lfspkg after completeing the the basic system and removing the tools folder.
 #Use same process as 2)/7) EXCEPT do NOT use BOOTSTRAP=1
 #If you have set any vairiable in /etc/lfspkg.rc then reply 'R' ( without the quotes ) when asked about replacing files in /etc.
-#If you forgot to do the above bit just re-edit /etc/lfspkg.rc
+#If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
+
 cd /LFSPkgBuildScripts/admin/LFSPkg
 ./LFSPkg.LFSBuild install
 
 13)
-#Configure and build the kernel
+#No point in compiling your own kernel on pi so prebuilt one is used, so skip this bit on pi.
+#Configure and build the kernel:
 cd /LFSPkgBuildScripts/kernel
 ./kernel.LFSBuild install
 
+#Again on pi skip this bit as firmware is installed by the pi-system-meta package.
+#You may prefer to manually copy all firmware modules from the host sytem from /lib/firmware to your new LFS system.
+#Or use the firmware build script to install all the latest firmware from https://git.kernel.org/ eg Whilst still in the kernel build folder:
+./firmware.LFSBuild install
+
 13.5)
+#No grub on pi
 #Optional install of grub, see here:
-http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
+#http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
 
-The LFSSetup script will install a basic grub.cfg file in ${LFS}/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
-Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub, or manually do this:
+#The LFSSetup script will install a basic grub.cfg file in ${LFS}/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
+#Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub, or manually do this:
 
-#assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
+#assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS:
 grub-install /dev/sda
 
 cat > /boot/grub/grub.cfg << "EOF"
@@ -110,13 +171,14 @@ set timeout=30
 insmod ext2
 set root=(hd0,1)
 
-menuentry "GNU/Linux, Linux 4.9.9-lfs-8.0" {
-	linux /boot/vmlinuz-4.9.9-lfs-8.0 root=/dev/sda1 ro
+menuentry "GNU/Linux, Linux 4.9.9" {
+	linux /boot/vmlinuz-4.9.9 root=/dev/sda1 ro
 }
 EOF
 
 14)
-#Build xorg
+#Before building the X server now is a good time to quickly boot into your new system and make sure all is OK, you can then reboot back to the host and continue building in the chroot or build in the 'real' system, the choice is yours but this HowTo assumes all building is done in the chroot.
+#Build xorg:
 cd /LFSPkgBuildScripts/xorg/xorg-meta/
 ./xorg-meta.LFSBuild install
 
@@ -139,6 +201,10 @@ cd /LFSPkgBuildScripts/print/cups
 cd /LFSPkgBuildScripts/gtk/gtk
 ./gtk.LFSBuild install
 
+#xsane frontends and xsane require gimp installed first to build the plugin
+cd /LFSPkgBuildScripts/desktop/gimp
+./gimp.LFSBuild install
+
 #rest of printing stuff
 cd /LFSPkgBuildScripts/print/printing-meta
 ./printing-meta.LFSBuild install
@@ -159,7 +225,7 @@ cd /LFSPkgBuildScripts/devel/development-meta
 #this is for an xfce4 desktop.
 cd /LFSPkgBuildScripts/desktop/desktop-meta
 ./desktop-meta.LFSBuild  install
-#Or for an LFSDesktop
+#Or fo r an LFSDesktop
 cd /LFSPkgBuildScripts/lfsdesktop/LFSDesktop-meta
 ./LFSDesktop-meta.LFSBuild install
 
@@ -202,23 +268,13 @@ cd /LFSPkgBuildScripts/net/davfs2
 cd /LFSPkgBuildScripts/net/curlftpfs
 ./curlftpfs.LFSBuild install
 
-#Qt5 stuff
-#cd /LFSPkgBuildScripts/qt/lxqt-meta
-#./lxqt-meta.LFSBuild install
-
 #TODO
 cd /LFSPkgBuildScripts/qt/qt-creator
 ./qt-creator.LFSBuild install
 
+#If you are building in chroot you will pobably have to rerun the postinstall script for this package AFTER booting to the 'real' system.
 cd /LFSPkgBuildScripts/admin/mariadb
 ./mariadb.LFSBuild install
-
-#Busybox init
-#cd /LFSPkgBuildScripts/sys/busybox
-#./busybox.LFSBuild install
-#
-#cd /LFSPkgBuildScripts/sys/bootfiles
-#./bootfiles.LFSBuild install
 
 #Odd stuff
 cd /LFSPkgBuildScripts/xorg/xbindkeys
@@ -230,7 +286,29 @@ cd /LFSPkgBuildScripts/net/libcddb
 cd /LFSPkgBuildScripts/desktop/epdfview
 ./epdfview.LFSBuild install
 
-cd /LFSPkgBuildScripts/desktop/conky
-./conky.LFSBuild install
+#Conky is getting increasingly tied to gnome and difficult ( impossible! )to build.
+#cd /LFSPkgBuildScripts/desktop/conky
+#./conky.LFSBuild install
+
+#Try an alternative!
+cd /LFSPkgBuildScripts/desktop/gkrellm
+./gkrellm.LFSBuild install
+
+#System admin/security stuff
+cd /LFSPkgBuildScripts/admin/logrotate
+./logrotate.LFSBuild install
+
+cd /LFSPkgBuildScripts/admin/fcron
+./fcron.LFSBuild install
+
+cd /LFSPkgBuildScripts/admin/iptables
+./iptables.LFSBuild install
+
+cd /LFSPkgBuildScripts/admin/fail2ban
+./fail2ban.LFSBuild install
+
+
+
+
 
 

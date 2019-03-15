@@ -13,7 +13,7 @@
 # BootCD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
+# GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with BootCD.  If not, see <http://www.gnu.org/licenses/>.
@@ -53,7 +53,7 @@ LFS=${LFS:-"/mnt/LFS"}
 readWithDefault "LFS"  "Enter Mountpoint For LFS"
 
 #LFS Version
-LFSVERSION=${LFSVERSION:-8.0}
+LFSVERSION=${LFSVERSION:-8.2}
 readWithDefault "LFSVERSION"  "Enter Version"
 
 #Computer name
@@ -61,7 +61,7 @@ LFSNAME=${LFSNAME:-"LFSDev"}
 readWithDefault "LFSNAME"  "Enter Hostname"
 
 #LFS init type eithe bbinit or sysvinit
-INITTYPE=${INITTYPE:-"LFSInit"}
+INITTYPE=${INITTYPE:-"sysvinit"}
 readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|bbinit|sysvinit)"
 
 #libdir suffix
@@ -81,7 +81,7 @@ readWithDefault "SOURCEARCHIVES"  "Enter Folder For Source Archives"
 
 #kernal version
 #if the kernel version you want to use is not the same as the book you will have to manually download the source to $SOURCEARCHIVES
-KERNELVERSION=${KERNELVERSION:-"4.9.9"}
+KERNELVERSION=${KERNELVERSION:-"4.15.3"}
 readWithDefault "KERNELVERSION"  "Enter Kernel Version"
 
 #keyboard
@@ -129,7 +129,7 @@ echo "LFSNAME=$LFSNAME"
 echo "INITTYPE=$INITTYPE"
 
 echo "LIBDIRSUFFIX=$LIBDIRSUFFIX"
-#echo "BUILDSCRIPTS=$BUILDSCRIPTS"
+echo "BUILDSCRIPTS=$BUILDSCRIPTS"
 echo "BUILTPACKAGES=$BUILTPACKAGES"
 echo "SOURCEARCHIVES=$SOURCEARCHIVES"
 echo "KERNELVERSION=$KERNELVERSION"
@@ -155,29 +155,31 @@ fi
 
 #cp files etc
 cp -r ${CDROMMOUNT}/LFS/LFSPkgBuilds ${LFS}
-ln -sv LFSPkgBuilds/LFSPkgBuildScripts ${LFS}/LFSPkgBuildScripts
-ln -sv LFSPkgBuilds/LFSScripts ${LFS}/LFSScripts
+ln -sfv LFSPkgBuilds/LFSPkgBuildScripts .
+ln -sfv LFSPkgBuilds/LFSScripts .
 
 mkdir ${LFS}/tools
 pushd ${LFS}/tools
 	case $(uname -m) in
 		*64)
-			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_64.tar.bz2
+			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_64.tar.bz2
 			;;
 		*)
-			tar -xvf ${CDROMMOUNT}/LFS/tools-8.0_32.tar.bz2
+			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_32.tar.bz2
 			;;
 	esac
 popd
 
-mkdir -vp "${LFS}/$SOURCEARCHIVES"
-cp -rv ${CDROMMOUNT}/LFS/LFSSourceArchives/8.0/* ${LFS}/$SOURCEARCHIVES
+mkdir -vp "${LFS}/$SOURCEARCHIVES" "${LFS}/$BUILTPACKAGES"
+cp -rv ${CDROMMOUNT}/LFS/LFSSourceArchives/${LFSVERSION}/* ${LFS}/$SOURCEARCHIVES
 
 #set kernel version in build scripts
 #build scripts should be at $LFS/LFSPkgBuildScripts
 sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/system/linuxheaders/linuxheaders.LFSBuild
 sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/kernel/kernel.LFSBuild
 sed -ri "s/linuxheaders-[0-9]+.[0-9]+.[0-9]+/linuxheaders-${KERNELVERSION}/i" ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-${INITTYPE}-meta.LFSBuild
+
+ln -svf system-${INITTYPE}-meta.LFSBuild ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-meta.LFSBuild
 
 cat > $LFS/LFSScripts/SystemData.local << EOF
 CDROMMOUNT=$CDROMMOUNT
@@ -208,6 +210,7 @@ EOF
 
 mkdir -vp $LFS/root||true
 cat > $LFS/root/.lfspkg.rc << EOF
+LFSVERSION=$LFSVERSION
 OUTPUT=$BUILTPACKAGES
 SOURCEARCHIVES=$SOURCEARCHIVES
 BUILDSCRIPTS=$BUILDSCRIPTS

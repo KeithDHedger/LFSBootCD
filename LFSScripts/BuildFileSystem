@@ -43,7 +43,6 @@ pushd $LFS
 	ln -sv /tools/bin/{perl,env,mkdir} usr/bin
 	ln -sv /tools/lib/libgcc_s.so{,.1} usr/lib
 	ln -sv /tools/lib/libstdc++.so{,.6} usr/lib
-	sed 's/tools/usr/' tools/lib/libstdc++.la > usr/lib/libstdc++.la
 	ln -sv bash bin/sh
 	ln -sv /proc/self/mounts etc/mtab
 
@@ -244,18 +243,34 @@ DISTRIB_CODENAME="$LFSNAME"
 DISTRIB_DESCRIPTION="Linux From Scratch"
 EOF
 
+	cat > etc/shells << EOF
+# Begin /etc/shells
+
+/bin/sh
+/bin/bash
+
+# End /etc/shells
+EOF
+
+	cat > root/.lfspkg.rc << EOF
+LFSVERSION=$LFSVERSION
+KERNELVERSION=$KERNELVERSION
+LIBDIRSUFFIX=$LIBDIRSUFFIX
+SCRIPTLOG=1
+OUTPUT=$BUILTPACKAGES
+SOURCEARCHIVES=$SOURCEARCHIVES
+BUILDSCRIPTS=$BUILDSCRIPTS
+COMPILEAT=\${COMPILEAT:-"\$SOURCEARCHIVES"}
+CONFIGOPTIONS="--disable-option-checking --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib$LIBDIRSUFFIX --disable-debug --disable-nls"
+CHECKETC=1
+EOF
+
 	chown -R root:root $LFS/* 2>/dev/null
 	touch var/log/{btmp,lastlog,wtmp}
 	chmod -v 664 var/log/lastlog
 	chmod -v 600  var/log/btmp
 	chgrp -v utmp var/log/lastlog
 	chmod 777 /tmp
-
-	cat > root/.lfspkg.rc << EOF
-OUTPUT=$BUILTPACKAGES
-SOURCEARCHIVES=$SOURCEARCHIVES
-BUILDSCRIPTS=$BUILDSCRIPTS
-EOF
 
 popd
 
