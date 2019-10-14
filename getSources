@@ -2,30 +2,34 @@
 
 #©keithhedger Wed 14 Jun 19:51:12 BST 2017 kdhedger68713@gmail.com
 
-LFSVERSION="8.2"
+LFSVERSION="9.0"
+#LFSGITVERSION="$LFSVERSION"
+LFSGITVERSION="dev"
+
 SYSTEMSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYSTEM
 NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
 SYSSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYS
+WGET_VERS=1.20.3
 
-WGETTAR="http://ftp.gnu.org/gnu/wget/wget-1.19.4.tar.gz"
+WGETTAR="https://ftp.gnu.org/gnu/wget/wget-$WGET_VERS.tar.gz"
 UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
 
 #TOOLS32TAR="https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-8.0_32.tar.bz2"
 #TOOLS64TAR="https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-8.0_64.tar.bz2"
-TOOLS32TAR="https://www.dropbox.com/s/a7keub18zn90esl/tools-8.2_32.tar.bz2"
-TOOLS64TAR="https://www.dropbox.com/s/wtis8ag8nwz1nzy/tools-8.2_64.tar.bz2"
+#TOOLS32TAR="https://www.dropbox.com/s/a7keub18zn90esl/tools-8.2_32.tar.bz2"
+#TOOLS64TAR="https://www.dropbox.com/s/wtis8ag8nwz1nzy/tools-8.2_64.tar.bz2"
+TOOLS32TAR="https://www.dropbox.com/s/dlmmd5us8bn86zt/tools-9.0_32.tar.bz2"
+TOOLS64TAR="https://www.dropbox.com/s/l2uer2qfy7czh9j/tools-9.0_64.tar.bz2"
 ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
 ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
-LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/${LFSVERSION}.zip"
+LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/${LFSGITVERSION}.zip"
 LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"
 
 mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
-	#bzip2 link broken in wget-list
-	sed -i 's@.*bzip2-1\.0\.6\.tar\.gz*@http://anduin.linuxfromscratch.org/LFS/bzip2-1.0.6.tar.gz@' wget-list
 	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
 	mv md5sums $SYSTEMSOURCE
 	wget -i wget-list -c -P $SYSTEMSOURCE
@@ -55,9 +59,9 @@ fi
 if [ ! -e cdtree/LFS/gotpkgbuilds ];then
 	pushd cdtree/LFS
 		wget -c "$LFSPKGBUILDS"
-		unzip ${LFSVERSION}.zip
-		mv LFSPkgBuilds-${LFSVERSION} LFSPkgBuilds
-		rm -r LFSPkgBuilds/.gitignore ${LFSVERSION}.zip
+		unzip ${LFSGITVERSION}.zip
+		mv LFSPkgBuilds-${LFSGITVERSION} LFSPkgBuilds
+		rm -r LFSPkgBuilds/.gitignore ${LFSGITVERSION}.zip
 		cp -r ../../LFSScripts/BuildFileSystem LFSPkgBuilds/LFSScripts
 		pushd LFSPkgBuilds/LFSPkgBuildScripts/admin/LFSPkg
 			wget -c $LFSPKG

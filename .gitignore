@@ -8,3 +8,4 @@ hostkeys
 *.iso
 workingfiles
 extenallinks
+cdtree/LFS/*

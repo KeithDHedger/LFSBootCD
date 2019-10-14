@@ -1,5 +1,5 @@
 
-VERSION=8.2
+VERSION=9.0
 TOPDIR=$(shell pwd)
 ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*")
 BOOTCDNAME=LFSBootCD-$(VERSION).iso
@@ -52,6 +52,7 @@ clean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	rm -rf $(TOPDIR)/loop2
 	rm -f $(TOPDIR)/wget-list*
+	rm -f $(TOPDIR)/gotpkgbuilds
 
 distclean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img $(TOPDIR)/tftp_area.tar.gz||true
@@ -60,4 +61,13 @@ distclean:
 	rm -rf $(TOPDIR)/cdtree/LFS/*||true
 	rm $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
 	rm $(TOPDIR)/bootcd.tar.xz||true
+
+nearlyclean:
+	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
+	rm -rf $(TOPDIR)/cdtree/LFS/LFSPkgBuilds
+	rm -rf $(TOPDIR)/cdtree/LFS/gotpkgbuilds
+
+
+
+
 

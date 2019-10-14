@@ -54,8 +54,8 @@ Run Build File System script:
 #Include the data set up previously
 . SystemData
 
-#Create a link from downloaded linux tarball to /LFSSourceArchives/8.2/KERNEL to prevent re-downloading source tarball.
-mkdir  /mnt/LFS/LFSSourceArchives/8.2/KERNEL
+#Create a link from downloaded linux tarball to /LFSSourceArchives/$LFSVERSION/KERNEL to prevent re-downloading source tarball.
+mkdir  /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
 pushd /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
 	ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
 popd
@@ -117,8 +117,15 @@ cd /LFSPkgBuildScripts/admin/LFSPkg
 ./LFSPkg.LFSBuild install
 
 Configure and build the kernel:
+Some example configs are here:
+/usr/share/KernelConfigs
+Suffix indicates 64/32 bit configs, thanks to Slackware for the huge configs.
+
 cd /LFSPkgBuildScripts/kernel
 ./kernel.LFSBuild install
+
+Install firmware (optional)
+./firmware.LFSBuild install
 
 Optional install of grub, see here:
 http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
@@ -131,7 +138,10 @@ Check that the grub.cfg file is OK, make any changes and just copy it to /boot/g
 assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
 grub-install /dev/sda
 
-cat > /boot/grub/grub.cfg << "EOF"
+Get the system variables set previously:
+. /LFSScripts/SystemData.local
+
+cat > /boot/grub/grub.cfg << EOF
 # Begin /boot/grub/grub.cfg
 set default=0
 set timeout=30
@@ -139,10 +149,17 @@ set timeout=30
 insmod ext2
 set root=(hd0,1)
 
-menuentry "GNU/Linux, Linux 4.9.9-lfs-8.0" {
-	linux /boot/vmlinuz-4.9.9 root=/dev/sda1 ro
+menuentry "GNU/Linux, Linux $KERNELVERSION LFS $LFSVERSION" {
+	linux /boot/vmlinuz-$KERNELVERSION root=$ROOTDEV ro
 }
 EOF
+
+Install GPM service
+cd /LFSPkgBuildScripts/HelperScripts
+./InstallServices
+If dialog has not been installed you will need to install sevices manually
+cd blfs-bootscripts-20190609
+make install-gpm
 
 Exit from chroot and reboot to your new LFS system to check that all is well, don't forget to eject the CD:
 exit

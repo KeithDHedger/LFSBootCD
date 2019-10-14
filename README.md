@@ -6,12 +6,14 @@ https://git-lfs.github.com/
 All commands marked with * MUST be run as root to preserve permissions ( don't type the *! ).
 
 *make clean
+Doesn't remove source archives.
+* make nearlyclean
 
 OR to remove the ssh keys folder
 *make distclean
 
 Grab external sources etc, this may take some time if you have a slow connection approx download 825M, this includes all the sources to build a functioning LFS system
-*make SOURCES
+make SOURCES
 
 *make CD
 

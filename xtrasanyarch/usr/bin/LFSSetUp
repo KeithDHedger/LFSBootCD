@@ -35,9 +35,11 @@ readWithDefault ()
 case $(uname -m) in
 	x86_64)
 		LIBDIRSUFFIX=64
+		LFSNAME=${LFSNAME:-"LFS9064"}
 		;;
 	*)
 		LIBDIRSUFFIX=""
+		LFSNAME=${LFSNAME:-"LFS9032"}
 		;;
 esac
 
@@ -53,11 +55,11 @@ LFS=${LFS:-"/mnt/LFS"}
 readWithDefault "LFS"  "Enter Mountpoint For LFS"
 
 #LFS Version
-LFSVERSION=${LFSVERSION:-8.2}
+LFSVERSION=${LFSVERSION:-9.0}
 readWithDefault "LFSVERSION"  "Enter Version"
 
 #Computer name
-LFSNAME=${LFSNAME:-"LFSDev"}
+#LFSNAME=${LFSNAME:-"LFS9064"}
 readWithDefault "LFSNAME"  "Enter Hostname"
 
 #LFS init type eithe bbinit or sysvinit
@@ -81,7 +83,7 @@ readWithDefault "SOURCEARCHIVES"  "Enter Folder For Source Archives"
 
 #kernal version
 #if the kernel version you want to use is not the same as the book you will have to manually download the source to $SOURCEARCHIVES
-KERNELVERSION=${KERNELVERSION:-"4.15.3"}
+KERNELVERSION=${KERNELVERSION:-"5.2.8"}
 readWithDefault "KERNELVERSION"  "Enter Kernel Version"
 
 #keyboard
@@ -158,7 +160,7 @@ cp -r ${CDROMMOUNT}/LFS/LFSPkgBuilds ${LFS}
 ln -sfv LFSPkgBuilds/LFSPkgBuildScripts .
 ln -sfv LFSPkgBuilds/LFSScripts .
 
-mkdir ${LFS}/tools
+mkdir -p ${LFS}/tools
 pushd ${LFS}/tools
 	case $(uname -m) in
 		*64)
@@ -174,10 +176,8 @@ mkdir -vp "${LFS}/$SOURCEARCHIVES" "${LFS}/$BUILTPACKAGES"
 cp -rv ${CDROMMOUNT}/LFS/LFSSourceArchives/${LFSVERSION}/* ${LFS}/$SOURCEARCHIVES
 
 #set kernel version in build scripts
-#build scripts should be at $LFS/LFSPkgBuildScripts
-sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/system/linuxheaders/linuxheaders.LFSBuild
 sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/kernel/kernel.LFSBuild
-sed -ri "s/linuxheaders-[0-9]+.[0-9]+.[0-9]+/linuxheaders-${KERNELVERSION}/i" ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-${INITTYPE}-meta.LFSBuild
+sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/kernel/firmware.LFSBuild
 
 ln -svf system-${INITTYPE}-meta.LFSBuild ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-meta.LFSBuild
 
