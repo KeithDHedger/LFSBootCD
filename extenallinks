@@ -1,0 +1,65 @@
+
+version 8.08
+32 bit
+tools
+https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-8.0_32.tar.bz2
+9.0
+https://www.dropbox.com/s/dlmmd5us8bn86zt/tools-9.0_32.tar.bz2
+
+root system
+https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz
+
+64 bit
+tools
+https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-8.0_64.tar.bz2
+9.0
+https://www.dropbox.com/s/l2uer2qfy7czh9j/tools-9.0_64.tar.bz2
+
+root system
+https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz
+
+bootcd
+**no use https://www.dropbox.com/s/x6ycbgtlhkb4onb/bootcd.iso**
+https://www.dropbox.com/s/5ut7v7sgobgykyu/bootcd-8.0.iso
+9.0
+https://www.dropbox.com/s/pv9v9sp312dkp1z/LFSBootCD-9.0.iso
+
+LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
+LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"
+
+POST
+There have been a number of threads here about a bootable CD to build LFS, so here's my version.
+This is the prebuild iso image:
+https://www.dropbox.com/s/5ut7v7sgobgykyu/bootcd-8.0.iso
+
+This can be used 'as is' for VBox or burnt to DVD for a 'real' computer.
+Both 64 bit ( default ) and 32 bit systems can be built, just follow the onscreen instructions.
+Full source archives are included on the iso along with pre-built 64 and 32 bit tools, also included are the source files for wget/openssl and complete build scripts for my lfspkg package manager.
+
+Login as root ( no password ), type[code]Instructions[/code] and then follow the onscreen guide, I would suggest opening another console ( ATL-F2 ) and run the commands from there, gpm is installed so you can copy/paste with the mouse.
+
+If all goes well at the end you will have a bootable LFS installed, you can then carry on and install xorg etc as you want.
+
+If you want to change/add stuff to the iso you can download the all the source files like so:[code]git clone https://github.com/KeithDHedger/LFSBootCD.git
+./getSources[/code]
+
+The getSources sscript will download some large external files:
+64bit tools.
+32bit tools.
+64bit system ( for iso ).
+32bit system ( for iso ).
+Source files for LFS.
+Source files for wget/openssl/unzip.
+Source files for lfspkg manager.
+
+The tools and system archives only need to be downloaded once.
+
+Most non exectuable extras should be put in the cdtree folder, executables and data should go in the relevent xtras* folders, anthing in the xtrasanyarch folder will be added to BOTH 32bit and 64bit system.
+
+After making any changes follow the instruction in the README.md file to rebuild the new system.
+
+Let me know what you think.
+Enjoy!
+
+
+
