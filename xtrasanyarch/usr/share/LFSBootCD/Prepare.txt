@@ -150,6 +150,7 @@ insmod ext2
 set root=(hd0,1)
 
 menuentry "GNU/Linux, Linux $KERNELVERSION LFS $LFSVERSION" {
+	gfxpayload=1024x768x32,1024x768
 	linux /boot/vmlinuz-$KERNELVERSION root=$ROOTDEV ro
 }
 EOF
@@ -163,6 +164,11 @@ make install-gpm
 
 Exit from chroot and reboot to your new LFS system to check that all is well, don't forget to eject the CD:
 exit
+Don't forget to eject the CD.
+eject /dev/cdrom
+
 reboot
 
 You may now add extra packages from the LFSPkgBuildScripts see the HowTo in the /LFSScripts folder on instructions to build a complete desktop, what you add now is up to you good luck!
+If you are running on vbox and want to install the quest additions you may need to install which ( cd /LFSPkgBuildScripts/sys/which/;./which.LFSBuild install ).
+
