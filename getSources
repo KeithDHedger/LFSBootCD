@@ -3,8 +3,8 @@
 #©keithhedger Wed 14 Jun 19:51:12 BST 2017 kdhedger68713@gmail.com
 
 LFSVERSION="9.0"
-#LFSGITVERSION="$LFSVERSION"
-LFSGITVERSION="dev"
+LFSGITVERSION="$LFSVERSION"
+#LFSGITVERSION="dev"
 
 SYSTEMSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYSTEM
 NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
@@ -24,6 +24,8 @@ ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
 ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/${LFSGITVERSION}.zip"
+#Or:
+#git clone  --single-branch --branch ${LFSGITVERSION} https://github.com/KeithDHedger/LFSPkgBuilds
 LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"
 
 mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
