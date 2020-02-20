@@ -4,7 +4,7 @@ version 8.08
 tools
 https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-8.0_32.tar.bz2
 9.0
-https://www.dropbox.com/s/dlmmd5us8bn86zt/tools-9.0_32.tar.bz2
+https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/tools-9.0_32.tar.bz2
 
 root system
 https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz
@@ -13,16 +13,14 @@ https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz
 tools
 https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-8.0_64.tar.bz2
 9.0
-https://www.dropbox.com/s/l2uer2qfy7czh9j/tools-9.0_64.tar.bz2
+https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/tools-9.0_64.tar.bz2
 
 root system
 https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz
 
 bootcd
-**no use https://www.dropbox.com/s/x6ycbgtlhkb4onb/bootcd.iso**
-https://www.dropbox.com/s/5ut7v7sgobgykyu/bootcd-8.0.iso
 9.0
-https://www.dropbox.com/s/pv9v9sp312dkp1z/LFSBootCD-9.0.iso
+https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCD-9.0.iso
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/version8.zip"
 LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"

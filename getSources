@@ -14,14 +14,8 @@ WGET_VERS=1.20.3
 WGETTAR="https://ftp.gnu.org/gnu/wget/wget-$WGET_VERS.tar.gz"
 UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
 
-#TOOLS32TAR="https://www.dropbox.com/s/00d9g99v1h7yzpn/tools-8.0_32.tar.bz2"
-#TOOLS64TAR="https://www.dropbox.com/s/m8spbezuuc1e9q2/tools-8.0_64.tar.bz2"
-#TOOLS32TAR="https://www.dropbox.com/s/a7keub18zn90esl/tools-8.2_32.tar.bz2"
-#TOOLS64TAR="https://www.dropbox.com/s/wtis8ag8nwz1nzy/tools-8.2_64.tar.bz2"
-TOOLS32TAR="https://www.dropbox.com/s/dlmmd5us8bn86zt/tools-9.0_32.tar.bz2"
-TOOLS64TAR="https://www.dropbox.com/s/l2uer2qfy7czh9j/tools-9.0_64.tar.bz2"
-ROOT32TAR="https://www.dropbox.com/s/ktxt3pwljmki6ns/root_tree32.tar.xz"
-ROOT64TAR="https://www.dropbox.com/s/wqxswj35gvrqqfv/root_tree64.tar.xz"
+TOOLS32TAR="https://github.com/KeithDHedger/LFSBootCD/releases/download/${LFSGITVERSION}/tools-${LFSGITVERSION}_32.tar.bz2"
+TOOLS64TAR="https://github.com/KeithDHedger/LFSBootCD/releases/download/${LFSGITVERSION}/tools-${LFSGITVERSION}_64.tar.bz2"
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/${LFSGITVERSION}.zip"
 #Or:
@@ -52,12 +46,8 @@ if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 
 	wget -c "$TOOLS32TAR" -P cdtree/LFS
 	wget -c "$TOOLS64TAR" -P cdtree/LFS
-
-	wget -c "$ROOT32TAR"
-	wget -c "$ROOT64TAR"
 fi
 
-#rm -r cdtree/LFS/LFSPkgBuilds
 if [ ! -e cdtree/LFS/gotpkgbuilds ];then
 	pushd cdtree/LFS
 		wget -c "$LFSPKGBUILDS"
