@@ -14,10 +14,10 @@ pushd $LFS
 	mknod -m 600 dev/console c 5 1
 	mknod -m 666 dev/null c 1 3
 
-	mkdir -pv {bin,boot,etc/{opt,sysconfig},home,lib${LIBDIRSUFFIX},mnt,opt,run}
+	mkdir -pv {bin,boot,etc/{sysconfig,profile.d},home,lib${LIBDIRSUFFIX},mnt,opt,run}
 	mkdir -pv {media/{floppy,cdrom},sbin,srv,var}
 	install -dv -m 0750 root
-	install -dv -m 1777 tmp var/tmp
+	install -dv -m 777 tmp var/tmp
 	mkdir -pv usr/{,local/}{bin,include,lib${LIBDIRSUFFIX},sbin,src}
 	mkdir -pv usr/{,local/}share/{color,dict,doc,info,locale,man}
 	mkdir -v  usr/{,local/}share/{misc,terminfo,zoneinfo}
@@ -34,6 +34,7 @@ pushd $LFS
 			;;
 	esac
 
+	mkdir -vp run/shm
 	mkdir -v var/{log,mail,spool}
 	ln -sv /run var/run
 	ln -sv /run/lock var/lock
@@ -51,6 +52,7 @@ root:x:0:0:root:/root:/bin/bash
 bin:x:1:1:bin:/dev/null:/bin/false
 daemon:x:6:6:Daemon User:/dev/null:/bin/false
 messagebus:x:18:18:D-Bus Message Daemon User:/var/run/dbus:/bin/false
+lfspkguser:x:26:26:Unprivileged lfspkg user:/dev/null:/bin/false
 nobody:x:99:99:Unprivileged User:/dev/null:/bin/false
 EOF
 
@@ -82,6 +84,7 @@ network:x:22
 plugdev:x:23
 users:x:24
 power:x:25
+lfspkguser:x:26
 mail:x:34:
 nogroup:x:99:
 EOF
@@ -142,6 +145,71 @@ EOF
 
 export LANG=$LANGUAGE
 
+pathremove ()
+{
+	local IFS=':'
+	local NEWPATH
+	local DIR
+	local PATHVARIABLE=\${2:-PATH}
+	for DIR in \${!PATHVARIABLE}
+		do
+			if [ "\$DIR" != "\$1" ];then
+				NEWPATH=\${NEWPATH:+\$NEWPATH:}\$DIR
+			fi
+        done
+        export \$PATHVARIABLE="\$NEWPATH"
+}
+
+pathprepend ()
+{
+	pathremove \$1 \$2
+	local PATHVARIABLE=\${2:-PATH}
+	export \$PATHVARIABLE="\$1\${!PATHVARIABLE:+:\${!PATHVARIABLE}}"
+}
+
+pathappend ()
+{
+	pathremove \$1 \$2
+	local PATHVARIABLE=\${2:-PATH}
+	export \$PATHVARIABLE="\${!PATHVARIABLE:+\${!PATHVARIABLE}:}\$1"
+}
+
+export -f pathremove pathprepend pathappend
+
+# Set the initial path
+
+export PATH=/bin:/usr/bin
+export HISTSIZE=1000
+export HISTIGNORE="&:[bf]g:exit"
+
+if [ \$EUID -eq 0 ];then
+	pathappend /sbin:/usr/sbin
+	#unset HISTFILE
+fi
+
+export XDG_DATA_DIRS=\${XDG_DATA_DIRS:-/usr/share/}
+export XDG_CONFIG_DIRS=\${XDG_CONFIG_DIRS:-/etc/xdg/}
+export XDG_RUNTIME_DIR=\${XDG_RUNTIME_DIR:-/tmp/xdg-\$USER}
+
+# Setup a red prompt for root and a green one for users.
+NORMAL="\[\e[0m\]"
+RED="\[\e[1;31m\]"
+GREEN="\[\e[1;32m\]"
+if [[ \$EUID == 0 ]] ; then
+	PS1="\$RED\u [ \$NORMAL\w\$RED ]# \$NORMAL"
+else
+	PS1="\$GREEN\u [ \$NORMAL\w\$GREEN ]\\\$ \$NORMAL"
+fi
+
+for script in /etc/profile.d/*.sh
+	do
+		if [ -r \$script ];then
+			. \$script
+		fi
+	done
+
+unset script RED GREEN NORMAL
+
 # End /etc/profile
 EOF
 
@@ -192,16 +260,16 @@ EOF
 	cat > etc/fstab << EOF
 # Begin /etc/fstab
 
-#file system	mount-point	type			options				dump	fsck order
+#file system					mount-point	type		options			dump	fsck order
 
 $ROOTDEV		/			$ROOTFSTYPE		defaults			1		1
 $SWAP			swap		swap			pri=1				0		0
 
-proc			/proc		proc			nosuid,noexec,nodev	0		0
-sysfs			/sys		sysfs			nosuid,noexec,nodev	0		0
-devpts			/dev/pts	devpts			gid=5,mode=620		0		0
-tmpfs			/run		tmpfs			defaults			0		0
-devtmpfs		/dev		devtmpfs		mode=0755,nosuid	0		0
+proc						/proc		proc		nosuid,noexec,nodev	0		0
+sysfs						/sys		sysfs		nosuid,noexec,nodev	0		0
+devpts						/dev/pts	devpts		gid=5,mode=620		0		0
+tmpfs						/run		tmpfs		defaults		0		0
+devtmpfs					/dev		devtmpfs	mode=0755,nosuid	0		0
 
 # End /etc/fstab
 EOF
@@ -252,7 +320,7 @@ EOF
 # End /etc/shells
 EOF
 
-	cat > root/.lfspkg.rc << EOF
+	cat > /tmp/.lfspkg.rc << EOF
 LFSVERSION=$LFSVERSION
 KERNELVERSION=$KERNELVERSION
 LIBDIRSUFFIX=$LIBDIRSUFFIX
@@ -261,10 +329,13 @@ OUTPUT=$BUILTPACKAGES
 SOURCEARCHIVES=$SOURCEARCHIVES
 BUILDSCRIPTS=$BUILDSCRIPTS
 COMPILEAT=\${COMPILEAT:-"\$SOURCEARCHIVES"}
-CONFIGOPTIONS="--disable-option-checking --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib$LIBDIRSUFFIX --disable-debug --disable-nls"
-CHECKETC=1
-EOF
+CONFIGOPTIONS="--disable-option-checking --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib\$LIBDIRSUFFIX --disable-debug --disable-nls --disable-static"
+MESONCONFIGOPTIONS="--prefix=/usr --sysconfdir=/etc --libexecdir=/usr/libexec --libdir=/usr/lib\$LIBDIRSUFFIX --buildtype=release --default-library=shared"
+MAKEFLAGS=" -j4 "
+CHECKETC=0
 
+EOF
+	mv /tmp/.lfspkg.rc root
 	chown -R root:root $LFS/* 2>/dev/null
 	touch var/log/{btmp,lastlog,wtmp}
 	chmod -v 664 var/log/lastlog

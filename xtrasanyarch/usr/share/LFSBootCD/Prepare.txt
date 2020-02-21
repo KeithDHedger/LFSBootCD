@@ -13,7 +13,8 @@ Live CD based heavily on this:
 https://www.phenix.bnl.gov/~purschke/RescueCD/
 Thanks!
 
-The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda1 mounted on /mnt/LFS with swap on /dev/sda2, alter as needed.
+The system (/) is in a RAM disk, for this help it is assumed the cd will be mounted on /cdrom and the partition for the new LFS system is /dev/sda2 mounted on /mnt/LFS with swap on /dev/sda1, alter as needed.
+
 The cdrom data may or may not be mounted, so if /cdrom is empty/not a mountpoint then you need to mount the cd manually eg:
 All these commands must be run as root.
 
@@ -28,17 +29,17 @@ Create partition table etc
 
 Format partition for new install of LFS if needed, eg:
 
-mke2fs -L MyNewLFS /dev/sda1
+mke2fs -L MyNewLFS /dev/sda2
 
 Create swap space if needed and turn on:
 
-mkswap /dev/sda2
-swapon /dev/sda2
+mkswap /dev/sda1
+swapon /dev/sda1
 
 Create a suitable mount point ( /mnt/LFS should already exist unless something went wrong ), mount the partition, and cd into it, eg:
 
 mkdir -vp /mnt/LFS
-mount /dev/sda1 /mnt/LFS
+mount /dev/sda2 /mnt/LFS
 cd /mnt/LFS
 
 Run the setup script to copy needed files etc, mostly you can just hit enter to accept the defaults, but you will probably have to change the gateway IP, enter y at the end to complete the transfer:
@@ -65,8 +66,9 @@ Chroot into temporary system:
 
 You should now be in the chroot.
 First install lfspkg:
+The LFSPkg build script will decide whether to do an install or upgrade.
 cd /LFSPkgBuildScripts/admin/LFSPkg
-BOOTSTRAP=1 ./LFSPkg.LFSBuild install
+BOOTSTRAP=1 ./LFSPkg.LFSBuild
 You WILL get errors about wget not being installed etc, ignore them for now, lfspkg will be re-installed after the base system has been built/installed.
 
 As part of the LFSSetUp script /root/.lfspkg.rc has been created to contain basic info needed by lfspkg, review and change if needed.
@@ -114,12 +116,15 @@ If you have set any variable in /etc/lfspkg.rc then reply 'R' ( without the quot
 If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
 
 cd /LFSPkgBuildScripts/admin/LFSPkg
-./LFSPkg.LFSBuild install
+./LFSPkg.LFSBuild
 
 Configure and build the kernel:
-Some example configs are here:
+Some example configs are here ( on the CD NOT in the chroot ):
 /usr/share/KernelConfigs
 Suffix indicates 64/32 bit configs, thanks to Slackware for the huge configs.
+So for instance to use one of these use ( from the host ):
+cp /usr/share/KernelConfigs/VBOX-config-5.2.8_64 /mnt/LFS/LFSPkgBuildScripts/kernel/config-5.2.8
+Replace config-5.2.8 with config-YOURKERNELVERSION if needed.
 
 cd /LFSPkgBuildScripts/kernel
 ./kernel.LFSBuild install
@@ -130,15 +135,16 @@ Install firmware (optional)
 Optional install of grub, see here:
 http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
 
-If your host already has grub installed you should configure that to boot your new LFS system.
+If your host already has grub installed you should configure that to boot your new LFS system, or manually do this:
 
-The LFSSetup script will install a basic grub.cfg file in /mnt/LFS/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
-Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub, or manually do this:
-
-assuming root device is /dev/sda and LFS system is on /dev/sda1 mounted at /mnt/LFS
+assuming root device is /dev/sda and LFS system is on /dev/sda2 mounted at /mnt/LFS
 grub-install /dev/sda
 
-Get the system variables set previously:
+The LFSSetup script will install a basic grub.cfg file in /mnt/LFS/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
+Check that the grub.cfg file is OK, make any changes and just copy it to /boot/grub like so ( whilst still in chroot ):
+cp /LFSPkgBuildScripts/system/grub/grub.cfg /boot/grub
+
+Or get the system variables set previously:
 . /LFSScripts/SystemData.local
 
 cat > /boot/grub/grub.cfg << EOF
@@ -147,7 +153,7 @@ set default=0
 set timeout=30
 
 insmod ext2
-set root=(hd0,1)
+set root=(hd0,2)
 
 menuentry "GNU/Linux, Linux $KERNELVERSION LFS $LFSVERSION" {
 	gfxpayload=1024x768x32,1024x768
