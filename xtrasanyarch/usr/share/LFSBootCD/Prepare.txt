@@ -52,10 +52,10 @@ cd /mnt/LFS/LFSScripts
 Run Build File System script:
 ./BuildFileSystem
 
-#Include the data set up previously
+Include the data set up previously
 . SystemData
 
-#Create a link from downloaded linux tarball to /LFSSourceArchives/$LFSVERSION/KERNEL to prevent re-downloading source tarball.
+Create a link from downloaded linux tarball to /LFSSourceArchives/$LFSVERSION/KERNEL to prevent re-downloading source tarball.
 mkdir  /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
 pushd /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
 	ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
@@ -63,6 +63,12 @@ popd
 
 Chroot into temporary system:
 ./Chroot system
+
+lfspkg/BuildFileSystem now creates an unprivileged user for certain actions eg extracting tarballs.
+/LFSSourceArchives and /LFSBuiltPackages should now have the group set to lfspkguser, and perms set to 775, if you want your normal user to have access just add yourself to the lfspkguser group.
+You will have to re-own/set perms the various folders etc, so:
+chown -R $USER:lfspkguser /LFSSourceArchives /LFSBuiltPackages
+chmod -R g+rwx /LFSSourceArchives/ /LFSBuiltPackages/
 
 You should now be in the chroot.
 First install lfspkg:
@@ -76,7 +82,6 @@ You can use lfspkg itself to create the users lfspkg.rc file by using:
 lfspkg --setup
 
 Set /mnt/LFS/etc/lfspkg.rc or /mnt/LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
-
 
 Build main system:
 
