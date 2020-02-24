@@ -82,8 +82,8 @@ cd /LFSPkgBuildScripts/admin/LFSPkg
 BOOTSTRAP=1 ./LFSPkg.LFSBuild
 You WILL get errors about wget not being installed etc, ignore them for now, lfspkg will be re-installed after the base system has been built/installed.
 
-As part of the LFSSetUp script /root/.lfspkg.rc has been created to contain basic info needed by lfspkg, review and change if needed.
-You can use lfspkg itself to create the users lfspkg.rc file by using:
+Lfspkg will install a default config file in /etc/lfspkg.rc
+You can use lfspkg itself to create/alter the lfspkg.rc file by using:
 lfspkg --setup
 
 Set /mnt/LFS/etc/lfspkg.rc or /mnt/LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
@@ -126,7 +126,9 @@ If you have set any variable in /etc/lfspkg.rc then reply 'R' ( without the quot
 If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
 
 cd /LFSPkgBuildScripts/admin/LFSPkg
-./LFSPkg.LFSBuild
+CHECKETC=1 ./LFSPkg.LFSBuild
+
+You may want to rerun lfspkg --setup and set CHECKETC globally.
 
 Configure and build the kernel:
 Some example configs are here ( on the CD NOT in the chroot ):
