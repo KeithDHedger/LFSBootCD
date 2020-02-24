@@ -1,6 +1,6 @@
 Build a new CD:
 
-You MAY need the git lfs plugin avaialable here:
+You MAY need the git lfs plugin available here:
 https://git-lfs.github.com/
 
 All commands marked with * MUST be run as root to preserve permissions ( don't type the *! ).
@@ -28,11 +28,11 @@ A small static cli text editor is available on the ROM here:
 /sbin/kilo
 The gpm server is also included and started at boot time.
 
-A pre-built iso is avaialable here:
-LATESET:
+A pre-built iso is available here:
+LATEST:
 https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCD-9.0.iso
 
-OLD VVERION:
+OLD VERSION:
 https://www.dropbox.com/s/7o09ayfg9pc3pyo/LFSBootCD-8.2.iso
 
 This uses the ssh public keys in the pulblickeys folder.

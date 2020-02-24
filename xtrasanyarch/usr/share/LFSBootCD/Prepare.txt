@@ -27,6 +27,11 @@ fdisk /dev/sda
 Create partition table etc
 ...
 
+You can use this line ( best to copy/paste ) to write the partion table all in one got, THIS WILL DELETE YOUR CURRENT PARTITION SCHEME, be warned.
+This will set up two partitions the 1st ( /dev/sda1 ) being a 6G swap the rest ( /dev/sda2 ) of the disk is used for LFS
+
+printf "o\nn\np\n1\n\n+6G\nt\n82\nn\np\n2\n\n\nt\n2\n83\nw\n\n"|fdisk /dev/sda 2>/dev/null >/dev/null
+ 
 Format partition for new install of LFS if needed, eg:
 
 mke2fs -L MyNewLFS /dev/sda2
