@@ -8,3 +8,4 @@ hostkeys
 *.iso
 workingfiles
 cdtree/LFS/*
+wget-list*

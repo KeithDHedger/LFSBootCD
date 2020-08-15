@@ -43,6 +43,9 @@ case $(uname -m) in
 		;;
 esac
 
+PIBUILD=0
+USESYSTEMD=0
+
 #set default language
 LANG=${LANG:-"en_GB"}
 
@@ -59,12 +62,14 @@ LFSVERSION=${LFSVERSION:-9.0}
 readWithDefault "LFSVERSION"  "Enter Version"
 
 #Computer name
-#LFSNAME=${LFSNAME:-"LFS9064"}
 readWithDefault "LFSNAME"  "Enter Hostname"
 
 #LFS init type eithe bbinit or sysvinit
 INITTYPE=${INITTYPE:-"sysvinit"}
-readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|bbinit|sysvinit)"
+readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|bbinit|systemd|sysvinit))"
+if [ "$INITTYPE" = "systemd" ];then
+	USESYSTEMD=1
+fi
 
 #libdir suffix
 readWithDefault "LIBDIRSUFFIX"  "Enter Suffix For Lib Folders"
@@ -129,6 +134,7 @@ echo "LFS=$LFS"
 echo "LFSVERSION=$LFSVERSION"
 echo "LFSNAME=$LFSNAME"
 echo "INITTYPE=$INITTYPE"
+echo "USESYSTEMD=$USESYSTEMD"
 
 echo "LIBDIRSUFFIX=$LIBDIRSUFFIX"
 echo "BUILDSCRIPTS=$BUILDSCRIPTS"
@@ -164,7 +170,11 @@ mkdir -p ${LFS}/tools
 pushd ${LFS}/tools
 	case $(uname -m) in
 		*64)
-			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_64.tar.bz2
+			if [ $USESYSTEMD -eq 1 ];then
+				tar -xvf ${CDROMMOUNT}/LFS/tools-systemd-${LFSVERSION}_64.tar.bz2
+			else
+				tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_64.tar.bz2
+			fi
 			;;
 		*)
 			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_32.tar.bz2
@@ -185,10 +195,15 @@ cat > $LFS/LFSScripts/SystemData.local << EOF
 CDROMMOUNT=$CDROMMOUNT
 
 LFS=$LFS
+PIBUILD=$PIBUILD
+PIVERS=$PIVERS
+PIBOOTDEV=$PIBOOTDEV
+PIROOTDEV=$PIROOTDEV
 LFSNAME=$LFSNAME
 LFSVERSION=$LFSVERSION
 KERNELVERSION=$KERNELVERSION
 INITTYPE=$INITTYPE
+USESYSTEMD=$USESYSTEMD
 
 LIBDIRSUFFIX=$LIBDIRSUFFIX
 BUILTPACKAGES=$BUILTPACKAGES
@@ -208,12 +223,16 @@ SUBNET=$SUBNET
 NAMESERVERS="$NAMESERVERS"
 EOF
 
-mkdir -vp $LFS/root||true
-cat > $LFS/root/.lfspkg.rc << EOF
+mkdir -vp $LFS/etc||true
+cat > $LFS/etc/lfspkg.rc << EOF
 LFSVERSION=$LFSVERSION
-OUTPUT=$BUILTPACKAGES
+OUTPUT=$PKGARCHIVES
 SOURCEARCHIVES=$SOURCEARCHIVES
 BUILDSCRIPTS=$BUILDSCRIPTS
+COMPILEAT=$COMPILEAT
+USESYSTEMD=$USESYSTEMD
+PIBUILD=$PIBUILD
+LANG=$LANGUAGE
 EOF
 
 cat > ${LFS}/${BUILDSCRIPTS}/system/grub/grub.cfg << EOF

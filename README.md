@@ -6,7 +6,7 @@ https://git-lfs.github.com/
 All commands marked with * MUST be run as root to preserve permissions ( don't type the *! ).
 *make clean
 
-This doesn't remove source archives.
+This doesn't remove source files/archives.
 * make nearlyclean
 
 OR to remove the ssh keys folder

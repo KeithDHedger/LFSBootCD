@@ -64,8 +64,8 @@ distclean:
 
 nearlyclean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
-	rm -rf $(TOPDIR)/cdtree/LFS/LFSPkgBuilds
-	rm -rf $(TOPDIR)/cdtree/LFS/gotpkgbuilds
+#	rm -rf $(TOPDIR)/cdtree/LFS/LFSPkgBuilds
+#	rm -rf $(TOPDIR)/cdtree/LFS/gotpkgbuilds
 
 
 

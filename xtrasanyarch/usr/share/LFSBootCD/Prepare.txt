@@ -57,6 +57,9 @@ cd /mnt/LFS/LFSScripts
 Run Build File System script:
 ./BuildFileSystem
 
+Or for systemd
+./BuildFileSystem-SystemD
+
 Include the data set up previously
 . SystemData
 
@@ -69,12 +72,6 @@ popd
 Chroot into temporary system:
 ./Chroot system
 
-lfspkg/BuildFileSystem now creates an unprivileged user for certain actions eg extracting tarballs.
-/LFSSourceArchives and /LFSBuiltPackages should now have the group set to lfspkguser, and perms set to 775, if you want your normal user to have access just add yourself to the lfspkguser group.
-You will have to re-own/set perms the various folders etc, so:
-chown -R $USER:lfspkguser /LFSSourceArchives /LFSBuiltPackages
-chmod -R g+rwx /LFSSourceArchives/ /LFSBuiltPackages/
-
 You should now be in the chroot.
 First install lfspkg:
 The LFSPkg build script will decide whether to do an install or upgrade.
@@ -86,7 +83,7 @@ Lfspkg will install a default config file in /etc/lfspkg.rc
 You can use lfspkg itself to create/alter the lfspkg.rc file by using:
 lfspkg --setup
 
-Set /mnt/LFS/etc/lfspkg.rc or /mnt/LFS/root/.lfspkg.rc (preferred) variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
+Set /mnt/LFS/etc/lfspkg.rc variables, make sure the SOURCEARCHIVES points to the same place as $SOURCEARCHIVES from SystemData.local as that's where the main LFS system source files are, you can do this either from in the chroot environment or from the host with root permissions.
 
 Build main system:
 
@@ -102,6 +99,9 @@ Use system-sysvinit-meta for standard sysvinit like so:
 
 Or use system-bbinit-meta.LFSBuildfor a busy box init system ( non standard ) like so:
 ./system-bbinit-meta.LFSBuild install
+
+Or use system-systemd-meta.LFSBuildfor a busy box init system ( non standard ) like so:
+./system-systemd-meta.LFSBuild install
 
 Or for ##experimental## custom init system use:
 ./system-LFSInit-meta.LFSBuild install
@@ -176,9 +176,9 @@ EOF
 Install GPM service
 cd /LFSPkgBuildScripts/HelperScripts
 ./InstallServices
-If dialog has not been installed you will need to install sevices manually
-cd blfs-bootscripts-20190609
-make install-gpm
+
+Or for systemd
+./InstallService-SystemD
 
 Exit from chroot and reboot to your new LFS system to check that all is well, don't forget to eject the CD:
 exit
