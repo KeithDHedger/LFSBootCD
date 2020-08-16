@@ -30,7 +30,11 @@ The gpm server is also included and started at boot time.
 
 A pre-built iso is available here:
 LATEST:
-https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCD-9.0.iso
+https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart00
+https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart01
+
+You must download both parts and then join them together like so:
+cat "LFSBootCDPart00" "LFSBootCDPart01" > LFSBootCd.iso
 
 OLD VERSION:
 https://www.dropbox.com/s/7o09ayfg9pc3pyo/LFSBootCD-8.2.iso
