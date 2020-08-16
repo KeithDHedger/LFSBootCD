@@ -29,11 +29,12 @@ A small static cli text editor is available on the ROM here:
 The gpm server is also included and started at boot time.
 
 A pre-built iso is available here:
-LATEST:
+
 https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart00
 https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart01
 
 You must download both parts and then join them together like so:
+
 cat "LFSBootCDPart00" "LFSBootCDPart01" > LFSBootCd.iso
 
 OLD VERSION:
