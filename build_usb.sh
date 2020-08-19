@@ -32,18 +32,22 @@ if ! e2fsck $USBPARTITION ; then
     exit 1
 fi
 
-
-
 # now do some surgery of the later /etc/fstab file to add a mount entry
 # for the usb stick. We first save the original fstab
 
+if [ ! -d $TOPDIR/root_tree64 ];then
+	mkdir $TOPDIR/root_tree64 $TOPDIR/root_tree32
+	cd $TOPDIR/root_tree64
+	tar -xvf $TOPDIR/root_tree64.tar.xz
+	cd $TOPDIR/root_tree32
+	tar -xvf $TOPDIR/root_tree32.tar.xz
+fi
 cp $TOPDIR/root_tree64/etc/fstab $TOPDIR/fstab_save
 
 # and we get the UUID and generate an entry in the fstab 
 BLKID=$(blkid -o export $USBPARTITION | head -1)
 echo "$BLKID   /usbstick     auto noauto,ro  0 0" >> $TOPDIR/root_tree32/etc/fstab
 echo "$BLKID   /usbstick     auto noauto,ro  0 0" >> $TOPDIR/root_tree64/etc/fstab
-
 
 # and we make a file which tells us later that we were booted through USB
 touch $TOPDIR/root_tree32/var/state/usb-booted
@@ -55,16 +59,15 @@ sleep 3
 #the we build the rootdisk image, and add it to the initial ramdisk 
 $TOPDIR/build_diskimage.sh
 
-
 # and we delete the files again
 rm -f $TOPDIR/root_tree32/var/state/usb-booted
 rm -f $TOPDIR/root_tree64/var/state/usb-booted
-
 
 # and we put back the original fstab file 
 cp $TOPDIR/fstab_save  $TOPDIR/root_tree32/etc/fstab
 cp $TOPDIR/fstab_save  $TOPDIR/root_tree64/etc/fstab
 
+mkdir -vp $TOPDIR/usbstick
 mount $USBPARTITION $TOPDIR/usbstick
 
 if [ -n "$LIGHT" ] ; then
@@ -100,5 +103,6 @@ extlinux --install $TOPDIR/usbstick/boot/
 sleep 2
 echo "Almost done, patience...  "
 umount $TOPDIR/usbstick
+rm $TOPDIR/fstab_save
 
 echo "done"

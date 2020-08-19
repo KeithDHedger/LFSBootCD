@@ -10,3 +10,5 @@ workingfiles
 cdtree/LFS/*
 wget-list*
 LFSBootCD*
+root_tree32/
+root_tree64/
