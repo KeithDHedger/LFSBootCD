@@ -19,8 +19,11 @@ if [ -z "$USBDEV" ] ; then
   exit 1
 fi
 
+if ! command -v extlinux &> /dev/null;then
+    echo "Can't find extlinux, quiting ..."
+    exit 1
+fi
 source $TOPDIR/settings.sh
-
 
 # this makes a full device name, such as /dev/sdb1
 USBPARTITION="${USBDEV}${USBPARTITIONNUMBER}"
@@ -104,5 +107,6 @@ sleep 2
 echo "Almost done, patience...  "
 umount $TOPDIR/usbstick
 rm $TOPDIR/fstab_save
+rmdir $TOPDIR/usbstick
 
 echo "done"
