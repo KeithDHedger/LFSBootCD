@@ -23,13 +23,13 @@ if ! command -v extlinux &> /dev/null;then
     echo "Can't find extlinux, quiting ..."
     exit 1
 fi
+
 source $TOPDIR/settings.sh
 
 # this makes a full device name, such as /dev/sdb1
 USBPARTITION="${USBDEV}${USBPARTITIONNUMBER}"
 
 if ! e2fsck $USBPARTITION ; then
-
     echo "$USBPARTITION does not seem to be formatted properly"
     echo "if this is the right partion, execute mkfs -t ext2 $USBPARTITION"
     exit 1
