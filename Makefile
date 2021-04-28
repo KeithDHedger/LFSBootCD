@@ -1,5 +1,5 @@
 
-VERSION=9.0
+VERSION=10.1
 TOPDIR=$(shell pwd)
 ISODEPS=$(shell find  $(TOPDIR)/cdtree -not -name "\.*")
 BOOTCDNAME=LFSBootCD-$(VERSION).iso

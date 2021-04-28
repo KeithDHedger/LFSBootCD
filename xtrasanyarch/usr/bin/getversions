@@ -1,0 +1,49 @@
+#!/bin/bash -e
+
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+NORMAL='\e[0;0m'
+
+trap 'echo -e "$0 ${RED}FAILED${NORMAL} at line ${GREEN}${LINENO}${NORMAL}"' ERR
+
+LFSVERSION=${LFSVERSION:-"10.1"}
+
+rm wget-list||true
+wget "https://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list"
+:>"./PkgVersions"
+
+while read
+	do
+		case $REPLY in
+			*html*)
+				echo "ignoring $REPLY ..."
+				;;			
+			*.patch)
+				echo "ignoring $REPLY ..."
+				;;			
+			*tzdata*)
+				basename "${REPLY,,}"|sed 's/\([[:alpha:]]*\)\([[:digit:]]*\).*/\1_version=\2/' >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/.*[0-9]\(.\).*/tzdata_minor_rev=\1/' >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/\([[:alpha:]]*\)[[:digit:]]*..\(tar\..*\)*/\1_arctype=\2/' >> "./PkgVersions"
+				;;			
+			*openssl*)
+				basename "${REPLY,,}"|sed 's/.\.tar\..*$//'|sed 's/\(.*\)-\(.*\)/\1_version=\2/' >> "./PkgVersions"
+				echo $REPLY|sed 's|.*\(.\)\.tar.*|openssl_minor_rev=\1|' >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/\(.*\)-.*\(tar\..*\)/\1_arctype=\2/'|tr "-" "_" >> "./PkgVersions"
+				;;
+			*expect*)
+				basename "${REPLY,,}"|sed 's/expect\([0-9.]*\)\.tar\..*/expect_version=\1/' >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/\([[:alpha:]]*\).*\.\(tar\..*\)/\1_arctype=\2/' >> "./PkgVersions"
+				;;
+			*tcl*)
+				basename "${REPLY,,}"|sed 's/tcl\([0-9]*\)/tcl_version=\1/'|sed 's/-src.*//' >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/.*src\.\(tar\..*\)/tcl_arctype=\1/' >> "./PkgVersions"
+				;;
+			*)
+				basename "${REPLY,,}"|sed 's/\.tar\..*$//'|sed 's/\(.*\)-\(.*\)/\1_version=\2/'|tr "-" "_" >> "./PkgVersions"
+				basename "${REPLY,,}"|sed 's/\(.*\)-.*\(tar\..*\)/\1_arctype=\2/'|tr "-" "_" >> "./PkgVersions"
+			;;
+		esac		
+	done < <(cat wget-list)
+
+. $(dirname $0)/RunSeds

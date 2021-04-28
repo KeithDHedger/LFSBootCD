@@ -4,6 +4,7 @@ You MAY need the git lfs plugin available here:
 https://git-lfs.github.com/
 
 All commands marked with * MUST be run as root to preserve permissions ( don't type the *! ).
+Remove source archives as well.
 *make clean
 
 This doesn't remove source files/archives.

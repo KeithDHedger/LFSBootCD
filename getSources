@@ -1,15 +1,18 @@
-#!/bin/bash
+#!/bin/bash -e 
 
 #©keithhedger Wed 14 Jun 19:51:12 BST 2017 kdhedger68713@gmail.com
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+NORMAL='\e[0;0m'
+trap 'echo -e "$0 ${RED}FAILED${NORMAL} at line ${GREEN}${LINENO}${NORMAL}"' ERR
 
-LFSVERSION="9.0"
+LFSVERSION="10.1"
 LFSGITVERSION="$LFSVERSION"
-#LFSGITVERSION="dev"
 
 SYSTEMSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYSTEM
 NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
 SYSSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYS
-WGET_VERS=1.20.3
+WGET_VERS=1.21.1
 
 WGETTAR="https://ftp.gnu.org/gnu/wget/wget-$WGET_VERS.tar.gz"
 UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
@@ -26,41 +29,51 @@ LFSPKG="https://github.com/KeithDHedger/LFSPkg/archive/master.zip"
 mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE $SYSTEMSOURCE||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
-	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list
-	wget http://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums
+	wget https://www.linuxfromscratch.org/lfs/view/$LFSVERSION/wget-list||true
+	. xtrasanyarch/usr/bin/RunSeds
+	wget https://www.linuxfromscratch.org/lfs/view/$LFSVERSION/md5sums||true
 	mv md5sums $SYSTEMSOURCE
-	wget -i wget-list -c -P $SYSTEMSOURCE
+	wget -nc -i wget-list -c -P $SYSTEMSOURCE||true
+	rm wget-list
+	wget https://www.linuxfromscratch.org/lfs/view/systemd/wget-list||true
+	wget https://www.linuxfromscratch.org/lfs/view/systemd/md5sums||true
+	wget -nc -i wget-list -c -P $SYSTEMSOURCE||true
+	mv md5sums ${SYSTEMSOURCE}/md5sumsd
 
 #wget/unzip from the blfs book I prefer to make this as part of the main system
-	wget -c "$WGETTAR" -P $NETSOURCE
-	wget -c "$UNZIPTAR" -P $SYSSOURCE
+	wget -c "$WGETTAR" -P $NETSOURCE||true
+	wget -c "$UNZIPTAR" -P $SYSSOURCE||true
 
 	touch $SYSTEMSOURCE/gotsystemsources
 	rm wget-list
-
+	
 	pushd $SYSTEMSOURCE
 		if ! md5sum -c md5sums;then
 			echo "WARNING ... md5 hashes did NOT match, Exiting ..."
 			exit 1
 		fi
+		if ! md5sum -c md5sumsd;then
+			echo "WARNING ... md5 hashes did NOT match, Exiting ..."
+			exit 1
+		fi
+		rm md5sumsd md5sums
 	popd
 
 fi
 
 if [ ! -e cdtree/LFS/gottools ];then
-	wget -c "$TOOLS32TAR" -P cdtree/LFS
-	wget -c "$TOOLS64TAR" -P cdtree/LFS
-	wget -c "$TOOLS64SYTEMDTAR" -P cdtree/LFS
+#	wget -c "$TOOLS32TAR" -P cdtree/LFS
+#	wget -c "$TOOLS64TAR" -P cdtree/LFS
 	touch cdtree/LFS/gottools
 fi
 
 if [ ! -e cdtree/LFS/gotpkgbuilds ];then
 	pushd cdtree/LFS
-		wget -c "$LFSPKGBUILDS"
-		unzip ${LFSGITVERSION}.zip
-		mv LFSPkgBuilds-${LFSGITVERSION} LFSPkgBuilds
-		rm -r LFSPkgBuilds/.gitignore ${LFSGITVERSION}.zip
-		cp -r ../../LFSScripts/BuildFileSystem LFSPkgBuilds/LFSScripts
+		#wget -c "$LFSPKGBUILDS"
+		#unzip ${LFSGITVERSION}.zip
+		#mv LFSPkgBuilds-${LFSGITVERSION} LFSPkgBuilds
+		#rm -r LFSPkgBuilds/.gitignore ${LFSGITVERSION}.zip
+		git clone https://github.com/KeithDHedger/LFSPkgBuilds.git --branch 10.1 --single-branch
 		pushd LFSPkgBuilds/LFSPkgBuildScripts/admin/LFSPkg
 			wget -c $LFSPKG
 			unzip master.zip
@@ -70,5 +83,16 @@ if [ ! -e cdtree/LFS/gotpkgbuilds ];then
 	popd
 fi
 
+(
+LFSVERSION=$LFSVERSION xtrasanyarch/usr/bin/getversions
+cp  ./PkgVersions cdtree/LFS/LFSPkgBuilds/LFSScripts/LFSInitBuild
+mv ./PkgVersions cdtree/LFS/LFSPkgBuilds/LFSScripts/SysVBuild
+rm wget-list
+LFSVERSION="systemd" xtrasanyarch/usr/bin/getversions
+mv ./PkgVersions cdtree/LFS/LFSPkgBuilds/LFSScripts/SystemDBuild
+rm wget-list||true
+rm cdtree/LFS/LFSPkgBuilds/LFSPkgBuildScripts/kernel/PkgVersions||true
+rm cdtree/LFS/LFSPkgBuilds/LFSPkgBuildScripts/system/PkgVersions||true
+)||true
 exit 0
 

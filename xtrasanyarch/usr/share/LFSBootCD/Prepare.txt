@@ -51,30 +51,18 @@ Run the setup script to copy needed files etc, mostly you can just hit enter to 
 
 LFSSetUp
 
+Wait for the script to complete.
 Change to the LFSScripts folder:
 cd /mnt/LFS/LFSScripts
-
-Run Build File System script:
-./BuildFileSystem
-
-Or for systemd
-./BuildFileSystem-SystemD
 
 Include the data set up previously
 . SystemData
 
-Create a link from downloaded linux tarball to /LFSSourceArchives/$LFSVERSION/KERNEL to prevent re-downloading source tarball.
-mkdir  /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
-pushd /mnt/LFS/LFSSourceArchives/$LFSVERSION/KERNEL
-	ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
-popd
-
 Chroot into temporary system:
-./Chroot system
+./Chroot
 
 You should now be in the chroot.
 First install lfspkg:
-The LFSPkg build script will decide whether to do an install or upgrade.
 cd /LFSPkgBuildScripts/admin/LFSPkg
 BOOTSTRAP=1 ./LFSPkg.LFSBuild
 You WILL get errors about wget not being installed etc, ignore them for now, lfspkg will be re-installed after the base system has been built/installed.
@@ -92,20 +80,6 @@ cd /LFSPkgBuildScripts/system/system-meta
 LFSSetUp will have created a symlink to your desired init type so use:
 ./system-meta.LFSBuild install
 
-Or if you have changed your mind you can install a different init system like so:
-
-Use system-sysvinit-meta for standard sysvinit like so:
-./system-sysvinit-meta.LFSBuild install
-
-Or use system-bbinit-meta.LFSBuildfor a busy box init system ( non standard ) like so:
-./system-bbinit-meta.LFSBuild install
-
-Or use system-systemd-meta.LFSBuildfor a busy box init system ( non standard ) like so:
-./system-systemd-meta.LFSBuild install
-
-Or for ##experimental## custom init system use:
-./system-LFSInit-meta.LFSBuild install
-
 Wait for script to complete ...
 Have coffee
 Walk the dog
@@ -114,10 +88,7 @@ Walk the dog
 logout from temporary system
 exit
 
-Remove the tools folder from your LFS install disk.
-rm -rf /mnt/LFS/tools
-
-Re-enter the chroot ( this time and subsequent times don't use the 'system' argument to Chroot ).
+Re-enter the chroot
 ./Chroot
 
 You ###MUST### rebuild lfspkg after completing the the basic system and removing the tools folder.
@@ -126,7 +97,7 @@ If you have set any variable in /etc/lfspkg.rc then reply 'R' ( without the quot
 If you forgot to do the above bit just re-edit /etc/lfspkg.rc:
 
 cd /LFSPkgBuildScripts/admin/LFSPkg
-CHECKETC=1 ./LFSPkg.LFSBuild
+./LFSPkg.LFSBuild
 
 You may want to rerun lfspkg --setup and set CHECKETC globally.
 
@@ -135,10 +106,12 @@ Some example configs are here ( on the CD NOT in the chroot ):
 /usr/share/KernelConfigs
 Suffix indicates 64/32 bit configs, thanks to Slackware for the huge configs.
 So for instance to use one of these use ( from the host ):
-cp /usr/share/KernelConfigs/VBOX-config-5.2.8_64 /mnt/LFS/LFSPkgBuildScripts/kernel/config-5.2.8
-Replace config-5.2.8 with config-YOURKERNELVERSION if needed.
+cp /usr/share/KernelConfigs/VBOX-config-5.2.8_64 /mnt/LFS/LFSPkgBuildScripts/kernel/config-5.10.17 #( $KERNALVERSION change to suit)
+Replace config-5.10.17 with config-YOURKERNELVERSION if needed.
 
 cd /LFSPkgBuildScripts/kernel
+Remake removed link
+ln -snvf ../../../LFSScripts/PkgVersions .
 ./kernel.LFSBuild install
 
 Install firmware (optional)
@@ -175,7 +148,7 @@ EOF
 
 Install GPM service
 cd /LFSPkgBuildScripts/HelperScripts
-./InstallServices
+./InstallService
 
 Or for systemd
 ./InstallService-SystemD

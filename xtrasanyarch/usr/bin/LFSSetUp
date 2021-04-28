@@ -32,17 +32,6 @@ readWithDefault ()
 	fi
 }
 
-case $(uname -m) in
-	x86_64)
-		LIBDIRSUFFIX=64
-		LFSNAME=${LFSNAME:-"LFS9064"}
-		;;
-	*)
-		LIBDIRSUFFIX=""
-		LFSNAME=${LFSNAME:-"LFS9032"}
-		;;
-esac
-
 PIBUILD=0
 USESYSTEMD=0
 
@@ -58,17 +47,37 @@ LFS=${LFS:-"/mnt/LFS"}
 readWithDefault "LFS"  "Enter Mountpoint For LFS"
 
 #LFS Version
-LFSVERSION=${LFSVERSION:-9.0}
+LFSVERSION=${LFSVERSION:-10.1}
 readWithDefault "LFSVERSION"  "Enter Version"
+
+case $(uname -m) in
+	x86_64)
+		LIBDIRSUFFIX=64
+		LFSNAME=${LFSNAME:-"LFS${LFSVERSION//./}64"}
+		;;
+	*)
+		LIBDIRSUFFIX=""
+		LFSNAME=${LFSNAME:-"LFS${LFSVERSION//./}32"}
+		;;
+esac
 
 #Computer name
 readWithDefault "LFSNAME"  "Enter Hostname"
 
+#cp files etc
+cp -r ${CDROMMOUNT}/LFS/LFSPkgBuilds ${LFS}
+ln -sfv LFSPkgBuilds/LFSPkgBuildScripts .
+
 #LFS init type eithe bbinit or sysvinit
 INITTYPE=${INITTYPE:-"sysvinit"}
-readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|bbinit|systemd|sysvinit))"
+readWithDefault "INITTYPE"  "Enter Init Type (LFSInit|systemd|sysvinit))"
 if [ "$INITTYPE" = "systemd" ];then
 	USESYSTEMD=1
+	. ${LFS}/LFSPkgBuilds/LFSScripts/SystemDBuild/PkgVersions
+	KERNELVERSION=${KERNELVERSION:-$linux_version}
+else
+	. ${LFS}/LFSPkgBuilds/LFSScripts/SysVBuild/PkgVersions
+	KERNELVERSION=${KERNELVERSION:-$linux_version}
 fi
 
 #libdir suffix
@@ -88,7 +97,6 @@ readWithDefault "SOURCEARCHIVES"  "Enter Folder For Source Archives"
 
 #kernal version
 #if the kernel version you want to use is not the same as the book you will have to manually download the source to $SOURCEARCHIVES
-KERNELVERSION=${KERNELVERSION:-"5.2.8"}
 readWithDefault "KERNELVERSION"  "Enter Kernel Version"
 
 #keyboard
@@ -114,11 +122,11 @@ LANGUAGE=${LANGUAGE:-$LANG}
 readWithDefault "LANGUAGE"  "Enter Language"
 
 #network
-IP="192.168.1.1"$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')
+IP=${IP:-"$(ifconfig |grep "inet addr"|head -n1|awk -F: '{print $2}'|awk '{print $1}'|sed 's/\(.*\)\..*$/\1/').$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')"}
 readWithDefault "IP"  "Enter IP"
 
 #Set up the network
-GATEWAY=${GATEWAY:-"192.168.1.254"}
+GATEWAY=${GATEWAY:-"$(route |grep default|awk '{print $2}')"}
 readWithDefault "GATEWAY"  "Enter Gateway IP"
 
 SUBNET=${SUBNET:-"255.255.255.0"}
@@ -161,28 +169,32 @@ if [ $SUMMARY = "n" ];then
 	exit 1
 fi
 
-#cp files etc
-cp -r ${CDROMMOUNT}/LFS/LFSPkgBuilds ${LFS}
-ln -sfv LFSPkgBuilds/LFSPkgBuildScripts .
-ln -sfv LFSPkgBuilds/LFSScripts .
-
-mkdir -p ${LFS}/tools
-pushd ${LFS}/tools
+pushd ${LFS}
+	mkdir  -vp ${LFS}/${SOURCEARCHIVES}/KERNEL
+	mkdir -vp "${LFS}/${SOURCEARCHIVES}" "${LFS}/$BUILTPACKAGES"
 	case $(uname -m) in
 		*64)
-			if [ $USESYSTEMD -eq 1 ];then
-				tar -xvf ${CDROMMOUNT}/LFS/tools-systemd-${LFSVERSION}_64.tar.bz2
-			else
-				tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_64.tar.bz2
-			fi
+			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_64.tar.bz2
 			;;
 		*)
 			tar -xvf ${CDROMMOUNT}/LFS/tools-${LFSVERSION}_32.tar.bz2
 			;;
 	esac
+
+	if [ "$USESYSTEMD" -eq 0 ];then
+		ln -snvf LFSPkgBuilds/LFSScripts/SysVBuild LFSScripts
+		ln -snvf ../../../LFSScripts/PkgVersions LFSPkgBuilds/LFSPkgBuildScripts/system/PkgVersions
+	else
+		if [ "$INITTYPE" = "LFSInit" ];then
+			ln -snvf LFSPkgBuilds/LFSScripts/LFSInitBuild LFSScripts
+			ln -snvf ../../../LFSScripts/PkgVersions LFSPkgBuilds/LFSPkgBuildScripts/kernel/PkgVersions
+		else
+			ln -snvf LFSPkgBuilds/LFSScripts/SystemDBuild LFSScripts
+			ln -snvf ../../../LFSScripts/PkgVersions LFSPkgBuilds/LFSPkgBuildScripts/kernel/PkgVersions
+		fi	
+	fi	
 popd
 
-mkdir -vp "${LFS}/$SOURCEARCHIVES" "${LFS}/$BUILTPACKAGES"
 cp -rv ${CDROMMOUNT}/LFS/LFSSourceArchives/${LFSVERSION}/* ${LFS}/$SOURCEARCHIVES
 
 #set kernel version in build scripts
@@ -190,6 +202,11 @@ sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LF
 sed -ri 's/^VERSION="[0-9]+.[0-9]+.[0-9]+"/VERSION="'"${KERNELVERSION}"'"/' ${LFS}/${BUILDSCRIPTS}/kernel/firmware.LFSBuild
 
 ln -svf system-${INITTYPE}-meta.LFSBuild ${LFS}/${BUILDSCRIPTS}/system/system-meta/system-meta.LFSBuild
+
+pushd  ${LFS}/${SOURCEARCHIVES}/KERNEL
+	ln -sv ../SYSTEM/linux-$KERNELVERSION.tar.xz linux-$KERNELVERSION.tar.xz
+	ln -svfn ../../../LFSScripts/PkgVersions
+popd
 
 cat > $LFS/LFSScripts/SystemData.local << EOF
 CDROMMOUNT=$CDROMMOUNT
@@ -233,6 +250,23 @@ COMPILEAT=$COMPILEAT
 USESYSTEMD=$USESYSTEMD
 PIBUILD=$PIBUILD
 LANG=$LANGUAGE
+EOF
+
+rm ${LFS}/etc/fstab
+cat > ${LFS}/etc/fstab << EOF
+# Begin /etc/fstab
+
+#file system	mount-point	type	options	dump	fsck order
+
+$ROOTDEV	/	$ROOTFSTYPE	defaults	1	1
+$SWAP	swap	swap	pri=1	0	0
+proc	/proc	proc	nosuid,noexec,nodev	0	0
+sysfs	/sys	sysfs	nosuid,noexec,nodev	0	0
+devpts	/dev/pts	devpts	gid=5,mode=620	0	0
+tmpfs	/run	tmpfs	defaults	0	0
+devtmpfs	/dev	devtmpfs	mode=0755,nosuid	0	0
+
+# End /etc/fstab
 EOF
 
 cat > ${LFS}/${BUILDSCRIPTS}/system/grub/grub.cfg << EOF

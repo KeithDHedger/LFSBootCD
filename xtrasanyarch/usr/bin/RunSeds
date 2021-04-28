@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+#©keithhedger Sat 24 Apr 13:33:18 BST 2021 kdhedger68713@gmail.com
+
+sed -i 's|http://www.linuxfromscratch.org/patches/lfs/10.1/\([[:alnum:]][[:alnum:]]*\)\-\(.*\)|https://www.linuxfromscratch.org/patches/downloads/\1/\1-\2|g' wget-list
