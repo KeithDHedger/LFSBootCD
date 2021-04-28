@@ -64,8 +64,10 @@ distclean:
 
 nearlyclean:
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
-#	rm -rf $(TOPDIR)/cdtree/LFS/LFSPkgBuilds
-#	rm -rf $(TOPDIR)/cdtree/LFS/gotpkgbuilds
+
+splitiso:
+	md5sum $(BOOTCDNAME)
+	split -db 900M $(BOOTCDNAME) LFSBootCDPart
 
 
 

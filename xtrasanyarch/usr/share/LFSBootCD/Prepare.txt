@@ -120,9 +120,12 @@ Install firmware (optional)
 Optional install of grub, see here:
 http://www.linuxfromscratch.org/lfs/view/stable/chapter08/grub.html
 
-If your host already has grub installed you should configure that to boot your new LFS system, or manually do this:
+If your host already has grub installed you should configure that to boot your new LFS system ( preferred ).
 
-assuming root device is /dev/sda and LFS system is on /dev/sda2 mounted at /mnt/LFS
+******
+Alternativly install from scratch.
+Install grub ***WARNING*** This will overwrite your current grub install, be careful!!!
+Assuming root device is /dev/sda and LFS system is on /dev/sda2 mounted at /mnt/LFS
 grub-install /dev/sda
 
 The LFSSetup script will install a basic grub.cfg file in /mnt/LFS/${BUILDSCRIPTS}/system/grub/ based on the details given to the script.
@@ -145,6 +148,7 @@ menuentry "GNU/Linux, Linux $KERNELVERSION LFS $LFSVERSION" {
 	linux /boot/vmlinuz-$KERNELVERSION root=$ROOTDEV ro
 }
 EOF
+******
 
 Install GPM service
 cd /LFSPkgBuildScripts/HelperScripts
