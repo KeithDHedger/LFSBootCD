@@ -19,7 +19,6 @@ UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
 
 TOOLS32TAR="https://github.com/KeithDHedger/LFSBootCD/releases/download/${LFSGITVERSION}/tools-${LFSGITVERSION}_32.tar.bz2"
 TOOLS64TAR="https://github.com/KeithDHedger/LFSBootCD/releases/download/${LFSGITVERSION}/tools-${LFSGITVERSION}_64.tar.bz2"
-TOOLS64SYTEMDTAR="https://github.com/KeithDHedger/LFSBootCD/releases/download/${LFSGITVERSION}/tools-systemd-${LFSGITVERSION}_64.tar.bz2"
 
 LFSPKGBUILDS="https://github.com/KeithDHedger/LFSPkgBuilds/archive/${LFSGITVERSION}.zip"
 #Or:

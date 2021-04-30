@@ -122,7 +122,7 @@ LANGUAGE=${LANGUAGE:-$LANG}
 readWithDefault "LANGUAGE"  "Enter Language"
 
 #network
-IP=${IP:-"$(ifconfig |grep "inet addr"|head -n1|awk -F: '{print $2}'|awk '{print $1}'|sed 's/\(.*\)\..*$/\1/').$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')"}
+IP=${IP:-"$(ifconfig |grep 'inet'|head -n1|awk '{print $2}'|sed 's/\(.*\)\..*$/\1/').$(echo $ROOTDEV|sed 's/^[a-zA-Z\/]*//')"}
 readWithDefault "IP"  "Enter IP"
 
 #Set up the network

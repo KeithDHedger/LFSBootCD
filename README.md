@@ -34,9 +34,9 @@ A pre-built iso is available here:
 https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart00
 https://github.com/KeithDHedger/LFSBootCD/releases/download/9.0/LFSBootCDPart01
 
-You must download both parts and then join them together like so:
+You must download all parts and then join them together like so:
 
-cat "LFSBootCDPart00" "LFSBootCDPart01" > LFSBootCd.iso
+cat "LFSBootCDPart00" "LFSBootCDPart01" "LFSBootCDPart02" > LFSBootCd.iso
 
 OLD VERSION:
 https://www.dropbox.com/s/7o09ayfg9pc3pyo/LFSBootCD-8.2.iso
