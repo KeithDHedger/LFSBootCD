@@ -45,4 +45,4 @@ This uses the ssh public keys in the pulblickeys folder.
 This will need to be burnt to a dvd writable if you mean to use a physical disk as it's slightly too large for a cdrom.
 
 BUGS etc.
-keithdhedger@gmail.com
+kdhedger68713@gmail.com
