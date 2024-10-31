@@ -16,7 +16,9 @@ OR to remove the ssh keys folder
 Grab external sources etc, this may take some time if you have a slow connection approx download 1G+, this includes all the sources to build a functioning LFS system
 make SOURCES
 
-*make CD
+*make -j1 CD
+
+Using more than one thread for make may leave unwanted files and have unforseen results.
 
 If removing the hostkeys folder you will have to unpack the root_tree* tarball(s) copy the keys as instructed by make and re-tar the root_tree* folder(s), this will probably change soon.
 

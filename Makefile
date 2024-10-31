@@ -51,7 +51,7 @@ clean:
 	rm -rf $(TOPDIR)/cdtree/LFS/*
 	rm -f $(TOPDIR)/$(BOOTCDNAME) $(TOPDIR)/cdtree/isolinux/sdisk32.img  $(TOPDIR)/cdtree/isolinux/sdisk64.img
 	rm -rf $(TOPDIR)/loop2
-	rm -f $(TOPDIR)/wget-list*
+	#rm -f $(TOPDIR)/wget-list*
 	rm -f $(TOPDIR)/gotpkgbuilds
 
 distclean:
@@ -59,7 +59,6 @@ distclean:
 	rm -rf $(TOPDIR)/hostkeys||true
 	rm $(TOPDIR)/*~ ||true
 	rm -rf $(TOPDIR)/cdtree/LFS/*||true
-	rm $(TOPDIR)/root_tree32.tar.xz $(TOPDIR)/root_tree64.tar.xz||true
 	rm $(TOPDIR)/bootcd.tar.xz||true
 
 nearlyclean:
