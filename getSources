@@ -14,6 +14,10 @@ NETSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/NET
 SYSSOURCE=cdtree/LFS/LFSSourceArchives/$LFSVERSION/SYS
 WGET_VERS=1.21.1
 
+#other mirrors are available here:
+#https://www.linuxfromscratch.org/mirrors.html#files
+LFSSOURCES="https://lfs.gnlug.org/pub/lfs/lfs-packages/10.1/"
+
 WGETTAR="https://ftp.gnu.org/gnu/wget/wget-$WGET_VERS.tar.gz"
 UNZIPTAR="http://downloads.sourceforge.net/infozip/unzip60.tar.gz"
 
@@ -29,7 +33,7 @@ mkdir -vp cdtree/LFS $NETSOURCE $SYSSOURCE ${SYSTEMSOURCE}||true
 
 if [ ! -e $SYSTEMSOURCE/gotsystemsources ];then
 	pushd ${SYSTEMSOURCE}
-		wget -c -r -l1 -nH --reject="index.html*"  --cut-dirs=4 "https://lfs.gnlug.org/pub/lfs/lfs-packages/10.1/"
+		wget -c -r -l1 -nH --reject="index.html*"  --cut-dirs=4 "$LFSSOURCES"
 	popd
 
 #wget/unzip from the blfs book I prefer to make this as part of the main system
